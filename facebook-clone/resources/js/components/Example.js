@@ -1,13 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
+import About from "./About";
+import GetUser from "./GetUser";
 
 function Example() {
     return (
         <div className="container">
-            <h1 className="text-3xl font-bold underline">
-                Hello world!
-            </h1>
-            <p>Work</p>
+            <Link to="/about">About</Link>
+            <Link to="/user/hendra">Hendra</Link>
+            <Routes>
+                <Route path="about" element={<About />} />
+                <Route path="user/:UserId" element={<GetUser />} />
+            </Routes>
         </div>
     );
 }
@@ -15,5 +21,9 @@ function Example() {
 export default Example;
 
 if (document.getElementById('example')) {
-    ReactDOM.render(<Example />, document.getElementById('example'));
+    ReactDOM.render(
+        <BrowserRouter>
+            <Example />
+        </BrowserRouter>,
+        document.getElementById('example'));
 }
