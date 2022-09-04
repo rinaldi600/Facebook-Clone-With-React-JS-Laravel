@@ -1,20 +1,20 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from "react-router-dom";
 import { Routes, Route, Link } from "react-router-dom";
 import About from "./About";
 import GetUser from "./GetUser";
+import Login from "./Login/Login";
 
 function Example() {
     return (
-        <div className="container">
-            <Link to="/about">About</Link>
-            <Link to="/user/hendra">Hendra</Link>
+        <Fragment>
             <Routes>
+                <Route path="/" element={<Login />} />
                 <Route path="about" element={<About />} />
                 <Route path="user/:UserId" element={<GetUser />} />
             </Routes>
-        </div>
+        </Fragment>
     );
 }
 
