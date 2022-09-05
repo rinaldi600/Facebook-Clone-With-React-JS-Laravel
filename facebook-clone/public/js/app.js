@@ -5494,13 +5494,41 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 function Login() {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-    className: "h-[1000px] w-full bg-neutral-400",
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h1", {
-      className: "text-3xl text-orange-200 font-bold",
-      children: "Hello world!"
-    })
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+    className: "min-h-[900px]",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+      className: "min-h-[750px] grid justify-items-center items-center",
+      style: {
+        backgroundColor: 'rgb(240,242,245)'
+      },
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+        className: "min-h-[400px] w-[90%] flex flex-wrap",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+          className: "w-full sm:w-[50%] bg-red-200 min-h-full grid content-center justify-end mx-auto p-2",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+            className: "sm:w-5/5 sm:h-fit",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("img", {
+              "class": "sm:w-[301px] sm:h-[106px]",
+              src: "https://static.xx.fbcdn.net/rsrc.php/y8/r/dF5SId3UHWd.svg",
+              alt: "Facebook"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+              className: "sm:w-4/5",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", {
+                className: "text-2xl font-Helvetica",
+                children: "Facebook membantu Anda terhubung dan berbagi dengan orang-orang dalam kehidupan Anda."
+              })
+            })]
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+          className: "bg-green-400 w-full sm:w-[50%] min-h-full",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {})
+        })]
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+      className: "min-h-[150px] bg-red-300"
+    })]
   });
 }
 
