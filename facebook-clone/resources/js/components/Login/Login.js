@@ -1,7 +1,13 @@
 import React from "react";
 import Footer from "./Footer/FooterComponent";
-
+import { useSelector, useDispatch } from 'react-redux'
+import {showNavbarSignUp} from '../../features/showNavbarSignUp';
+import SignUp from "./SignUp/SignUp";
 function Login() {
+
+    const toogle = useSelector((state) => state.showNavbarSlice.value);
+    const dispatch = useDispatch();
+
     return (
           <div className={"min-h-[900px]"}>
               <div className={"min-h-[750px] p-0.5 grid justify-items-center items-center"} style={{backgroundColor : 'rgb(240,242,245)'}}>
@@ -25,12 +31,13 @@ function Login() {
                                 <div className="w-[90%] border border-white border-b-[#DADDE1] lg:w-[360px] h-[50px]">
                                     <p className="text-[#1877F2] text-center mt-3">Lupa Kata Sandi</p>
                                 </div>
-                                <button className="font-bold text-sm hover:bg-[#36A420] w-[80%] lg:w-[127.825px] h-[50px] text-white bg-[#42B72A] rounded-lg mt-4">Buat Akun Baru</button>
+                                <button onClick={() => dispatch(showNavbarSignUp())} className="font-bold text-sm hover:bg-[#36A420] w-[80%] lg:w-[127.825px] h-[50px] text-white bg-[#42B72A] rounded-lg mt-4">Buat Akun Baru</button>
                             </div>
                         </div>
                     </div>
                 </div>
               </div>
+              { toogle ? <SignUp/> : '' }
               <div className={"min-h-[150px]"}>
                 <Footer/>
               </div>

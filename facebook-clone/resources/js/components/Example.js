@@ -5,6 +5,8 @@ import { Routes, Route, Link } from "react-router-dom";
 import About from "./About";
 import GetUser from "./GetUser";
 import Login from "./Login/Login";
+import store from "../app/store";
+import {Provider} from "react-redux";
 
 function Example() {
     return (
@@ -22,8 +24,10 @@ export default Example;
 
 if (document.getElementById('example')) {
     ReactDOM.render(
-        <BrowserRouter>
-            <Example />
-        </BrowserRouter>,
+        <Provider store={store}>
+            <BrowserRouter>
+                <Example />
+            </BrowserRouter>
+        </Provider>,
         document.getElementById('example'));
 }
