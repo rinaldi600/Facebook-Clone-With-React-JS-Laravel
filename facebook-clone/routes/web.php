@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\SignUpUser;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +22,9 @@ Route::get('/', function () {
 Route::get('/{route?}',function(){
     return view('welcome');
 });
+
 Route::get('/{route?}/{userId}',function(){
     return view('welcome');
 });
+
+Route::post('/sign_up_user', [SignUpUser::class, 'getData']);
