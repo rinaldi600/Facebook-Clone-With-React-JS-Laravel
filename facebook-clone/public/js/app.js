@@ -7636,6 +7636,18 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -7645,20 +7657,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 function SignUp() {
+  var _errors$name, _errors$username, _errors$email, _errors$password, _errors$photo_profile;
+
   var _useForm = (0,react_hook_form__WEBPACK_IMPORTED_MODULE_5__.useForm)(),
       register = _useForm.register,
-      handleSubmit = _useForm.handleSubmit;
+      handleSubmit = _useForm.handleSubmit,
+      errors = _useForm.formState.errors;
 
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useDispatch)();
 
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+      _useState2 = _slicedToArray(_useState, 2),
+      errorsValidation = _useState2[0],
+      setErrors = _useState2[1];
+
   var onSubmit = function onSubmit(data) {
     var formData = new FormData();
+    formData.append("username", data['username']);
+    formData.append("name", data['name']);
+    formData.append("email", data['email']);
     formData.append("photo_profile", data['photo_profile'][0]);
+    formData.append("password", data['password']);
     axios__WEBPACK_IMPORTED_MODULE_3___default().post('/sign_up_user', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
     }).then(function (response) {
+      if (response.data.hasOwnProperty('errors')) {
+        setErrors(response.data.errors);
+      }
+
       console.log(response);
     })["catch"](function (error) {
       console.log(error);
@@ -7710,28 +7738,53 @@ function SignUp() {
             onSubmit: handleSubmit(onSubmit),
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", _objectSpread(_objectSpread({
               type: "text"
-            }, register('name')), {}, {
+            }, register('name', {
+              required: "Kolom wajib diisi"
+            })), {}, {
               placeholder: "Nama Lengkap",
               className: "h-[40px] w-[90%] lg:w-[375px] p-2 border border-[#DDDFE2] rounded-lg outline-none focus:border-[#1B74E4]"
-            })), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", _objectSpread(_objectSpread({
+            })), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+              className: "mt-1 text-red-600 text-xs",
+              children: ((_errors$name = errors.name) === null || _errors$name === void 0 ? void 0 : _errors$name.message) || (errorsValidation === null || errorsValidation === void 0 ? void 0 : errorsValidation.name)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", _objectSpread(_objectSpread({
               type: "text"
-            }, register('username')), {}, {
+            }, register('username', {
+              required: "Kolom wajib diisi"
+            })), {}, {
               placeholder: "Username",
               className: "h-[40px] w-[90%] lg:w-[375px] p-2 border border-[#DDDFE2] mt-2 rounded-lg outline-none focus:border-[#1B74E4]"
-            })), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", _objectSpread(_objectSpread({
+            })), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+              className: "mt-1 text-red-600 text-xs",
+              children: ((_errors$username = errors.username) === null || _errors$username === void 0 ? void 0 : _errors$username.message) || (errorsValidation === null || errorsValidation === void 0 ? void 0 : errorsValidation.username)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", _objectSpread(_objectSpread({
               type: "text"
-            }, register('email')), {}, {
+            }, register('email', {
+              required: "Kolom wajib diisi"
+            })), {}, {
               placeholder: "Email",
               className: "h-[40px] w-[90%] lg:w-[375px] p-2 border border-[#DDDFE2] mt-2 rounded-lg outline-none focus:border-[#1B74E4]"
-            })), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", _objectSpread(_objectSpread({
+            })), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+              className: "mt-1 text-red-600 text-xs",
+              children: ((_errors$email = errors.email) === null || _errors$email === void 0 ? void 0 : _errors$email.message) || (errorsValidation === null || errorsValidation === void 0 ? void 0 : errorsValidation.email)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", _objectSpread(_objectSpread({
               type: "password"
-            }, register('password')), {}, {
+            }, register('password', {
+              required: "Kolom wajib diisi"
+            })), {}, {
               placeholder: "Password",
               className: "h-[40px] w-[90%] lg:w-[375px] p-2 border border-[#DDDFE2] mt-2 rounded-lg outline-none focus:border-[#1B74E4]"
-            })), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", _objectSpread({
+            })), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+              className: "mt-1 text-red-600 text-xs",
+              children: ((_errors$password = errors.password) === null || _errors$password === void 0 ? void 0 : _errors$password.message) || (errorsValidation === null || errorsValidation === void 0 ? void 0 : errorsValidation.password)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", _objectSpread({
               type: "file",
               className: "h-[40px] w-[90%] lg:w-[375px] p-2"
-            }, register('photo_profile'))), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            }, register('photo_profile', {
+              required: "Kolom wajib diisi"
+            }))), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+              className: "mt-1 text-red-600 text-xs",
+              children: ((_errors$photo_profile = errors['photo_profile']) === null || _errors$photo_profile === void 0 ? void 0 : _errors$photo_profile.message) || (errorsValidation === null || errorsValidation === void 0 ? void 0 : errorsValidation.photo_profile)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
               className: "w-[95%] text-[11px] mt-3 text-[#777777]",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("p", {
                 children: ["Orang yang menggunakan layanan kami dapat mengunggah informasi kontak Anda ke Facebook. ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("a", {

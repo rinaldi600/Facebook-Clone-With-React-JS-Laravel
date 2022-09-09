@@ -5,24 +5,30 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 
 function SignUp() {
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const dispatch = useDispatch();
+    const [errorsValidation, setErrors] = useState({});
 
     const onSubmit = (data) => {
         const formData = new FormData();
+        formData.append("username", data['username']);
+        formData.append("name", data['name']);
+        formData.append("email", data['email']);
         formData.append("photo_profile", data['photo_profile'][0]);
-
+        formData.append("password", data['password']);
         axios.post('/sign_up_user', formData ,{
             headers: {
                 'Content-Type': 'multipart/form-data',
               }
         }).then((response) => {
-            console.log(response)
+            if (response.data.hasOwnProperty('errors')) {
+               setErrors(response.data.errors);
+            }
+            console.log(response);
         })
         .catch((error) => {
             console.log(error);
         })
-
     };
 
     return (
@@ -43,11 +49,16 @@ function SignUp() {
                 <div className="min-h-[439px] p-2">
                     <div className="pl-3 pt-5">
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            <input type="text" {...register('name')} placeholder="Nama Lengkap" className="h-[40px] w-[90%] lg:w-[375px] p-2 border border-[#DDDFE2] rounded-lg outline-none focus:border-[#1B74E4]" />
-                            <input type="text" {...register('username')} placeholder="Username" className="h-[40px] w-[90%] lg:w-[375px] p-2 border border-[#DDDFE2] mt-2 rounded-lg outline-none focus:border-[#1B74E4]" />
-                            <input type="text" {...register('email')} placeholder="Email" className="h-[40px] w-[90%] lg:w-[375px] p-2 border border-[#DDDFE2] mt-2 rounded-lg outline-none focus:border-[#1B74E4]" />
-                            <input type="password" {...register('password')} placeholder="Password" className="h-[40px] w-[90%] lg:w-[375px] p-2 border border-[#DDDFE2] mt-2 rounded-lg outline-none focus:border-[#1B74E4]" />
-                            <input type="file" className="h-[40px] w-[90%] lg:w-[375px] p-2" {...register('photo_profile')} />
+                            <input type="text" {...register('name', { required: "Kolom wajib diisi"})} placeholder="Nama Lengkap" className="h-[40px] w-[90%] lg:w-[375px] p-2 border border-[#DDDFE2] rounded-lg outline-none focus:border-[#1B74E4]" />
+                            <p className={"mt-1 text-red-600 text-xs"}>{errors.name?.message || errorsValidation?.name}</p>
+                            <input type="text" {...register('username', {required: "Kolom wajib diisi"})} placeholder="Username" className="h-[40px] w-[90%] lg:w-[375px] p-2 border border-[#DDDFE2] mt-2 rounded-lg outline-none focus:border-[#1B74E4]" />
+                            <p className={"mt-1 text-red-600 text-xs"}>{errors.username?.message || errorsValidation?.username}</p>
+                            <input type="text" {...register('email', {required: "Kolom wajib diisi"})} placeholder="Email" className="h-[40px] w-[90%] lg:w-[375px] p-2 border border-[#DDDFE2] mt-2 rounded-lg outline-none focus:border-[#1B74E4]" />
+                            <p className={"mt-1 text-red-600 text-xs"}>{errors.email?.message || errorsValidation?.email}</p>
+                            <input type="password" {...register('password', {required: "Kolom wajib diisi"})} placeholder="Password" className="h-[40px] w-[90%] lg:w-[375px] p-2 border border-[#DDDFE2] mt-2 rounded-lg outline-none focus:border-[#1B74E4]" />
+                            <p className={"mt-1 text-red-600 text-xs"}>{errors.password?.message || errorsValidation?.password}</p>
+                            <input type="file" className="h-[40px] w-[90%] lg:w-[375px] p-2" {...register('photo_profile', {required: "Kolom wajib diisi"})} />
+                            <p className={"mt-1 text-red-600 text-xs"}>{errors['photo_profile']?.message || errorsValidation?.photo_profile}</p>
 
                             <div className="w-[95%] text-[11px] mt-3 text-[#777777]">
                                 <p>
