@@ -7662,7 +7662,8 @@ function SignUp() {
   var _useForm = (0,react_hook_form__WEBPACK_IMPORTED_MODULE_5__.useForm)(),
       register = _useForm.register,
       handleSubmit = _useForm.handleSubmit,
-      errors = _useForm.formState.errors;
+      errors = _useForm.formState.errors,
+      resetField = _useForm.resetField;
 
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useDispatch)();
 
@@ -7685,9 +7686,14 @@ function SignUp() {
     }).then(function (response) {
       if (response.data.hasOwnProperty('errors')) {
         setErrors(response.data.errors);
+      } else {
+        console.log(response);
+        resetField('name');
+        resetField('username');
+        resetField('email');
+        resetField('photo_profile');
+        resetField('password');
       }
-
-      console.log(response);
     })["catch"](function (error) {
       console.log(error);
     });

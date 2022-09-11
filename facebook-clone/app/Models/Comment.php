@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class User extends Model
+class Comment extends Model
 {
     use HasFactory;
     use SoftDeletes;
@@ -17,13 +17,4 @@ class User extends Model
      * @var array
      */
     protected $guarded = ['id'];
-
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'users';
-
-
 }

@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 
 function SignUp() {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, resetField } = useForm();
     const dispatch = useDispatch();
     const [errorsValidation, setErrors] = useState({});
 
@@ -23,8 +23,14 @@ function SignUp() {
         }).then((response) => {
             if (response.data.hasOwnProperty('errors')) {
                setErrors(response.data.errors);
+            } else {
+                console.log(response);
+                resetField('name');
+                resetField('username');
+                resetField('email');
+                resetField('photo_profile');
+                resetField('password');
             }
-            console.log(response);
         })
         .catch((error) => {
             console.log(error);

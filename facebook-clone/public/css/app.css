@@ -758,6 +758,10 @@ video {
   --tw-text-opacity: 1;
   color: rgb(96 103 112 / var(--tw-text-opacity));
 }
+.text-red-600 {
+  --tw-text-opacity: 1;
+  color: rgb(220 38 38 / var(--tw-text-opacity));
+}
 .text-\[\#777777\] {
   --tw-text-opacity: 1;
   color: rgb(119 119 119 / var(--tw-text-opacity));
@@ -765,10 +769,6 @@ video {
 .text-\[\#385898\] {
   --tw-text-opacity: 1;
   color: rgb(56 88 152 / var(--tw-text-opacity));
-}
-.text-red-600 {
-  --tw-text-opacity: 1;
-  color: rgb(220 38 38 / var(--tw-text-opacity));
 }
 .antialiased {
   -webkit-font-smoothing: antialiased;
