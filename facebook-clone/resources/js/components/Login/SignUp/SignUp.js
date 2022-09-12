@@ -8,8 +8,11 @@ function SignUp() {
     const { register, handleSubmit, formState: { errors }, resetField } = useForm();
     const dispatch = useDispatch();
     const [errorsValidation, setErrors] = useState({});
+    const [success, setSuccess] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const onSubmit = (data) => {
+        setLoading(true);
         const formData = new FormData();
         formData.append("username", data['username']);
         formData.append("name", data['name']);
@@ -24,6 +27,7 @@ function SignUp() {
             if (response.data.hasOwnProperty('errors')) {
                setErrors(response.data.errors);
             } else {
+                setSuccess(true);
                 console.log(response);
                 resetField('name');
                 resetField('username');
@@ -35,6 +39,7 @@ function SignUp() {
         .catch((error) => {
             console.log(error);
         })
+            .finally(() => setLoading(false));
     };
 
     return (
@@ -53,7 +58,20 @@ function SignUp() {
                     </div>
                 </div>
                 <div className="min-h-[439px] p-2">
-                    <div className="pl-3 pt-5">
+                    <div className="pl-3 pt-3">
+                        {
+                            success ?
+                                <div className={"h-[40px] w-[90%] lg:w-[375px] flex gap-1 items-center p-2 mb-2 border border-[#3FBF63] bg-[#EAF7EE] rounded-lg outline-none"}>
+                                    <div className={"bg-[#3FBF63] rounded-full inline-block p-0.5"}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                             stroke="currentColor" className="w-6 h-6 text-[#EAF7EE]">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+                                        </svg>
+                                    </div>
+                                    Akun berhasil dibuat
+                                </div>
+                                : ''
+                        }
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <input type="text" {...register('name', { required: "Kolom wajib diisi"})} placeholder="Nama Lengkap" className="h-[40px] w-[90%] lg:w-[375px] p-2 border border-[#DDDFE2] rounded-lg outline-none focus:border-[#1B74E4]" />
                             <p className={"mt-1 text-red-600 text-xs"}>{errors.name?.message || errorsValidation?.name}</p>
@@ -75,7 +93,7 @@ function SignUp() {
                                 </p>
                             </div>
                             <div className="w-full grid justify-items-center mt-3">
-                                <button type="submit" className="lg:w-[194px] text-center text-white bg-[#00A400] hover:bg-[#699B5C] text-lg font-bold rounded-lg w-[90%] h-[36px]">
+                                <button type="submit" className={`lg:w-[194px] ${ loading ? 'cursor-not-allowed' : '' } text-center text-white bg-[#00A400] hover:bg-[#699B5C] text-lg font-bold rounded-lg w-[90%] h-[36px]`}>
                                     Daftar
                                 </button>
                             </div>

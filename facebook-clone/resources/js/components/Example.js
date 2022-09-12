@@ -7,12 +7,14 @@ import GetUser from "./GetUser";
 import Login from "./Login/Login";
 import store from "../app/store";
 import {Provider} from "react-redux";
+import Home from "./Login/Home/Home";
 
 function Example() {
     return (
         <Fragment>
             <Routes>
                 <Route path="/" element={<Login />} />
+                <Route path="/home" element={<Home />} />
                 <Route path="about" element={<About />} />
                 <Route path="user/:UserId" element={<GetUser />} />
             </Routes>

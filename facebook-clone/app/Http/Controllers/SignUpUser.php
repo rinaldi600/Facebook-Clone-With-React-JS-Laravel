@@ -55,25 +55,18 @@ class SignUpUser extends Controller
                 )
             ]);
         } else {
-
-
+            $request->file('photo_profile')->storeAs('photo_profile', $request->file('photo_profile')->hashName(),'public');
+            User::create([
+                'id_user' => 'USER - ' . uniqid(),
+                'username' => $request->input('username'),
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'photo_profile' => Storage::url('photo_profile/'.$request->file('photo_profile')->hashName()),
+                'password' => Hash::make($request->input('password'))
+            ]);
             return response()->json([
                 'success' => 'Akun berhasil dibuat',
             ]);
-
-
-
-//            $request->file('photo_profile')->storeAs('photo_profile', $request->file('photo_profile')->hashName(),'public');
-//            User::create([
-//                'id_user' => 'USER - ' . uniqid(),
-//                'username' => $request->input('username'),
-//                'name' => $request->input('name'),
-//                'photo_profile' => Storage::url('photo_profile/'.$request->file('photo_profile')->hashName()),
-//                'password' => Hash::make($request->input('password'))
-//            ]);
-//            return response()->json([
-//                'success' => 'Akun berhasil dibuat',
-//            ]);
         }
     }
 }
