@@ -69,4 +69,37 @@ class SignUpUser extends Controller
             ]);
         }
     }
+
+    public function getDataLoginUser(Request $request) {
+
+        $checkTypeData = str_contains($request->input('email_username'),'@') ? 'email:rfc,dns' : 'min:3|alpha_dash';
+
+        $validator = Validator::make($request->all(), [
+            'email_username' => 'required|' . $checkTypeData,
+            'password' => 'required|min:8|string',
+        ],[
+            'email_username.required' => 'Kolom wajib diisi',
+            'email_username.min' => 'Username minimal 3 karakter',
+            'email_username.alpha_dash' => 'Username tidak valid',
+            'email_username.email' => 'Email tidak valid',
+            'password.required' => 'Kolom wajib diisi',
+            'password.min' => 'Password minimal 8 karakter',
+            'password.string' => 'Password tidak valid',
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return response()->json([
+                'errors' => array(
+                    'email_username' => $errors->first('email_username'),
+                    'password' => $errors->first('password'),
+                )
+            ]);
+        } else {
+            return response()->json([
+                'success' => $request->input()
+            ]);
+        }
+        
+    }
 }

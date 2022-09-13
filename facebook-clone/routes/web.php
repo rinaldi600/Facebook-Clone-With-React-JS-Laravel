@@ -28,3 +28,4 @@ Route::get('/{route?}/{userId}',function(){
 });
 
 Route::post('/sign_up_user', [SignUpUser::class, 'getData']);
+Route::post('/sign_in_user', [SignUpUser::class, 'getDataLoginUser']);
