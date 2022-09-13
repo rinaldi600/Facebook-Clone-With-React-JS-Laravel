@@ -18,7 +18,6 @@ function Login() {
         const formData = new FormData();
         formData.append('email_username', data['email_username']);
         formData.append('password', data['password']);
-
         axios.post('/sign_in_user', formData)
             .then((response) => {
                 setLoading(true);
