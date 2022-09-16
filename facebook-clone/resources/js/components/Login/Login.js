@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import Footer from "./Footer/FooterComponent";
 import { useSelector, useDispatch } from 'react-redux'
 import {showNavbarSignUp} from '../../features/showNavbarSignUp';
+import {useNavigate} from 'react-router-dom';
 import SignUp from "./SignUp/SignUp";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -9,6 +10,7 @@ import axios from "axios";
 function Login() {
 
     const toogle = useSelector((state) => state.showNavbarSlice.value);
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [errorsValidation, setErrors] = useState({});
     const dispatch = useDispatch();
@@ -24,9 +26,9 @@ function Login() {
                 if (response.data.hasOwnProperty('errors')) {
                     setErrors(response.data.errors);
                 } else {
-                    console.log(response);
                     resetField('email_username');
                     resetField('password');
+                    navigate('/home');
                 }
             })
             .catch((error) => {

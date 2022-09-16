@@ -67,7 +67,7 @@ class SignUpUser extends Controller
             ]);
             return response()->json([
                 'success' => 'Akun berhasil dibuat',
-            ]);
+            ],200);
         }
     }
 
@@ -105,11 +105,9 @@ class SignUpUser extends Controller
 
             if (Auth::attempt($data)) {
                 $user = Auth::user();
-//                return response()->json([
-//                    'success' =>  $user->createToken('auth')->plainTextToken,
-//                ]);
+                $request->session()->regenerate();
                 return response()->json([
-                    'success' =>  'ssss12f78',
+                    'WORK' => 'SUCCESS'
                 ]);
             } else {
                 return response()->json([

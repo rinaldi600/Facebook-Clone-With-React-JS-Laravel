@@ -11,21 +11,20 @@ class Home extends Controller
      * Handle the incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return string
      */
 
-    public function index(Request $request) {
-        return $request->user();
+    public function getUser(Request $request) {
+        return view('welcome');
     }
 
     public function logout(Request $request) {
-        if ($request->user()) {
-            $request->user()->tokens()->delete();
-            return response()->json(['message' => 'Anda berhasil logout'], 200);
-        } else {
-            return response()->json([
-                'message' => 'Tidak ada token'
-            ], 200);
-        }
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 }

@@ -19,10 +19,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Route::post('/sign_up_user', [SignUpUser::class, 'getData']);
 Route::post('/sign_in_user', [SignUpUser::class, 'getDataLoginUser']);
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/home', [\App\Http\Controllers\Home::class, 'index']);
+Route::middleware('isLogin')->group(function () {
+    Route::get('/home', [\App\Http\Controllers\Home::class, 'getUser']);
     Route::get('/logout', [\App\Http\Controllers\Home::class, 'logout']);
 });
+
