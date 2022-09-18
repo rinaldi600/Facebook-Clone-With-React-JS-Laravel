@@ -18,6 +18,12 @@ class Home extends Controller
         return view('welcome');
     }
 
+    public function getUserDetail(Request $request) {
+        return response()->json([
+           'userDetail' => Auth::user(),
+        ]);
+    }
+
     public function logout(Request $request) {
         Auth::logout();
 
@@ -25,6 +31,8 @@ class Home extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return response()->json([
+            'success' => 'LogOut'
+        ]);
     }
 }
