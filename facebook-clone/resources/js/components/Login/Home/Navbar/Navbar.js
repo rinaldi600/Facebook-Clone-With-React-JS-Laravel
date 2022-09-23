@@ -3,6 +3,7 @@ import LogoFacebook from "../../../../../img/SeekPng.com_logo-facebook-png-trans
 import photoDump from "../../../../../photo-dump/freestocks-8a95EVm0ovQ-unsplash.jpg";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
+import {useSelector} from "react-redux";
 
 function getWidthDimension() {
     const { innerWidth: width, innerHeight: height } = window;
@@ -13,26 +14,13 @@ function getWidthDimension() {
 }
 
 function Navbar() {
-    const [user, getUser] = useState({});
+    const detailUser = useSelector(state => state.detailUserCurrent.value);
     const [modalSearchFriends, setModalSearchFriends] = useState(false);
     const [windowDimensions, setWindowDimensions] = useState(getWidthDimension());
     const [closeModalBox, setCloseModalBox] = useState(0);
     const [modalProfile, setModalProfile] = useState(false);
     const [modalNotifications, setModalNotifications] = useState(false);
     const navigate = useNavigate();
-
-    useEffect(() => {
-        axios.get('/get_detail_user')
-            .then((response) => {
-                getUser(response.data.userDetail)
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-            .finally((complete) => {
-                console.log(complete);
-            })
-    },[]);
 
     useEffect(() => {
         function handleResize() {
@@ -42,6 +30,7 @@ function Navbar() {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
 
     const searchFriends = (e) => {
         if (e.target.value !== '') {
@@ -168,7 +157,7 @@ function Navbar() {
                     </svg>
                 </div>
                 <div onClick={showProfile} className={"w-[40px] h-[40px] rounded-full cursor-pointer overflow-hidden"}>
-                    <img src={user.photo_profile} alt=""/>
+                    <img src={detailUser?.photo_profile} alt=""/>
                 </div>
             </div>
 
@@ -176,9 +165,9 @@ function Navbar() {
                 <div style={{boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}} className={"w-11/12 mb-5 min-h-[110.662px] bg-white rounded-lg p-4"}>
                     <div style={{borderBottom : '2px solid #CED0D4'}} className={"flex flex-wrap items-center gap-2 pb-4"}>
                         <div className={"w-[40px] h-[40px] rounded-full cursor-pointer overflow-hidden"}>
-                            <img className={"w-full h-full"} src={user.photo_profile} alt=""/>
+                            <img className={"w-full h-full"} src={detailUser?.photo_profile} alt=""/>
                         </div>
-                        <p className={"text-base text-[#050505] mobile:text-xs font-semibold"}>{user.name}</p>
+                        <p className={"text-base text-[#050505] mobile:text-xs font-semibold"}>{detailUser?.name}</p>
                     </div>
                     <p className={"text-[#3889F4] mt-2 text-sm font-medium"}>Lihat Semua Profil</p>
                 </div>
