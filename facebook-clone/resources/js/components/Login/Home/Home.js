@@ -25,9 +25,8 @@ function Home(props) {
             .finally(() => {
                 setLoading(false);
             });
-    },[]);
 
-    console.log(loading);
+    },[]);
 
     return (
         <Fragment>

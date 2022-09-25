@@ -82,7 +82,7 @@ function Navbar() {
 
 
     return (
-        <div className={"flex min-h-[56px] flex-wrap font-Helvetica bg-red-400 shadow-md"}>
+        <div style={{boxShadow: 'rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px'}} className={"flex min-h-[56px] flex-wrap font-Helvetica bg-red-400 shadow-md"}>
             <div className={"w-[50%] relative mobile:pt-1 mobile:pb-1 mobile:pr-1 md:w-[25%] gap-2 p-2 flex flex-wrap items-center bg-white"}>
                 <div className={`w-[40px] h-[40px]`}>
                     <img src={LogoFacebook} alt=""/>
