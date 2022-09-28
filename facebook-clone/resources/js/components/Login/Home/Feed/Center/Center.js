@@ -12,9 +12,8 @@ function Center(props) {
         console.log(detailUser)
     },[detailUser]);
 
-    const showBoxModal = (e) => {
+    const showBoxModal = () => {
         dispatch(show());
-        e.target.disabled = true;
     };
 
     return (
@@ -24,7 +23,7 @@ function Center(props) {
                     <div className={"w-[40px] h-[40px] rounded-full overflow-hidden"}>
                         <img src={detailUser['photo_profile']} alt=""/>
                     </div>
-                    <input onClick={(e) => showBoxModal(e)} className={"bg-[#F0F2F5] w-[90%] h-[40px] rounded-full text-lg p-2 border-none outline-none cursor-pointer hover:bg-[#E4E6E9]"} placeholder={`Apa yang anda pikirkan, ${detailUser['name'].split(' ')[0]}?`} type="text"/>
+                    <input disabled={!!statusState} onClick={showBoxModal} className={"bg-[#F0F2F5] w-[90%] h-[40px] rounded-full text-lg p-2 border-none outline-none cursor-pointer hover:bg-[#E4E6E9]"} placeholder={`Apa yang anda pikirkan, ${detailUser['name'].split(' ')[0]}?`} type="text"/>
                 </div>
                 <div className={"min-h-[40px] flex justify-around mobile:flex-wrap"}>
                     <button className={"hover:bg-[#F2F2F2] p-2 flex gap-1 items-center hover:rounded-lg"}>

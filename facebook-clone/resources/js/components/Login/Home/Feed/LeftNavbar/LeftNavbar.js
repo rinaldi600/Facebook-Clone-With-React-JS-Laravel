@@ -17,7 +17,7 @@ function LeftNavbar(props) {
     };
 
     return (
-        <div className={"h-screen overflow-y-scroll bg-[#F0F2F5] scrollbar-hide scrollbar-thumb-gray-900 scrollbar-track-gray-100"}>
+        <div className={"h-screen overflow-y-scroll bg-[#F0F2F5] scrollbar-hide"}>
             <div className={"min-h-[48px] hover:bg-[#E4E6E9] mt-4 gap-2 pl-2 cursor-pointer flex flex-wrap items-center"}>
                 <div className={"w-[36px] h-[36px] rounded-full overflow-hidden"}>
                     <img src={detailUser['photo_profile']} alt=""/>

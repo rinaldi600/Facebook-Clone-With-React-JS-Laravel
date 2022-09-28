@@ -7493,9 +7493,8 @@ function Center(props) {
     console.log(detailUser);
   }, [detailUser]);
 
-  var showBoxModal = function showBoxModal(e) {
+  var showBoxModal = function showBoxModal() {
     dispatch((0,_features_showStatusBox__WEBPACK_IMPORTED_MODULE_2__.show)());
-    e.target.disabled = true;
   };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
@@ -7514,9 +7513,8 @@ function Center(props) {
             alt: ""
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
-          onClick: function onClick(e) {
-            return showBoxModal(e);
-          },
+          disabled: !!statusState,
+          onClick: showBoxModal,
           className: "bg-[#F0F2F5] w-[90%] h-[40px] rounded-full text-lg p-2 border-none outline-none cursor-pointer hover:bg-[#E4E6E9]",
           placeholder: "Apa yang anda pikirkan, ".concat(detailUser['name'].split(' ')[0], "?"),
           type: "text"
@@ -7625,28 +7623,124 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _features_showStatusBox__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../features/showStatusBox */ "./resources/js/features/showStatusBox.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
 
 
 
 
 function StatusBoxModal(props) {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+  var detailUser = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
+    return state.detailUserCurrent.value;
+  });
+  var statusState = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
+    return state.showStatus.value;
+  });
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
+
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      isScroll = _useState2[0],
+      setScroll = _useState2[1];
+
+  var checkScrollBar = function checkScrollBar(e) {
+    if (e.target.value.length >= 591) {
+      setScroll(true);
+    } else {
+      setScroll(false);
+    }
+
+    console.log(e.target.value.length);
+  };
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
     className: "fixed bg-[#F3F3F4]/75 inset-0 flex justify-center items-center",
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-      className: "lg:w-[500px] min-h-[408px] bg-white shadow-xl rounded-lg overflow-hidden",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+      className: "lg:w-[500px] md:w-[60%] sm:w-[65%] w-[75%] min-h-[408px] bg-white shadow-xl rounded-lg overflow-hidden",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
         style: {
           borderBottom: '1px solid #E5E5E5'
         },
-        className: "h-[40px] flex items-center",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", {
-          className: "text-xl text-[#050505] font-bold",
+        className: "h-[40px] p-1 justify-between flex justify-center items-center",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+          className: "text-xl text-[#050505] font-bold mx-auto",
           children: "Buat Postingan"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-          className: "w-[24px] h-[24px] rounded-full bg-[#D8DADF]"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+          onClick: function onClick() {
+            return dispatch((0,_features_showStatusBox__WEBPACK_IMPORTED_MODULE_2__.close)());
+          },
+          className: "w-[24px] h-[24px] rounded-full bg-[#D8DADF] cursor-pointer",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("svg", {
+            xmlns: "http://www.w3.org/2000/svg",
+            fill: "none",
+            viewBox: "0 0 24 24",
+            "stroke-width": "1.5",
+            stroke: "currentColor",
+            className: "w-6 h-6",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("path", {
+              "stroke-linecap": "round",
+              "stroke-linejoin": "round",
+              d: "M6 18L18 6M6 6l12 12"
+            })
+          })
         })]
-      })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+        className: "min-h-[368px] bg-blue-300",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: "min-h-[40px] bg-white flex gap-2 p-4",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            className: "w-[40px] h-[40px] rounded-full overflow-hidden",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
+              src: detailUser['photo_profile'],
+              alt: ""
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+              className: "text-sm font-semibold",
+              children: detailUser['name']
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("button", {
+              className: "w-[65px] h-[14px] flex items-center gap-1 justify-center p-2 rounded-md mt-1 bg-[#E4E6EB] text-xs font-semibold",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
+                className: "w-[12px] h-[12px]",
+                src: "https://static.xx.fbcdn.net/rsrc.php/v3/ys/r/L39Daxsxmmw.png",
+                alt: ""
+              }), "Publik"]
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: "min-h-[328px] bg-white pr-4 pl-4",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("textarea", {
+            onChange: function onChange(e) {
+              return checkScrollBar(e);
+            },
+            placeholder: "Apa yang anda pikirkan, ".concat(detailUser['name'].split(' ')[0], "?"),
+            className: "scrollbar-hide bg-grey-100 ".concat(isScroll ? 'text-sm' : 'text-2xl', " min-h-[200px] w-full outline-none border-none"),
+            name: "status",
+            id: "",
+            cols: "30"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            style: {
+              border: '1px solid #D0D2D6'
+            },
+            className: "rounded-lg min-h-[58px]"
+          })]
+        })]
+      })]
     })
   });
 }
@@ -7748,7 +7842,7 @@ function LeftNavbar(props) {
   };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-    className: "h-screen overflow-y-scroll bg-[#F0F2F5] scrollbar-hide scrollbar-thumb-gray-900 scrollbar-track-gray-100",
+    className: "h-screen overflow-y-scroll bg-[#F0F2F5] scrollbar-hide",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
       className: "min-h-[48px] hover:bg-[#E4E6E9] mt-4 gap-2 pl-2 cursor-pointer flex flex-wrap items-center",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
