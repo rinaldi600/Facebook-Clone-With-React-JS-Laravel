@@ -1,6 +1,7 @@
 import React from "react";
 import LeftNavbar from "./LeftNavbar/LeftNavbar";
 import Center from "./Center/Center";
+import RightNavbar from "../RightNavbar/RightNavbar";
 
 function Feed(props) {
 
@@ -13,7 +14,7 @@ function Feed(props) {
                 <Center/>
             </div>
             <div className={"lg:w-[25%] md:w-[40%] md:block hidden bg-blue-300"}>
-                <p>TEST</p>
+                <RightNavbar/>
             </div>
         </div>
     );
