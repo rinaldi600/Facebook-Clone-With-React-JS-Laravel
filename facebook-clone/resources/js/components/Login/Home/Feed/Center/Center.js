@@ -19,7 +19,7 @@ function Center(props) {
 
     return (
         <div className={"bg-[#F0F2F5] min-h-screen pt-5"}>
-            <div className={"min-h-[101px] bg-white rounded-lg p-3"}>
+            <div className={"min-h-[101px] md:w-[90%] bg-white rounded-lg p-3"}>
                 <div style={{borderBottom : '1px solid #E4E6EB'}} className={"mb-2 w-full flex gap-2 p-1 items-center h-[60px]"}>
                     <div className={"w-[40px] h-[40px] rounded-full overflow-hidden"}>
                         <img src={detailUser['photo_profile']} alt=""/>

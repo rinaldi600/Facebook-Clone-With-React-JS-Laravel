@@ -195,10 +195,11 @@ function LeftNavbar(props) {
                 <p className={"text-sm font-medium"}>Lihat Lainnya</p>
             </div>
 
-            <div style={{borderBottom : '1px solid #CED0D4'}} className={"h-[1px] mb-2 w-11/12 mx-auto"}>
+            <div style={{borderBottom : '1px solid #CED0D4'}} className={"h-[1px] mt-3 mb-2 w-11/12 mx-auto"}>
 
             </div>
 
+            <p className={"pl-2 text-[#65676b] text-base font-semibold mt-3 mb-3"}>Pintasan Anda</p>
             <div className={"min-h-[48px] hover:bg-[#E4E6E9] gap-2 pl-2 cursor-pointer flex flex-wrap items-center"}>
                 <div className={"w-[36px] h-[36px] rounded-lg overflow-hidden"}>
                     <img src='https://scontent.fsrg7-1.fna.fbcdn.net/v/t39.30808-6/301120520_621500392832173_3419125554319852132_n.jpg?stp=c53.0.64.64a_cp0_dst-jpg_p64x64&_nc_cat=108&ccb=1-7&_nc_sid=ac9ee4&_nc_ohc=qBA3LhdknoUAX-msFSh&_nc_ht=scontent.fsrg7-1.fna&oh=00_AT_-OF5N7k0OGJK0YvkmWh6h9oYi5eKGpkoQo3MudKo_sw&oe=63354A01' alt=""/>

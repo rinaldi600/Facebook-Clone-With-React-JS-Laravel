@@ -7506,7 +7506,7 @@ function Center(props) {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
     className: "bg-[#F0F2F5] min-h-screen pt-5",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-      className: "min-h-[101px] bg-white rounded-lg p-3",
+      className: "min-h-[101px] md:w-[90%] bg-white rounded-lg p-3",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
         style: {
           borderBottom: '1px solid #E4E6EB'
@@ -8291,7 +8291,10 @@ function LeftNavbar(props) {
       style: {
         borderBottom: '1px solid #CED0D4'
       },
-      className: "h-[1px] mb-2 w-11/12 mx-auto"
+      className: "h-[1px] mt-3 mb-2 w-11/12 mx-auto"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+      className: "pl-2 text-[#65676b] text-base font-semibold mt-3 mb-3",
+      children: "Pintasan Anda"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
       className: "min-h-[48px] hover:bg-[#E4E6E9] gap-2 pl-2 cursor-pointer flex flex-wrap items-center",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
@@ -8904,10 +8907,10 @@ function Navbar() {
 
 /***/ }),
 
-/***/ "./resources/js/components/Login/Home/RightNavbar/RightNavbar.js":
-/*!***********************************************************************!*\
-  !*** ./resources/js/components/Login/Home/RightNavbar/RightNavbar.js ***!
-  \***********************************************************************/
+/***/ "./resources/js/components/Login/Home/RightNavbar/PeopleOnline/PeopleOnline.js":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/Login/Home/RightNavbar/PeopleOnline/PeopleOnline.js ***!
+  \*************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -8920,12 +8923,330 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+function PeopleOnline(props) {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+    className: "flex items-center gap-4 hover:bg-[#E4E6E9] relative pb-1 pl-1 rounded-lg pt-1",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+      style: {
+        border: '2px solid #1876F2'
+      },
+      className: "w-[36px] h-[36px] rounded-full overflow-hidden",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("img", {
+        className: "w-full h-full",
+        src: props.image,
+        alt: ""
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+        style: {
+          border: '2px solid white'
+        },
+        className: "w-[10px] bg-[#31A24C] h-[10px] rounded-full absolute bottom-1 left-8 z-50"
+      })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", {
+      className: "text-[#050505] text-sm font-medium",
+      children: props.name
+    })]
+  });
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PeopleOnline);
+
+/***/ }),
+
+/***/ "./resources/js/components/Login/Home/RightNavbar/RightNavbar.js":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/Login/Home/RightNavbar/RightNavbar.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _photo_dump_freestocks_8a95EVm0ovQ_unsplash_jpg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../photo-dump/freestocks-8a95EVm0ovQ-unsplash.jpg */ "./resources/photo-dump/freestocks-8a95EVm0ovQ-unsplash.jpg");
+/* harmony import */ var _photo_dump_albert_dera_ILip77SbmOE_unsplash_jpg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../photo-dump/albert-dera-ILip77SbmOE-unsplash.jpg */ "./resources/photo-dump/albert-dera-ILip77SbmOE-unsplash.jpg");
+/* harmony import */ var _photo_dump_austin_wade_X6Uj51n5CE8_unsplash_jpg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../photo-dump/austin-wade-X6Uj51n5CE8-unsplash.jpg */ "./resources/photo-dump/austin-wade-X6Uj51n5CE8-unsplash.jpg");
+/* harmony import */ var _photo_dump_behrouz_sasani_xUo4xFp9l64_unsplash_jpg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../../photo-dump/behrouz-sasani-xUo4xFp9l64-unsplash.jpg */ "./resources/photo-dump/behrouz-sasani-xUo4xFp9l64-unsplash.jpg");
+/* harmony import */ var _photo_dump_christopher_campbell_rDEOVtE7vOs_unsplash_jpg__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../../photo-dump/christopher-campbell-rDEOVtE7vOs-unsplash.jpg */ "./resources/photo-dump/christopher-campbell-rDEOVtE7vOs-unsplash.jpg");
+/* harmony import */ var _photo_dump_dan_asaki_CG6Wo4Ac4uc_unsplash_jpg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../../photo-dump/dan-asaki-CG6Wo4Ac4uc-unsplash.jpg */ "./resources/photo-dump/dan-asaki-CG6Wo4Ac4uc-unsplash.jpg");
+/* harmony import */ var _photo_dump_derick_mckinney_QuwQYDBI6sI_unsplash_jpg__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../../photo-dump/derick-mckinney-QuwQYDBI6sI-unsplash.jpg */ "./resources/photo-dump/derick-mckinney-QuwQYDBI6sI-unsplash.jpg");
+/* harmony import */ var _photo_dump_duman_photography_w3JKo9UgXFY_unsplash_jpg__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../../photo-dump/duman-photography-w3JKo9UgXFY-unsplash.jpg */ "./resources/photo-dump/duman-photography-w3JKo9UgXFY-unsplash.jpg");
+/* harmony import */ var _photo_dump_engin_akyurt_GQeHbaf05Z0_unsplash_jpg__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../../../photo-dump/engin-akyurt-GQeHbaf05Z0-unsplash.jpg */ "./resources/photo-dump/engin-akyurt-GQeHbaf05Z0-unsplash.jpg");
+/* harmony import */ var _photo_dump_gabriel_silverio_u3WmDyKGsrY_unsplash_jpg__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../../../photo-dump/gabriel-silverio-u3WmDyKGsrY-unsplash.jpg */ "./resources/photo-dump/gabriel-silverio-u3WmDyKGsrY-unsplash.jpg");
+/* harmony import */ var _photo_dump_oliver_johnson_yH0dth2yEQE_unsplash_jpg__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../../../photo-dump/oliver-johnson-yH0dth2yEQE-unsplash.jpg */ "./resources/photo-dump/oliver-johnson-yH0dth2yEQE-unsplash.jpg");
+/* harmony import */ var _photo_dump_philipp_wuthrich_5n3JP9WAJTs_unsplash_jpg__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../../../../photo-dump/philipp-wuthrich-5n3JP9WAJTs-unsplash.jpg */ "./resources/photo-dump/philipp-wuthrich-5n3JP9WAJTs-unsplash.jpg");
+/* harmony import */ var _photo_dump_stephan_louis_L3s5QySz5UM_unsplash_jpg__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../../../../photo-dump/stephan-louis-L3s5QySz5UM-unsplash.jpg */ "./resources/photo-dump/stephan-louis-L3s5QySz5UM-unsplash.jpg");
+/* harmony import */ var _photo_dump_stephanie_liverani_Zz5LQe_VSMY_unsplash_jpg__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../../../../photo-dump/stephanie-liverani-Zz5LQe-VSMY-unsplash.jpg */ "./resources/photo-dump/stephanie-liverani-Zz5LQe-VSMY-unsplash.jpg");
+/* harmony import */ var _PeopleOnline_PeopleOnline__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./PeopleOnline/PeopleOnline */ "./resources/js/components/Login/Home/RightNavbar/PeopleOnline/PeopleOnline.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function RightNavbar(props) {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-    className: "bg-[#F0F2F5] min-h-screen pt-5",
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h1", {
-      children: "HELLO"
-    })
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("div", {
+    className: "bg-[#F0F2F5] overflow-y-scroll scrollbar-hide h-screen pt-5",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("div", {
+      className: "flex items-center justify-between",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("p", {
+        className: "text-[#65676b] text-base font-semibold",
+        children: "Halaman dan profil anda"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("div", {
+        className: "cursor-pointer hover:bg-[#E4E6E9] w-[24px] h-[24px] flex items-center justify-center p-px rounded-full",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("svg", {
+          xmlns: "http://www.w3.org/2000/svg",
+          fill: "none",
+          viewBox: "0 0 24 24",
+          "stroke-width": "1.5",
+          stroke: "currentColor",
+          className: "w-[16px] h-[16px] text-[#90969D]",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("path", {
+            "stroke-linecap": "round",
+            "stroke-linejoin": "round",
+            d: "M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+          })
+        })
+      })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("div", {
+      className: "mt-3",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("div", {
+        className: "flex items-center gap-2 w-full hover:bg-[#E4E6E9] pl-1 cursor-pointer h-[48px] rounded-lg",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("div", {
+          className: "w-[36px] h-[36px] rounded-full overflow-hidden",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("img", {
+            src: "https://scontent.fsrg7-1.fna.fbcdn.net/v/t39.30808-1/297579949_100416456114671_869850798967648584_n.png?stp=cp0_dst-png_p50x50&_nc_cat=100&ccb=1-7&_nc_sid=05dcb7&_nc_ohc=Fbl1yADXpGoAX_7YCdH&_nc_ht=scontent.fsrg7-1.fna&oh=00_AT_cL8WsNbCjmn6pj6JrWBymYBlA4eDV50QqHykhpNhZDQ&oe=633DB39E",
+            alt: ""
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("p", {
+          className: "font-medium text-[#050505] text-sm",
+          children: "Doodle Art"
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("div", {
+        className: "flex items-center gap-2 w-full hover:bg-[#E4E6E9] pl-3 mt-2 cursor-pointer h-[30px] rounded-lg",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("div", {
+          className: "w-[20px] h-[20px] flex items-center justify-center",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("svg", {
+            xmlns: "http://www.w3.org/2000/svg",
+            fill: "none",
+            viewBox: "0 0 24 24",
+            "stroke-width": "1.5",
+            stroke: "currentColor",
+            className: "w-6 h-6 text-[#65676b]",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("path", {
+              "stroke-linecap": "round",
+              "stroke-linejoin": "round",
+              d: "M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3"
+            })
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("p", {
+          className: "text-[#65676b] text-xs font-semibold",
+          children: "Beralih ke halaman"
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("div", {
+        className: "flex items-center gap-2 w-full hover:bg-[#E4E6E9] pl-3 mt-2 cursor-pointer h-[30px] rounded-lg",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("div", {
+          className: "w-[20px] h-[20px] flex items-center justify-center",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("svg", {
+            xmlns: "http://www.w3.org/2000/svg",
+            fill: "none",
+            viewBox: "0 0 24 24",
+            "stroke-width": "1.5",
+            stroke: "currentColor",
+            className: "w-6 h-6 text-[#65676b]",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("path", {
+              "stroke-linecap": "round",
+              "stroke-linejoin": "round",
+              d: "M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 110-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 01-1.44-4.282m3.102.069a18.03 18.03 0 01-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 018.835 2.535M10.34 6.66a23.847 23.847 0 008.835-2.535m0 0A23.74 23.74 0 0018.795 3m.38 1.125a23.91 23.91 0 011.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 001.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 010 3.46"
+            })
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("p", {
+          className: "text-[#65676b] text-xs font-semibold",
+          children: "Beralih ke halaman"
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("div", {
+        className: "h-[1px] bg-[#CED0D4] w-full mt-3"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("div", {
+        className: "mt-3",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("p", {
+          className: "text-[#65676b] text-base font-semibold",
+          children: "Ulang Tahun"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("div", {
+          className: "mt-3 flex items-center gap-2",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("svg", {
+            xmlns: "http://www.w3.org/2000/svg",
+            viewBox: "0 0 24 24",
+            fill: "currentColor",
+            className: "w-6 h-6 text-[#EA2F5C]",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("path", {
+              d: "M15 1.784l-.796.796a1.125 1.125 0 101.591 0L15 1.784zM12 1.784l-.796.796a1.125 1.125 0 101.591 0L12 1.784zM9 1.784l-.796.796a1.125 1.125 0 101.591 0L9 1.784zM9.75 7.547c.498-.02.998-.035 1.5-.042V6.75a.75.75 0 011.5 0v.755c.502.007 1.002.021 1.5.042V6.75a.75.75 0 011.5 0v.88l.307.022c1.55.117 2.693 1.427 2.693 2.946v1.018a62.182 62.182 0 00-13.5 0v-1.018c0-1.519 1.143-2.829 2.693-2.946l.307-.022v-.88a.75.75 0 011.5 0v.797zM12 12.75c-2.472 0-4.9.184-7.274.54-1.454.217-2.476 1.482-2.476 2.916v.384a4.104 4.104 0 012.585.364 2.605 2.605 0 002.33 0 4.104 4.104 0 013.67 0 2.605 2.605 0 002.33 0 4.104 4.104 0 013.67 0 2.605 2.605 0 002.33 0 4.104 4.104 0 012.585-.364v-.384c0-1.434-1.022-2.7-2.476-2.917A49.138 49.138 0 0012 12.75zM21.75 18.131a2.604 2.604 0 00-1.915.165 4.104 4.104 0 01-3.67 0 2.604 2.604 0 00-2.33 0 4.104 4.104 0 01-3.67 0 2.604 2.604 0 00-2.33 0 4.104 4.104 0 01-3.67 0 2.604 2.604 0 00-1.915-.165v2.494c0 1.036.84 1.875 1.875 1.875h15.75c1.035 0 1.875-.84 1.875-1.875v-2.494z"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("p", {
+            className: "font-normal",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("span", {
+              className: "font-semibold text-sm",
+              children: "Mittie V. Rodriguez"
+            }), " berulang tahun hari ini"]
+          })]
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("div", {
+        className: "h-[1px] bg-[#CED0D4] w-full mt-4"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("div", {
+        className: "mt-3",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("div", {
+          className: "mt-3 flex items-center justify-between gap-2",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("p", {
+            className: "text-[#65676b] text-base font-semibold",
+            children: "Kontak"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("div", {
+            className: "flex items-center gap-3",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("div", {
+              className: "w-[24px] h-[24px] hover:bg-[#E4E6E9] flex items-center justify-center cursor-pointer rounded-full",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("svg", {
+                fill: "currentColor",
+                viewBox: "0 0 16 16",
+                width: "1em",
+                height: "1em",
+                className: "b6ax4al1 text-[#65676B] m4pnbp5e somyomsx ahndzqod gnhxmgs4 eohcrkr5 akh3l2rg",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("g", {
+                  "fill-rule": "evenodd",
+                  transform: "translate(-448 -544)",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("path", {
+                    d: "M457.25 552.5H455v2.25a.75.75 0 0 1-1.5 0v-2.25h-2.25a.75.75 0 0 1 0-1.5h2.25v-2.25a.75.75 0 0 1 1.5 0V551h2.25a.75.75 0 0 1 0 1.5m6.38-4.435a.62.62 0 0 0-.64.047l-2.49 1.634v-1.394a1.854 1.854 0 0 0-1.852-1.852l-8.796.002a1.854 1.854 0 0 0-1.851 1.852v6.793c0 1.021.83 1.852 1.852 1.852l1.147-.002h7.648a1.854 1.854 0 0 0 1.852-1.851v-1.392l2.457 1.61a.641.641 0 0 0 .673.071.663.663 0 0 0 .37-.601v-6.167c0-.26-.142-.49-.37-.602"
+                  })
+                })
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("div", {
+              className: "w-[24px] h-[24px] hover:bg-[#E4E6E9] flex items-center justify-center cursor-pointer rounded-full",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("svg", {
+                fill: "currentColor",
+                viewBox: "0 0 16 16",
+                width: "1em",
+                height: "1em",
+                className: "b6ax4al1 text-[#65676B] m4pnbp5e somyomsx ahndzqod gnhxmgs4 eohcrkr5 akh3l2rg",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("g", {
+                  "fill-rule": "evenodd",
+                  transform: "translate(-448 -544)",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("g", {
+                    "fill-rule": "nonzero",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("path", {
+                      d: "M10.743 2.257a6 6 0 1 1-8.485 8.486 6 6 0 0 1 8.485-8.486zm-1.06 1.06a4.5 4.5 0 1 0-6.365 6.364 4.5 4.5 0 0 0 6.364-6.363z",
+                      transform: "translate(448 544)"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("path", {
+                      d: "M10.39 8.75a2.94 2.94 0 0 0-.199.432c-.155.417-.23.849-.172 1.284.055.415.232.794.54 1.103a.75.75 0 0 0 1.112-1.004l-.051-.057a.39.39 0 0 1-.114-.24c-.021-.155.014-.356.09-.563.031-.081.06-.145.08-.182l.012-.022a.75.75 0 1 0-1.299-.752z",
+                      transform: "translate(448 544)"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("path", {
+                      d: "M9.557 11.659c.038-.018.09-.04.15-.064.207-.077.408-.112.562-.092.08.01.143.034.198.077l.041.036a.75.75 0 0 0 1.06-1.06 1.881 1.881 0 0 0-1.103-.54c-.435-.058-.867.018-1.284.175-.189.07-.336.143-.433.2a.75.75 0 0 0 .624 1.356l.066-.027.12-.061z",
+                      transform: "translate(448 544)"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("path", {
+                      d: "m13.463 15.142-.04-.044-3.574-4.192c-.599-.703.355-1.656 1.058-1.057l4.191 3.574.044.04c.058.059.122.137.182.24.249.425.249.96-.154 1.41l-.057.057c-.45.403-.986.403-1.411.154a1.182 1.182 0 0 1-.24-.182zm.617-.616.444-.444a.31.31 0 0 0-.063-.052c-.093-.055-.263-.055-.35.024l.208.232.207-.206.006.007-.22.257-.026-.024.033-.034.025.027-.257.22-.007-.007zm-.027-.415c-.078.088-.078.257-.023.35a.31.31 0 0 0 .051.063l.205-.204-.233-.209z",
+                      transform: "translate(448 544)"
+                    })]
+                  })
+                })
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("div", {
+              className: "w-[24px] h-[24px] hover:bg-[#E4E6E9] flex items-center justify-center cursor-pointer rounded-full",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("svg", {
+                fill: "currentColor",
+                viewBox: "0 0 20 20",
+                width: "1em",
+                height: "1em",
+                className: "b6ax4al1 text-[#65676B] m4pnbp5e somyomsx ahndzqod gnhxmgs4 dmdr2h6l kgzac55p",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("g", {
+                  "fill-rule": "evenodd",
+                  transform: "translate(-446 -350)",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("path", {
+                    d: "M458 360a2 2 0 1 1-4 0 2 2 0 0 1 4 0m6 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-12 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0"
+                  })
+                })
+              })
+            })]
+          })]
+        })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("div", {
+        className: "mt-3",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_PeopleOnline_PeopleOnline__WEBPACK_IMPORTED_MODULE_15__["default"], {
+          name: "Caraka Sirait",
+          image: _photo_dump_albert_dera_ILip77SbmOE_unsplash_jpg__WEBPACK_IMPORTED_MODULE_2__["default"]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_PeopleOnline_PeopleOnline__WEBPACK_IMPORTED_MODULE_15__["default"], {
+          name: "Nilam Hastuti",
+          image: _photo_dump_austin_wade_X6Uj51n5CE8_unsplash_jpg__WEBPACK_IMPORTED_MODULE_3__["default"]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_PeopleOnline_PeopleOnline__WEBPACK_IMPORTED_MODULE_15__["default"], {
+          name: "Puspa Agustina",
+          image: _photo_dump_behrouz_sasani_xUo4xFp9l64_unsplash_jpg__WEBPACK_IMPORTED_MODULE_4__["default"]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_PeopleOnline_PeopleOnline__WEBPACK_IMPORTED_MODULE_15__["default"], {
+          name: "Halima Prastuti",
+          image: _photo_dump_christopher_campbell_rDEOVtE7vOs_unsplash_jpg__WEBPACK_IMPORTED_MODULE_5__["default"]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_PeopleOnline_PeopleOnline__WEBPACK_IMPORTED_MODULE_15__["default"], {
+          name: "Irsad Hidayat",
+          image: _photo_dump_dan_asaki_CG6Wo4Ac4uc_unsplash_jpg__WEBPACK_IMPORTED_MODULE_6__["default"]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_PeopleOnline_PeopleOnline__WEBPACK_IMPORTED_MODULE_15__["default"], {
+          name: "Jane Riyanti",
+          image: _photo_dump_derick_mckinney_QuwQYDBI6sI_unsplash_jpg__WEBPACK_IMPORTED_MODULE_7__["default"]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_PeopleOnline_PeopleOnline__WEBPACK_IMPORTED_MODULE_15__["default"], {
+          name: "Nabila Nurdiyanti",
+          image: _photo_dump_duman_photography_w3JKo9UgXFY_unsplash_jpg__WEBPACK_IMPORTED_MODULE_8__["default"]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_PeopleOnline_PeopleOnline__WEBPACK_IMPORTED_MODULE_15__["default"], {
+          name: "Kezia Halimah",
+          image: _photo_dump_engin_akyurt_GQeHbaf05Z0_unsplash_jpg__WEBPACK_IMPORTED_MODULE_9__["default"]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_PeopleOnline_PeopleOnline__WEBPACK_IMPORTED_MODULE_15__["default"], {
+          name: "Suci Mayasari",
+          image: _photo_dump_gabriel_silverio_u3WmDyKGsrY_unsplash_jpg__WEBPACK_IMPORTED_MODULE_10__["default"]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_PeopleOnline_PeopleOnline__WEBPACK_IMPORTED_MODULE_15__["default"], {
+          name: "Vicky Nasyidah",
+          image: _photo_dump_oliver_johnson_yH0dth2yEQE_unsplash_jpg__WEBPACK_IMPORTED_MODULE_11__["default"]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_PeopleOnline_PeopleOnline__WEBPACK_IMPORTED_MODULE_15__["default"], {
+          name: "Intan Oktaviani",
+          image: _photo_dump_philipp_wuthrich_5n3JP9WAJTs_unsplash_jpg__WEBPACK_IMPORTED_MODULE_12__["default"]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_PeopleOnline_PeopleOnline__WEBPACK_IMPORTED_MODULE_15__["default"], {
+          name: "Anita Yuliarti",
+          image: _photo_dump_stephan_louis_L3s5QySz5UM_unsplash_jpg__WEBPACK_IMPORTED_MODULE_13__["default"]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_PeopleOnline_PeopleOnline__WEBPACK_IMPORTED_MODULE_15__["default"], {
+          name: "Anita Yuliarti",
+          image: _photo_dump_stephanie_liverani_Zz5LQe_VSMY_unsplash_jpg__WEBPACK_IMPORTED_MODULE_14__["default"]
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("div", {
+        className: "h-[2px] bg-[#CED0D4] w-full mt-3 mb-3"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("div", {
+        className: "mt-3",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("div", {
+          className: "mt-3 flex items-center gap-2",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("p", {
+            className: "text-[#65676b] text-base font-semibold",
+            children: "Percakapan grup"
+          })
+        })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("div", {
+        className: "mt-3",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_PeopleOnline_PeopleOnline__WEBPACK_IMPORTED_MODULE_15__["default"], {
+          name: "Caraka Sirait",
+          image: _photo_dump_albert_dera_ILip77SbmOE_unsplash_jpg__WEBPACK_IMPORTED_MODULE_2__["default"]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_PeopleOnline_PeopleOnline__WEBPACK_IMPORTED_MODULE_15__["default"], {
+          name: "Nilam Hastuti",
+          image: _photo_dump_austin_wade_X6Uj51n5CE8_unsplash_jpg__WEBPACK_IMPORTED_MODULE_3__["default"]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_PeopleOnline_PeopleOnline__WEBPACK_IMPORTED_MODULE_15__["default"], {
+          name: "Puspa Agustina",
+          image: _photo_dump_behrouz_sasani_xUo4xFp9l64_unsplash_jpg__WEBPACK_IMPORTED_MODULE_4__["default"]
+        })]
+      })]
+    })]
   });
 }
 
@@ -14773,6 +15094,126 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/photo-dump/albert-dera-ILip77SbmOE-unsplash.jpg":
+/*!*******************************************************************!*\
+  !*** ./resources/photo-dump/albert-dera-ILip77SbmOE-unsplash.jpg ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/albert-dera-ILip77SbmOE-unsplash.jpg?ff49f0ba9aa65cb809fd4f6e5d477cf4");
+
+/***/ }),
+
+/***/ "./resources/photo-dump/austin-wade-X6Uj51n5CE8-unsplash.jpg":
+/*!*******************************************************************!*\
+  !*** ./resources/photo-dump/austin-wade-X6Uj51n5CE8-unsplash.jpg ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/austin-wade-X6Uj51n5CE8-unsplash.jpg?467933923627147cfd1c115a39f0fda2");
+
+/***/ }),
+
+/***/ "./resources/photo-dump/behrouz-sasani-xUo4xFp9l64-unsplash.jpg":
+/*!**********************************************************************!*\
+  !*** ./resources/photo-dump/behrouz-sasani-xUo4xFp9l64-unsplash.jpg ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/behrouz-sasani-xUo4xFp9l64-unsplash.jpg?232b62282ef0826321d7cfffdc14617e");
+
+/***/ }),
+
+/***/ "./resources/photo-dump/christopher-campbell-rDEOVtE7vOs-unsplash.jpg":
+/*!****************************************************************************!*\
+  !*** ./resources/photo-dump/christopher-campbell-rDEOVtE7vOs-unsplash.jpg ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/christopher-campbell-rDEOVtE7vOs-unsplash.jpg?86418473c9f1612a01f80ce6cb9b1987");
+
+/***/ }),
+
+/***/ "./resources/photo-dump/dan-asaki-CG6Wo4Ac4uc-unsplash.jpg":
+/*!*****************************************************************!*\
+  !*** ./resources/photo-dump/dan-asaki-CG6Wo4Ac4uc-unsplash.jpg ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/dan-asaki-CG6Wo4Ac4uc-unsplash.jpg?3763ca70d00202cc919a1ba22388c48d");
+
+/***/ }),
+
+/***/ "./resources/photo-dump/derick-mckinney-QuwQYDBI6sI-unsplash.jpg":
+/*!***********************************************************************!*\
+  !*** ./resources/photo-dump/derick-mckinney-QuwQYDBI6sI-unsplash.jpg ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/derick-mckinney-QuwQYDBI6sI-unsplash.jpg?72e004d3babdcfac7e69a210d8426af3");
+
+/***/ }),
+
+/***/ "./resources/photo-dump/duman-photography-w3JKo9UgXFY-unsplash.jpg":
+/*!*************************************************************************!*\
+  !*** ./resources/photo-dump/duman-photography-w3JKo9UgXFY-unsplash.jpg ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/duman-photography-w3JKo9UgXFY-unsplash.jpg?c65b97cde3fed44f3039b6cc5b9000f2");
+
+/***/ }),
+
+/***/ "./resources/photo-dump/engin-akyurt-GQeHbaf05Z0-unsplash.jpg":
+/*!********************************************************************!*\
+  !*** ./resources/photo-dump/engin-akyurt-GQeHbaf05Z0-unsplash.jpg ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/engin-akyurt-GQeHbaf05Z0-unsplash.jpg?10f11ded630d94bc1f737bd5f1da7be8");
+
+/***/ }),
+
 /***/ "./resources/photo-dump/freestocks-8a95EVm0ovQ-unsplash.jpg":
 /*!******************************************************************!*\
   !*** ./resources/photo-dump/freestocks-8a95EVm0ovQ-unsplash.jpg ***!
@@ -14785,6 +15226,81 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/freestocks-8a95EVm0ovQ-unsplash.jpg?611ce11ffc970f758b9c0c5f2381f80d");
+
+/***/ }),
+
+/***/ "./resources/photo-dump/gabriel-silverio-u3WmDyKGsrY-unsplash.jpg":
+/*!************************************************************************!*\
+  !*** ./resources/photo-dump/gabriel-silverio-u3WmDyKGsrY-unsplash.jpg ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/gabriel-silverio-u3WmDyKGsrY-unsplash.jpg?d8c66b546f8faf393e0e4e7de9ec1944");
+
+/***/ }),
+
+/***/ "./resources/photo-dump/oliver-johnson-yH0dth2yEQE-unsplash.jpg":
+/*!**********************************************************************!*\
+  !*** ./resources/photo-dump/oliver-johnson-yH0dth2yEQE-unsplash.jpg ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/oliver-johnson-yH0dth2yEQE-unsplash.jpg?c0ffe1976e25c10ba49603f136c35e93");
+
+/***/ }),
+
+/***/ "./resources/photo-dump/philipp-wuthrich-5n3JP9WAJTs-unsplash.jpg":
+/*!************************************************************************!*\
+  !*** ./resources/photo-dump/philipp-wuthrich-5n3JP9WAJTs-unsplash.jpg ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/philipp-wuthrich-5n3JP9WAJTs-unsplash.jpg?8b194ead6250c1c3de9cb7d6f3ab04e5");
+
+/***/ }),
+
+/***/ "./resources/photo-dump/stephan-louis-L3s5QySz5UM-unsplash.jpg":
+/*!*********************************************************************!*\
+  !*** ./resources/photo-dump/stephan-louis-L3s5QySz5UM-unsplash.jpg ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/stephan-louis-L3s5QySz5UM-unsplash.jpg?fd43003811289e35f34b07c85616d571");
+
+/***/ }),
+
+/***/ "./resources/photo-dump/stephanie-liverani-Zz5LQe-VSMY-unsplash.jpg":
+/*!**************************************************************************!*\
+  !*** ./resources/photo-dump/stephanie-liverani-Zz5LQe-VSMY-unsplash.jpg ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/stephanie-liverani-Zz5LQe-VSMY-unsplash.jpg?f147d3097526f4f0377d08bc39d9b9a7");
 
 /***/ }),
 
