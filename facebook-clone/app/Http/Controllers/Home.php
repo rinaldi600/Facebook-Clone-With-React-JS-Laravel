@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,6 +22,13 @@ class Home extends Controller
     public function getUserDetail(Request $request) {
         return response()->json([
            'userDetail' => Auth::user(),
+        ]);
+    }
+
+    public function searchUser(Request $request) {
+        $searchUser = User::where('name', 'LIKE' , "%" . $request->input('user') . "%")->get();
+        return response()->json([
+           'test' => $searchUser,
         ]);
     }
 

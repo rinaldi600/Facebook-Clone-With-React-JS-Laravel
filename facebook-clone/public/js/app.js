@@ -8602,6 +8602,17 @@ function Navbar() {
       setModalNotifications = _useState10[1];
 
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.useNavigate)();
+
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+      _useState12 = _slicedToArray(_useState11, 2),
+      users = _useState12[0],
+      searchUser = _useState12[1];
+
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+      _useState14 = _slicedToArray(_useState13, 2),
+      status = _useState14[0],
+      setStatus = _useState14[1];
+
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     function handleResize() {
       setWindowDimensions(getWidthDimension);
@@ -8620,7 +8631,19 @@ function Navbar() {
       setModalSearchFriends(false);
     }
 
-    console.log(e.target.value);
+    axios__WEBPACK_IMPORTED_MODULE_3___default().post('/search_user', {
+      user: e.target.value
+    }).then(function (response) {
+      var _response$data;
+
+      setStatus(response.status);
+      searchUser((_response$data = response.data) === null || _response$data === void 0 ? void 0 : _response$data.test);
+      console.log(response);
+    })["catch"](function (error) {
+      console.log(error);
+    })["finally"](function () {
+      console.log("WORK");
+    });
   };
 
   var logout = function logout() {
@@ -8669,6 +8692,7 @@ function Navbar() {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
         className: "w-[40px] h-[40px]",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
+          className: "".concat(modalSearchFriends ? 'hidden' : ''),
           src: _img_SeekPng_com_logo_facebook_png_transparente_516623_1_png__WEBPACK_IMPORTED_MODULE_1__["default"],
           alt: ""
         })
@@ -8683,26 +8707,31 @@ function Navbar() {
           placeholder: "Cari di Facebook"
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-        className: "w-[90%] rounded-lg pt-32 overflow-hidden absolute ".concat(modalSearchFriends ? 'block' : 'hidden', " bg-white shadow-xl min-h-[100px]"),
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "w-[90%] rounded-lg overflow-hidden absolute ".concat(modalSearchFriends ? 'block' : 'hidden', " top-16 bg-white shadow-xl overflow-y-scroll scrollbar-hide h-[200px]"),
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
           className: "w-full p-2",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
-            className: "font-semibold text-base",
-            children: "Pencarian Terbaru"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-            className: "flex w-full items-center gap-2",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-              className: "w-[36px] h-[36px] rounded-full overflow-hidden",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
-                className: "w-full h-full",
-                src: _photo_dump_freestocks_8a95EVm0ovQ_unsplash_jpg__WEBPACK_IMPORTED_MODULE_2__["default"],
-                alt: ""
-              })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
-              className: "text-[#050505] font-normal text-sm",
-              children: "Shane M. Heatherly"
-            })]
-          })]
+          children: users.length > 0 ? users.map(function (user) {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+              className: "flex w-full items-center gap-2 mt-3 p-1 rounded-lg hover:bg-[#E3E4E5] cursor-pointer",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+                className: "w-[36px] h-[36px] rounded-full overflow-hidden",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
+                  className: "w-full h-full",
+                  src: user.photo_profile,
+                  alt: ""
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                className: "text-[#050505] font-normal text-sm",
+                children: user.name
+              })]
+            });
+          }) : status === 200 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+            className: "font-semibold text-base text-center",
+            children: "Data Tidak Ditemukan..."
+          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+            className: "font-semibold text-base text-center",
+            children: "Loading..."
+          })
         })
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
@@ -8926,11 +8955,8 @@ __webpack_require__.r(__webpack_exports__);
 
 function PeopleOnline(props) {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
-    className: "flex items-center gap-4 hover:bg-[#E4E6E9] relative pb-1 pl-1 rounded-lg pt-1",
+    className: "flex items-center gap-4 hover:bg-[#E4E6E9] cursor-pointer relative pb-1 pl-1 rounded-lg pt-1",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
-      style: {
-        border: '2px solid #1876F2'
-      },
       className: "w-[36px] h-[36px] rounded-full overflow-hidden",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("img", {
         className: "w-full h-full",
@@ -9181,7 +9207,7 @@ function RightNavbar(props) {
           })]
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("div", {
-        className: "mt-3",
+        className: "mt-3 relative",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_PeopleOnline_PeopleOnline__WEBPACK_IMPORTED_MODULE_15__["default"], {
           name: "Caraka Sirait",
           image: _photo_dump_albert_dera_ILip77SbmOE_unsplash_jpg__WEBPACK_IMPORTED_MODULE_2__["default"]
@@ -9221,30 +9247,27 @@ function RightNavbar(props) {
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_PeopleOnline_PeopleOnline__WEBPACK_IMPORTED_MODULE_15__["default"], {
           name: "Anita Yuliarti",
           image: _photo_dump_stephanie_liverani_Zz5LQe_VSMY_unsplash_jpg__WEBPACK_IMPORTED_MODULE_14__["default"]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("div", {
+          style: {
+            boxShadow: 'rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px'
+          },
+          className: "fixed w-[48px] h-[48px] flex items-center justify-center bg-white rounded-full bottom-4 cursor-pointer right-4",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("svg", {
+            xmlns: "http://www.w3.org/2000/svg",
+            fill: "none",
+            viewBox: "0 0 24 24",
+            "stroke-width": "1.5",
+            stroke: "currentColor",
+            className: "w-[20px] h-[20px]",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("path", {
+              "stroke-linecap": "round",
+              "stroke-linejoin": "round",
+              d: "M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+            })
+          })
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("div", {
         className: "h-[2px] bg-[#CED0D4] w-full mt-3 mb-3"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("div", {
-        className: "mt-3",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("div", {
-          className: "mt-3 flex items-center gap-2",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("p", {
-            className: "text-[#65676b] text-base font-semibold",
-            children: "Percakapan grup"
-          })
-        })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("div", {
-        className: "mt-3",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_PeopleOnline_PeopleOnline__WEBPACK_IMPORTED_MODULE_15__["default"], {
-          name: "Caraka Sirait",
-          image: _photo_dump_albert_dera_ILip77SbmOE_unsplash_jpg__WEBPACK_IMPORTED_MODULE_2__["default"]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_PeopleOnline_PeopleOnline__WEBPACK_IMPORTED_MODULE_15__["default"], {
-          name: "Nilam Hastuti",
-          image: _photo_dump_austin_wade_X6Uj51n5CE8_unsplash_jpg__WEBPACK_IMPORTED_MODULE_3__["default"]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_PeopleOnline_PeopleOnline__WEBPACK_IMPORTED_MODULE_15__["default"], {
-          name: "Puspa Agustina",
-          image: _photo_dump_behrouz_sasani_xUo4xFp9l64_unsplash_jpg__WEBPACK_IMPORTED_MODULE_4__["default"]
-        })]
       })]
     })]
   });

@@ -26,6 +26,7 @@ Route::post('/sign_in_user', [SignUpUser::class, 'getDataLoginUser']);
 Route::middleware('isLogin')->group(function () {
     Route::get('/home', [\App\Http\Controllers\Home::class, 'getUser']);
     Route::get('/get_detail_user', [\App\Http\Controllers\Home::class, 'getUserDetail']);
+    Route::post('/search_user', [\App\Http\Controllers\Home::class, 'searchUser']);
     Route::post('/logout', [\App\Http\Controllers\Home::class, 'logout']);
 });
 

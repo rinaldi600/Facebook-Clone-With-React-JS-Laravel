@@ -21,6 +21,8 @@ function Navbar() {
     const [modalProfile, setModalProfile] = useState(false);
     const [modalNotifications, setModalNotifications] = useState(false);
     const navigate = useNavigate();
+    const [users, searchUser] = useState([]);
+    const [status, setStatus] = useState(0);
 
     useEffect(() => {
         function handleResize() {
@@ -38,7 +40,20 @@ function Navbar() {
         } else {
             setModalSearchFriends(false);
         }
-        console.log(e.target.value);
+        axios.post('/search_user',{
+            user : e.target.value
+        })
+            .then(function (response) {
+                setStatus(response.status);
+                searchUser(response.data?.test);
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+            .finally(function () {
+                console.log("WORK")
+            });
     };
 
     const logout = () => {
@@ -85,20 +100,29 @@ function Navbar() {
         <div style={{boxShadow: 'rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px'}} className={"flex min-h-[56px] flex-wrap font-Helvetica bg-red-400 shadow-md"}>
             <div className={"w-[50%] relative mobile:pt-1 mobile:pb-1 mobile:pr-1 md:w-[25%] gap-2 p-2 flex flex-wrap items-center bg-white"}>
                 <div className={`w-[40px] h-[40px]`}>
-                    <img src={LogoFacebook} alt=""/>
+                    <img className={`${modalSearchFriends ? 'hidden' : ''}`} src={LogoFacebook} alt=""/>
                 </div>
                 <div className={`${modalSearchFriends ? 'z-50 absolute p-1' : ''}`}>
                     <input onChange={(e) => searchFriends(e)} className={`h-[40px] bg-[#F0F2F5] text-[#65676B] mobile:w-full w-[90%] lg:w-[194px] rounded-full p-2 outline-none`} type="text" placeholder={"Cari di Facebook"}/>
                 </div>
-                <div className={`w-[90%] rounded-lg pt-32 overflow-hidden absolute ${modalSearchFriends ? 'block' : 'hidden'} bg-white shadow-xl min-h-[100px]`}>
+                <div className={`w-[90%] rounded-lg overflow-hidden absolute ${modalSearchFriends ? 'block' : 'hidden'} top-16 bg-white shadow-xl overflow-y-scroll scrollbar-hide h-[200px]`}>
                     <div className={"w-full p-2"}>
-                        <p className={"font-semibold text-base"}>Pencarian Terbaru</p>
-                        <div className={"flex w-full items-center gap-2"}>
-                            <div className={"w-[36px] h-[36px] rounded-full overflow-hidden"}>
-                                <img className={"w-full h-full"} src={photoDump} alt=""/>
-                            </div>
-                            <p className={"text-[#050505] font-normal text-sm"}>Shane M. Heatherly</p>
-                        </div>
+                        {
+                            users.length > 0 ?
+                                users.map(user => (
+                                    <div className={"flex w-full items-center gap-2 mt-3 p-1 rounded-lg hover:bg-[#E3E4E5] cursor-pointer"}>
+                                        <div className={"w-[36px] h-[36px] rounded-full overflow-hidden"}>
+                                            <img className={"w-full h-full"} src={user.photo_profile} alt=""/>
+                                        </div>
+                                        <p className={"text-[#050505] font-normal text-sm"}>{user.name}</p>
+                                    </div>
+                                ))
+                                :
+                                status === 200 ?
+                                    <p className={"font-semibold text-base text-center"}>Data Tidak Ditemukan...</p>
+                                    :
+                                    <p className={"font-semibold text-base text-center"}>Loading...</p>
+                        }
                     </div>
                 </div>
             </div>
