@@ -6,6 +6,7 @@ import Login from "./Login/Login";
 import store from "../app/store";
 import {Provider} from "react-redux";
 import Home from "./Login/Home/Home";
+import ViewUser from "./Login/Home/ViewUser/ViewUser";
 
 function Example() {
     return (
@@ -13,6 +14,7 @@ function Example() {
             <Routes>
                 <Route path="/" element={<Login />} />
                 <Route path="/home" element={<Home />} />
+                <Route path="/user/:user" element={<ViewUser />} />
             </Routes>
         </Fragment>
     );

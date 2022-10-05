@@ -43,4 +43,14 @@ class Home extends Controller
             'success' => 'LogOut'
         ]);
     }
+
+    public function viewUser(User $user) {
+        return response()->json([
+            'detailUser' => $user,
+        ]);
+    }
+
+    public function userView() {
+        return view('welcome');
+    }
 }

@@ -86,6 +86,10 @@ function Navbar() {
         }
     };
 
+    const viewUser = (username) => {
+        navigate(`/user/${username}`)
+    };
+
     const showNotifications = () => {
         setModalNotifications(true);
         setCloseModalBox(closeModalBox + 1);
@@ -95,12 +99,16 @@ function Navbar() {
         }
     };
 
+    const backHome = () => {
+        navigate('/home');
+    };
+
 
     return (
         <div style={{boxShadow: 'rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px'}} className={"flex min-h-[56px] flex-wrap font-Helvetica bg-red-400 shadow-md"}>
             <div className={"w-[50%] relative mobile:pt-1 mobile:pb-1 mobile:pr-1 md:w-[25%] gap-2 p-2 flex flex-wrap items-center bg-white"}>
                 <div className={`w-[40px] h-[40px]`}>
-                    <img className={`${modalSearchFriends ? 'hidden' : ''}`} src={LogoFacebook} alt=""/>
+                    <img onClick={backHome} className={`${modalSearchFriends ? 'hidden' : ''} cursor-pointer`} src={LogoFacebook} alt=""/>
                 </div>
                 <div className={`${modalSearchFriends ? 'z-50 absolute p-1' : ''}`}>
                     <input onChange={(e) => searchFriends(e)} className={`h-[40px] bg-[#F0F2F5] text-[#65676B] mobile:w-full w-[90%] lg:w-[194px] rounded-full p-2 outline-none`} type="text" placeholder={"Cari di Facebook"}/>
@@ -109,8 +117,8 @@ function Navbar() {
                     <div className={"w-full p-2"}>
                         {
                             users.length > 0 ?
-                                users.map(user => (
-                                    <div className={"flex w-full items-center gap-2 mt-3 p-1 rounded-lg hover:bg-[#E3E4E5] cursor-pointer"}>
+                                users.map((user, index)=> (
+                                    <div onClick={() => viewUser(user.username)} className={"flex w-full items-center gap-2 mt-3 p-1 rounded-lg hover:bg-[#E3E4E5] cursor-pointer"}>
                                         <div className={"w-[36px] h-[36px] rounded-full overflow-hidden"}>
                                             <img className={"w-full h-full"} src={user.photo_profile} alt=""/>
                                         </div>
