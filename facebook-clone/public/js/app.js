@@ -8496,10 +8496,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 function Home(props) {
-  var detailUser = (0,react_redux__WEBPACK_IMPORTED_MODULE_3__.useSelector)(function (state) {
-    return state.detailUserCurrent.value;
-  });
-
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
       _useState2 = _slicedToArray(_useState, 2),
       loading = _useState2[0],
@@ -8508,8 +8504,11 @@ function Home(props) {
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_3__.useDispatch)();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     axios__WEBPACK_IMPORTED_MODULE_4___default().get('/get_detail_user').then(function (response) {
-      setLoading(true);
       dispatch((0,_getUser_getUserLogin__WEBPACK_IMPORTED_MODULE_5__.detailUserCurrent)(response.data.userDetail));
+      setLoading(true);
+      var detailUser = Object.assign({}, response.data.userDetail);
+      delete detailUser.password;
+      window.localStorage.setItem('user', JSON.stringify(detailUser));
     })["catch"](function (error) {
       setLoading(true);
       console.log(error);
@@ -8577,46 +8576,53 @@ function getWidthDimension() {
 }
 
 function Navbar() {
-  var detailUser = (0,react_redux__WEBPACK_IMPORTED_MODULE_4__.useSelector)(function (state) {
+  var _detailUser$photo_pro, _detailUser$photo_pro2, _detailUser$name;
+
+  var detailUserRedux = (0,react_redux__WEBPACK_IMPORTED_MODULE_4__.useSelector)(function (state) {
     return state.detailUserCurrent.value;
   });
 
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
       _useState2 = _slicedToArray(_useState, 2),
-      modalSearchFriends = _useState2[0],
-      setModalSearchFriends = _useState2[1];
+      detailUser = _useState2[0],
+      setDetailUser = _useState2[1];
 
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(getWidthDimension()),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
       _useState4 = _slicedToArray(_useState3, 2),
-      windowDimensions = _useState4[0],
-      setWindowDimensions = _useState4[1];
+      modalSearchFriends = _useState4[0],
+      setModalSearchFriends = _useState4[1];
 
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(getWidthDimension()),
       _useState6 = _slicedToArray(_useState5, 2),
-      closeModalBox = _useState6[0],
-      setCloseModalBox = _useState6[1];
+      windowDimensions = _useState6[0],
+      setWindowDimensions = _useState6[1];
 
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
       _useState8 = _slicedToArray(_useState7, 2),
-      modalProfile = _useState8[0],
-      setModalProfile = _useState8[1];
+      closeModalBox = _useState8[0],
+      setCloseModalBox = _useState8[1];
 
   var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
       _useState10 = _slicedToArray(_useState9, 2),
-      modalNotifications = _useState10[0],
-      setModalNotifications = _useState10[1];
+      modalProfile = _useState10[0],
+      setModalProfile = _useState10[1];
+
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState12 = _slicedToArray(_useState11, 2),
+      modalNotifications = _useState12[0],
+      setModalNotifications = _useState12[1];
 
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.useNavigate)();
 
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-      _useState12 = _slicedToArray(_useState11, 2),
-      users = _useState12[0],
-      searchUser = _useState12[1];
-
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
       _useState14 = _slicedToArray(_useState13, 2),
-      status = _useState14[0],
-      setStatus = _useState14[1];
+      users = _useState14[0],
+      searchUser = _useState14[1];
+
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+      _useState16 = _slicedToArray(_useState15, 2),
+      status = _useState16[0],
+      setStatus = _useState16[1];
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     function handleResize() {
@@ -8628,6 +8634,10 @@ function Navbar() {
       return window.removeEventListener('resize', handleResize);
     };
   }, []);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    setDetailUser(JSON.parse(window.localStorage.getItem('user')));
+  }, []);
+  console.log(detailUserRedux);
 
   var searchFriends = function searchFriends(e) {
     if (e.target.value !== '') {
@@ -8643,7 +8653,6 @@ function Navbar() {
 
       setStatus(response.status);
       searchUser((_response$data = response.data) === null || _response$data === void 0 ? void 0 : _response$data.test);
-      console.log(response);
     })["catch"](function (error) {
       console.log(error);
     })["finally"](function () {
@@ -8654,6 +8663,7 @@ function Navbar() {
   var logout = function logout() {
     axios__WEBPACK_IMPORTED_MODULE_3___default().post('/logout').then(function (response) {
       navigate('/');
+      window.localStorage.clear();
     })["catch"](function (error) {
       console.log(error);
     })["finally"](function (complete) {
@@ -8861,7 +8871,7 @@ function Navbar() {
         onClick: showProfile,
         className: "w-[40px] h-[40px] rounded-full cursor-pointer overflow-hidden",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
-          src: detailUser === null || detailUser === void 0 ? void 0 : detailUser.photo_profile,
+          src: (_detailUser$photo_pro = detailUser === null || detailUser === void 0 ? void 0 : detailUser.photo_profile) !== null && _detailUser$photo_pro !== void 0 ? _detailUser$photo_pro : detailUserRedux === null || detailUserRedux === void 0 ? void 0 : detailUserRedux.photo_profile,
           alt: ""
         })
       })]
@@ -8884,12 +8894,12 @@ function Navbar() {
             className: "w-[40px] h-[40px] rounded-full cursor-pointer overflow-hidden",
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
               className: "w-full h-full",
-              src: detailUser === null || detailUser === void 0 ? void 0 : detailUser.photo_profile,
+              src: (_detailUser$photo_pro2 = detailUser === null || detailUser === void 0 ? void 0 : detailUser.photo_profile) !== null && _detailUser$photo_pro2 !== void 0 ? _detailUser$photo_pro2 : detailUserRedux === null || detailUserRedux === void 0 ? void 0 : detailUserRedux.photo_profile,
               alt: ""
             })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
             className: "text-base text-[#050505] mobile:text-xs font-semibold",
-            children: detailUser === null || detailUser === void 0 ? void 0 : detailUser.name
+            children: (_detailUser$name = detailUser === null || detailUser === void 0 ? void 0 : detailUser.name) !== null && _detailUser$name !== void 0 ? _detailUser$name : detailUserRedux === null || detailUserRedux === void 0 ? void 0 : detailUserRedux.name
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
           className: "text-[#3889F4] mt-2 text-sm font-medium",
@@ -8921,7 +8931,7 @@ function Navbar() {
       style: {
         boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px'
       },
-      className: "mobile:w-full w-[30%] ".concat(windowDimensions.width < 508 ? 'top-[14%]' : '', " ").concat(windowDimensions.width >= 508 && windowDimensions.width <= 767 ? 'top-[8%]' : '', " ").concat(windowDimensions.width >= 767 && windowDimensions.width <= 1023 ? 'top-[15%]' : '', " lg:top-[10%] right-0 ").concat(modalNotifications ? '' : 'hidden', " bg-white p-2 min-h-[100px] rounded-lg absolute"),
+      className: "mobile:w-full w-[30%] ".concat(windowDimensions.width < 508 ? 'top-[14%]' : '', " ").concat(windowDimensions.width >= 508 && windowDimensions.width <= 767 ? 'top-[8%]' : '', " ").concat(windowDimensions.width >= 767 && windowDimensions.width <= 1023 ? 'top-[15%]' : '', " lg:top-[10%] right-0 ").concat(modalNotifications ? '' : 'hidden', " bg-white z-50 p-2 min-h-[100px] rounded-lg absolute"),
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
         className: "text-2xl font-bold",
         children: "Notifikasi"
@@ -9307,30 +9317,131 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _Navbar_Navbar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Navbar/Navbar */ "./resources/js/components/Login/Home/Navbar/Navbar.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var unsplash_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! unsplash-js */ "./node_modules/unsplash-js/dist/unsplash-js.esm.js");
+/* harmony import */ var _bg_random_markus_winkler_m5JqBg1AMg_unsplash_jpg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../bg-random/markus-winkler-_m5JqBg1AMg-unsplash.jpg */ "./resources/bg-random/markus-winkler-_m5JqBg1AMg-unsplash.jpg");
+/* harmony import */ var _photo_dump_stephanie_liverani_Zz5LQe_VSMY_unsplash_jpg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../photo-dump/stephanie-liverani-Zz5LQe-VSMY-unsplash.jpg */ "./resources/photo-dump/stephanie-liverani-Zz5LQe-VSMY-unsplash.jpg");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
 
 
 
 
 
 function ViewUser(props) {
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    // axios.get(`/user_profile/${username}`)
-    //     .then(function (response) {
-    //         console.log(response);
-    //
-    //     })
-    //     .catch(function (error) {
-    //         console.log(error);
-    //     })
-    //     .finally(function () {
-    //         console.log("WORK")
-    //     });
-    console.log("WORK");
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+      _useState2 = _slicedToArray(_useState, 2),
+      bgRandom = _useState2[0],
+      setRandomBg = _useState2[1];
+
+  var unsplash = (0,unsplash_js__WEBPACK_IMPORTED_MODULE_5__.createApi)({
+    accessKey: 'UR3l5ThucatZkTCoUPxoDM7mvmBW1zUneBD6iRdOrx4'
   });
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("fragment", {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_Navbar_Navbar__WEBPACK_IMPORTED_MODULE_1__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h1", {
-      children: "wORK"
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {// unsplash.photos.getRandom({
+    //
+    // }).then((success) => {
+    //     console.log(success);
+    //     setRandomBg(success.response?.urls.full);
+    // }).catch((error) => {
+    //     console.log(error)
+    // });
+    // console.log("WORK")
+  }, []); // axios.get(`/user_profile/${username}`)
+  //     .then(function (response) {
+  //         console.log(response);
+  //
+  //     })
+  //     .catch(function (error) {
+  //         console.log(error);
+  //     })
+  //     .finally(function () {
+  //         console.log("WORK")
+  //     });
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("fragment", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Navbar_Navbar__WEBPACK_IMPORTED_MODULE_1__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+      className: "min-h-[565px] bg-white",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        className: "lg:w-[80%] w-[95%] mx-auto",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "h-[405px] bg-yellow-500 rounded-lg overflow-hidden",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+            className: "w-full h-full object-cover",
+            src: bgRandom ? bgRandom : _bg_random_markus_winkler_m5JqBg1AMg_unsplash_jpg__WEBPACK_IMPORTED_MODULE_2__["default"],
+            alt: ""
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          style: {
+            borderBottom: '1px solid #CCCED2'
+          },
+          className: "min-h-[160px] flex justify-self-center",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            className: "flex lg:flex-row w-full gap-2 flex-col",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              className: "w-[168px] h-[168px] bg-yellow-500 overflow-hidden rounded-full border-2 border-white lg:mt-[-50px] lg:ml-2 mx-auto mt-[-50px]",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+                className: "w-full h-full object-center",
+                src: _photo_dump_stephanie_liverani_Zz5LQe_VSMY_unsplash_jpg__WEBPACK_IMPORTED_MODULE_3__["default"],
+                alt: ""
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "lg:w-[85%] w-full flex lg:mb-0 mb-3 lg:flex-row flex-col justify-between lg:text-start text-center",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                className: "lg:mt-3 lg:ml-3",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h1", {
+                  className: "font-bold text-3xl text-[#050505]",
+                  children: "Lucille J. Tatum"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+                  className: "font-semibold text-[#65676b] text-base mb-10 lg:mb-0",
+                  children: "800 Teman"
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                className: "flex justify-center gap-2 items-center",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("button", {
+                  className: "w-[82px] h-[36px] bg-[#E4E6EB] justify-center rounded-md flex items-center gap-1",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+                    className: "w-[16px] h-[16px]",
+                    src: "https://static.xx.fbcdn.net/rsrc.php/v3/yE/r/1z-5F6qDswz.png",
+                    alt: ""
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                    className: "font-semibold text-[#050505] text-sm",
+                    children: "Pesan"
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("button", {
+                  className: "w-[141px] h-[36px] bg-[#1B74E4] justify-center rounded-md flex items-center gap-1",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("svg", {
+                    xmlns: "http://www.w3.org/2000/svg",
+                    viewBox: "0 0 24 24",
+                    fill: "currentColor",
+                    className: "w-[16px] h-[16px] text-white",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("path", {
+                      d: "M6.25 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM3.25 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM19.75 7.5a.75.75 0 00-1.5 0v2.25H16a.75.75 0 000 1.5h2.25v2.25a.75.75 0 001.5 0v-2.25H22a.75.75 0 000-1.5h-2.25V7.5z"
+                    })
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                    className: "font-semibold text-sm text-white",
+                    children: "Tambah Teman"
+                  })]
+                })]
+              })]
+            })]
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "min-h-[60px]"
+        })]
+      })
     })]
   });
 }
@@ -15161,6 +15272,254 @@ defineJQueryPlugin(Toast);
 
 //# sourceMappingURL=bootstrap.esm.js.map
 
+
+/***/ }),
+
+/***/ "./node_modules/content-type/index.js":
+/*!********************************************!*\
+  !*** ./node_modules/content-type/index.js ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+/*!
+ * content-type
+ * Copyright(c) 2015 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+
+
+
+/**
+ * RegExp to match *( ";" parameter ) in RFC 7231 sec 3.1.1.1
+ *
+ * parameter     = token "=" ( token / quoted-string )
+ * token         = 1*tchar
+ * tchar         = "!" / "#" / "$" / "%" / "&" / "'" / "*"
+ *               / "+" / "-" / "." / "^" / "_" / "`" / "|" / "~"
+ *               / DIGIT / ALPHA
+ *               ; any VCHAR, except delimiters
+ * quoted-string = DQUOTE *( qdtext / quoted-pair ) DQUOTE
+ * qdtext        = HTAB / SP / %x21 / %x23-5B / %x5D-7E / obs-text
+ * obs-text      = %x80-FF
+ * quoted-pair   = "\" ( HTAB / SP / VCHAR / obs-text )
+ */
+var PARAM_REGEXP = /; *([!#$%&'*+.^_`|~0-9A-Za-z-]+) *= *("(?:[\u000b\u0020\u0021\u0023-\u005b\u005d-\u007e\u0080-\u00ff]|\\[\u000b\u0020-\u00ff])*"|[!#$%&'*+.^_`|~0-9A-Za-z-]+) */g
+var TEXT_REGEXP = /^[\u000b\u0020-\u007e\u0080-\u00ff]+$/
+var TOKEN_REGEXP = /^[!#$%&'*+.^_`|~0-9A-Za-z-]+$/
+
+/**
+ * RegExp to match quoted-pair in RFC 7230 sec 3.2.6
+ *
+ * quoted-pair = "\" ( HTAB / SP / VCHAR / obs-text )
+ * obs-text    = %x80-FF
+ */
+var QESC_REGEXP = /\\([\u000b\u0020-\u00ff])/g
+
+/**
+ * RegExp to match chars that must be quoted-pair in RFC 7230 sec 3.2.6
+ */
+var QUOTE_REGEXP = /([\\"])/g
+
+/**
+ * RegExp to match type in RFC 7231 sec 3.1.1.1
+ *
+ * media-type = type "/" subtype
+ * type       = token
+ * subtype    = token
+ */
+var TYPE_REGEXP = /^[!#$%&'*+.^_`|~0-9A-Za-z-]+\/[!#$%&'*+.^_`|~0-9A-Za-z-]+$/
+
+/**
+ * Module exports.
+ * @public
+ */
+
+exports.format = format
+exports.parse = parse
+
+/**
+ * Format object to media type.
+ *
+ * @param {object} obj
+ * @return {string}
+ * @public
+ */
+
+function format (obj) {
+  if (!obj || typeof obj !== 'object') {
+    throw new TypeError('argument obj is required')
+  }
+
+  var parameters = obj.parameters
+  var type = obj.type
+
+  if (!type || !TYPE_REGEXP.test(type)) {
+    throw new TypeError('invalid type')
+  }
+
+  var string = type
+
+  // append parameters
+  if (parameters && typeof parameters === 'object') {
+    var param
+    var params = Object.keys(parameters).sort()
+
+    for (var i = 0; i < params.length; i++) {
+      param = params[i]
+
+      if (!TOKEN_REGEXP.test(param)) {
+        throw new TypeError('invalid parameter name')
+      }
+
+      string += '; ' + param + '=' + qstring(parameters[param])
+    }
+  }
+
+  return string
+}
+
+/**
+ * Parse media type to object.
+ *
+ * @param {string|object} string
+ * @return {Object}
+ * @public
+ */
+
+function parse (string) {
+  if (!string) {
+    throw new TypeError('argument string is required')
+  }
+
+  // support req/res-like objects as argument
+  var header = typeof string === 'object'
+    ? getcontenttype(string)
+    : string
+
+  if (typeof header !== 'string') {
+    throw new TypeError('argument string is required to be a string')
+  }
+
+  var index = header.indexOf(';')
+  var type = index !== -1
+    ? header.substr(0, index).trim()
+    : header.trim()
+
+  if (!TYPE_REGEXP.test(type)) {
+    throw new TypeError('invalid media type')
+  }
+
+  var obj = new ContentType(type.toLowerCase())
+
+  // parse parameters
+  if (index !== -1) {
+    var key
+    var match
+    var value
+
+    PARAM_REGEXP.lastIndex = index
+
+    while ((match = PARAM_REGEXP.exec(header))) {
+      if (match.index !== index) {
+        throw new TypeError('invalid parameter format')
+      }
+
+      index += match[0].length
+      key = match[1].toLowerCase()
+      value = match[2]
+
+      if (value[0] === '"') {
+        // remove quotes and escapes
+        value = value
+          .substr(1, value.length - 2)
+          .replace(QESC_REGEXP, '$1')
+      }
+
+      obj.parameters[key] = value
+    }
+
+    if (index !== header.length) {
+      throw new TypeError('invalid parameter format')
+    }
+  }
+
+  return obj
+}
+
+/**
+ * Get content-type from req/res objects.
+ *
+ * @param {object}
+ * @return {Object}
+ * @private
+ */
+
+function getcontenttype (obj) {
+  var header
+
+  if (typeof obj.getHeader === 'function') {
+    // res-like
+    header = obj.getHeader('content-type')
+  } else if (typeof obj.headers === 'object') {
+    // req-like
+    header = obj.headers && obj.headers['content-type']
+  }
+
+  if (typeof header !== 'string') {
+    throw new TypeError('content-type header is missing from object')
+  }
+
+  return header
+}
+
+/**
+ * Quote a string if necessary.
+ *
+ * @param {string} val
+ * @return {string}
+ * @private
+ */
+
+function qstring (val) {
+  var str = String(val)
+
+  // no need to quote tokens
+  if (TOKEN_REGEXP.test(str)) {
+    return str
+  }
+
+  if (str.length > 0 && !TEXT_REGEXP.test(str)) {
+    throw new TypeError('invalid parameter value')
+  }
+
+  return '"' + str.replace(QUOTE_REGEXP, '\\$1') + '"'
+}
+
+/**
+ * Class to represent a content type.
+ * @private
+ */
+function ContentType (type) {
+  this.parameters = Object.create(null)
+  this.type = type
+}
+
+
+/***/ }),
+
+/***/ "./resources/bg-random/markus-winkler-_m5JqBg1AMg-unsplash.jpg":
+/*!*********************************************************************!*\
+  !*** ./resources/bg-random/markus-winkler-_m5JqBg1AMg-unsplash.jpg ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/markus-winkler-_m5JqBg1AMg-unsplash.jpg?e8e8ea702698747308704c97a1269528");
 
 /***/ }),
 
@@ -69364,6 +69723,1050 @@ if (false) {} else {
 if (false) {} else {
   module.exports = __webpack_require__(/*! ./cjs/scheduler-tracing.development.js */ "./node_modules/scheduler/cjs/scheduler-tracing.development.js");
 }
+
+
+/***/ }),
+
+/***/ "./node_modules/unsplash-js/dist/unsplash-js.esm.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/unsplash-js/dist/unsplash-js.esm.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Language": () => (/* binding */ Language),
+/* harmony export */   "OrderBy": () => (/* binding */ OrderBy),
+/* harmony export */   "_internals": () => (/* binding */ internals),
+/* harmony export */   "createApi": () => (/* binding */ createApi)
+/* harmony export */ });
+/* harmony import */ var content_type__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! content-type */ "./node_modules/content-type/index.js");
+
+
+function _extends() {
+  _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+var checkIsString = /*#__PURE__*/getRefinement(function (value) {
+  return typeof value === 'string' ? value : null;
+});
+var isDefined = function isDefined(x) {
+  return x !== null && x !== undefined;
+};
+function getRefinement(getB) {
+  return function (a) {
+    return isDefined(getB(a));
+  };
+}
+var checkIsNonEmptyArray = function checkIsNonEmptyArray(a) {
+  return a.length > 0;
+};
+
+/** Takes a dictionary containing nullish values and returns a dictionary of all the defined
+ * (non-nullish) values.
+ */
+
+var compactDefined = function compactDefined(obj) {
+  return Object.keys(obj).reduce(function (acc, key) {
+    var _ref;
+
+    var value = obj[key];
+    return _extends({}, acc, isDefined(value) ? (_ref = {}, _ref[key] = value, _ref) : {});
+  }, {});
+};
+function flow() {
+  for (var _len = arguments.length, fns = new Array(_len), _key = 0; _key < _len; _key++) {
+    fns[_key] = arguments[_key];
+  }
+
+  var len = fns.length - 1;
+  return function () {
+    for (var _len2 = arguments.length, x = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      x[_key2] = arguments[_key2];
+    }
+
+    var y = fns[0].apply(this, x);
+
+    for (var i = 1; i <= len; i++) {
+      y = fns[i].call(this, y);
+    }
+
+    return y;
+  };
+}
+
+var checkIsObject = /*#__PURE__*/getRefinement(function (response) {
+  return isDefined(response) && typeof response === 'object' && !Array.isArray(response) ? response : null;
+});
+var checkIsErrors = /*#__PURE__*/getRefinement(function (errors) {
+  return Array.isArray(errors) && errors.every(checkIsString) && checkIsNonEmptyArray(errors) ? errors : null;
+});
+var checkIsApiError = /*#__PURE__*/getRefinement(function (response) {
+  return checkIsObject(response) && 'errors' in response && checkIsErrors(response.errors) ? {
+    errors: response.errors
+  } : null;
+});
+var getErrorForBadStatusCode = function getErrorForBadStatusCode(jsonResponse) {
+  if (checkIsApiError(jsonResponse)) {
+    return {
+      errors: jsonResponse.errors,
+      source: 'api'
+    };
+  } else {
+    return {
+      errors: ['Responded with a status code outside the 2xx range, and the response body is not recognisable.'],
+      source: 'decoding'
+    };
+  }
+};
+var DecodingError = function DecodingError(message) {
+  this.message = message;
+};
+
+var CONTENT_TYPE_RESPONSE_HEADER = 'content-type';
+var CONTENT_TYPE_JSON = 'application/json';
+
+var checkIsJsonResponse = function checkIsJsonResponse(response) {
+  var contentTypeHeader = response.headers.get(CONTENT_TYPE_RESPONSE_HEADER);
+  return isDefined(contentTypeHeader) && (0,content_type__WEBPACK_IMPORTED_MODULE_0__.parse)(contentTypeHeader).type === CONTENT_TYPE_JSON;
+};
+/**
+ * Note: restrict the type of JSON to `AnyJson` so that `any` doesn't leak downstream.
+ */
+
+
+var getJsonResponse = function getJsonResponse(response) {
+  if (checkIsJsonResponse(response)) {
+    return response.json()["catch"](function (_err) {
+      throw new DecodingError('unable to parse JSON response.');
+    });
+  } else {
+    throw new DecodingError('expected JSON response from server.');
+  }
+};
+
+var handleFetchResponse = function handleFetchResponse(handleResponse) {
+  return function (response) {
+    return (response.ok ? handleResponse({
+      response: response
+    }).then(function (handledResponse) {
+      return {
+        type: 'success',
+        status: response.status,
+        response: handledResponse,
+        originalResponse: response
+      };
+    }) : getJsonResponse(response).then(function (jsonResponse) {
+      return _extends({
+        type: 'error',
+        status: response.status
+      }, getErrorForBadStatusCode(jsonResponse), {
+        originalResponse: response
+      });
+    }))["catch"](function (error) {
+      /**
+       * We want to separate expected decoding errors from unknown ones. We do so by throwing a custom
+       * `DecodingError` whenever we encounter one within `handleFetchResponse` and catch them all
+       * here. This allows us to easily handle all of these errors at once. Unexpected errors are not
+       * caught, so that they bubble up and fail loudly.
+       *
+       * Note: Ideally we'd use an Either type, but this does the job without introducing dependencies
+       * like `fp-ts`.
+       */
+      if (error instanceof DecodingError) {
+        return {
+          type: 'error',
+          source: 'decoding',
+          status: response.status,
+          originalResponse: response,
+          errors: [error.message]
+        };
+      } else {
+        throw error;
+      }
+    });
+  };
+};
+var castResponse = function castResponse() {
+  return function (_ref) {
+    var response = _ref.response;
+    return getJsonResponse(response);
+  };
+};
+
+var addQueryToUrl = function addQueryToUrl(query) {
+  return function (url) {
+    Object.keys(query).forEach(function (queryKey) {
+      return url.searchParams.set(queryKey, query[queryKey].toString());
+    });
+  };
+};
+
+var addPathnameToUrl = function addPathnameToUrl(pathname) {
+  return function (url) {
+    // When there is no existing pathname, the value is `/`. Appending would give us a URL with two
+    // forward slashes. This is why we replace the value in that scenario.
+    if (url.pathname === '/') {
+      url.pathname = pathname;
+    } else {
+      url.pathname += pathname;
+    }
+  };
+};
+
+var buildUrl = function buildUrl(_ref) {
+  var pathname = _ref.pathname,
+      query = _ref.query;
+  return function (apiUrl) {
+    var url = new URL(apiUrl);
+    addPathnameToUrl(pathname)(url);
+    addQueryToUrl(query)(url);
+    return url.toString();
+  };
+};
+
+var getQueryFromSearchParams = function getQueryFromSearchParams(searchParams) {
+  var query = {};
+  searchParams.forEach(function (value, key) {
+    query[key] = value;
+  });
+  return query;
+};
+
+var parseQueryAndPathname = function parseQueryAndPathname(url) {
+  var _URL = new URL(url),
+      pathname = _URL.pathname,
+      searchParams = _URL.searchParams;
+
+  var query = getQueryFromSearchParams(searchParams);
+  return {
+    query: query,
+    pathname: pathname === '/' ? undefined : pathname
+  };
+};
+
+/**
+ * helper used to type-check the arguments, and add default params for all requests
+ */
+
+var createRequestHandler = function createRequestHandler(fn) {
+  return function (a, additionalFetchOptions) {
+    if (additionalFetchOptions === void 0) {
+      additionalFetchOptions = {};
+    }
+
+    var _fn = fn(a),
+        headers = _fn.headers,
+        query = _fn.query,
+        baseReqParams = _objectWithoutPropertiesLoose(_fn, ["headers", "query"]);
+
+    return _extends({}, baseReqParams, additionalFetchOptions, {
+      query: query,
+      headers: _extends({}, headers, additionalFetchOptions.headers)
+    });
+  };
+};
+var makeEndpoint = function makeEndpoint(endpoint) {
+  return endpoint;
+};
+var initMakeRequest = function initMakeRequest(_ref) {
+  var accessKey = _ref.accessKey,
+      _ref$apiVersion = _ref.apiVersion,
+      apiVersion = _ref$apiVersion === void 0 ? 'v1' : _ref$apiVersion,
+      _ref$apiUrl = _ref.apiUrl,
+      apiUrl = _ref$apiUrl === void 0 ? 'https://api.unsplash.com' : _ref$apiUrl,
+      generalHeaders = _ref.headers,
+      providedFetch = _ref.fetch,
+      generalFetchOptions = _objectWithoutPropertiesLoose(_ref, ["accessKey", "apiVersion", "apiUrl", "headers", "fetch"]);
+
+  return function (_ref2) {
+    var handleResponse = _ref2.handleResponse,
+        handleRequest = _ref2.handleRequest;
+    return flow(handleRequest, function (_ref3) {
+      var pathname = _ref3.pathname,
+          query = _ref3.query,
+          _ref3$method = _ref3.method,
+          method = _ref3$method === void 0 ? 'GET' : _ref3$method,
+          endpointHeaders = _ref3.headers,
+          body = _ref3.body,
+          signal = _ref3.signal;
+      var url = buildUrl({
+        pathname: pathname,
+        query: query
+      })(apiUrl);
+
+      var fetchOptions = _extends({
+        method: method,
+        headers: _extends({}, generalHeaders, endpointHeaders, {
+          'Accept-Version': apiVersion
+        }, isDefined(accessKey) ? {
+          Authorization: "Client-ID " + accessKey
+        } : {}),
+        body: body,
+        signal: signal
+      }, generalFetchOptions);
+
+      var fetchToUse = providedFetch != null ? providedFetch : fetch;
+      return fetchToUse(url, fetchOptions).then(handleFetchResponse(handleResponse));
+    });
+  };
+};
+
+var TOTAL_RESPONSE_HEADER = 'x-total';
+
+var getTotalFromApiFeedResponse = function getTotalFromApiFeedResponse(response) {
+  var totalsStr = response.headers.get(TOTAL_RESPONSE_HEADER);
+
+  if (isDefined(totalsStr)) {
+    var total = parseInt(totalsStr);
+
+    if (Number.isInteger(total)) {
+      return total;
+    } else {
+      throw new DecodingError("expected " + TOTAL_RESPONSE_HEADER + " header to be valid integer.");
+    }
+  } else {
+    throw new DecodingError("expected " + TOTAL_RESPONSE_HEADER + " header to exist.");
+  }
+};
+
+var handleFeedResponse = function handleFeedResponse() {
+  return function (_ref) {
+    var response = _ref.response;
+    return castResponse()({
+      response: response
+    }).then(function (results) {
+      return {
+        results: results,
+        total: getTotalFromApiFeedResponse(response)
+      };
+    });
+  };
+};
+
+var getCollections = function getCollections(collectionIds) {
+  return isDefined(collectionIds) ? {
+    collections: collectionIds.join()
+  } : {};
+};
+var getTopics = function getTopics(topicIds) {
+  return isDefined(topicIds) ? {
+    topics: topicIds.join()
+  } : {};
+};
+var getFeedParams = function getFeedParams(_ref) {
+  var page = _ref.page,
+      perPage = _ref.perPage,
+      orderBy = _ref.orderBy;
+  return compactDefined({
+    per_page: perPage,
+    order_by: orderBy,
+    page: page
+  });
+};
+
+var COLLECTIONS_PATH_PREFIX = '/collections';
+var getPhotos = /*#__PURE__*/function () {
+  var getPathname = function getPathname(_ref) {
+    var collectionId = _ref.collectionId;
+    return COLLECTIONS_PATH_PREFIX + "/" + collectionId + "/photos";
+  };
+
+  return makeEndpoint({
+    getPathname: getPathname,
+    handleRequest: createRequestHandler(function (_ref2) {
+      var collectionId = _ref2.collectionId,
+          orientation = _ref2.orientation,
+          paginationParams = _objectWithoutPropertiesLoose(_ref2, ["collectionId", "orientation"]);
+
+      return {
+        pathname: getPathname({
+          collectionId: collectionId
+        }),
+        query: compactDefined(_extends({}, getFeedParams(paginationParams), {
+          orientation: orientation
+        }))
+      };
+    }),
+    handleResponse: handleFeedResponse()
+  });
+}();
+var get = /*#__PURE__*/function () {
+  var getPathname = function getPathname(_ref3) {
+    var collectionId = _ref3.collectionId;
+    return COLLECTIONS_PATH_PREFIX + "/" + collectionId;
+  };
+
+  return makeEndpoint({
+    getPathname: getPathname,
+    handleRequest: createRequestHandler(function (_ref4) {
+      var collectionId = _ref4.collectionId;
+      return {
+        pathname: getPathname({
+          collectionId: collectionId
+        }),
+        query: {}
+      };
+    }),
+    handleResponse: castResponse()
+  });
+}();
+var list = /*#__PURE__*/function () {
+  var getPathname = function getPathname() {
+    return COLLECTIONS_PATH_PREFIX;
+  };
+
+  return makeEndpoint({
+    getPathname: getPathname,
+    handleRequest: createRequestHandler(function (paginationParams) {
+      if (paginationParams === void 0) {
+        paginationParams = {};
+      }
+
+      return {
+        pathname: getPathname(),
+        query: getFeedParams(paginationParams)
+      };
+    }),
+    handleResponse: handleFeedResponse()
+  });
+}();
+var getRelated = /*#__PURE__*/function () {
+  var getPathname = function getPathname(_ref5) {
+    var collectionId = _ref5.collectionId;
+    return COLLECTIONS_PATH_PREFIX + "/" + collectionId + "/related";
+  };
+
+  return makeEndpoint({
+    getPathname: getPathname,
+    handleRequest: createRequestHandler(function (_ref6) {
+      var collectionId = _ref6.collectionId;
+      return {
+        pathname: getPathname({
+          collectionId: collectionId
+        }),
+        query: {}
+      };
+    }),
+    handleResponse: castResponse()
+  });
+}();
+
+var index = {
+  __proto__: null,
+  getPhotos: getPhotos,
+  get: get,
+  list: list,
+  getRelated: getRelated
+};
+
+var PHOTOS_PATH_PREFIX = '/photos';
+var list$1 = /*#__PURE__*/function () {
+  var _getPathname = function getPathname() {
+    return PHOTOS_PATH_PREFIX;
+  };
+
+  return makeEndpoint({
+    // Wrapper uses type trick to allow 0 args
+    getPathname: function getPathname(_params) {
+      return _getPathname();
+    },
+    handleRequest: createRequestHandler(function (feedParams) {
+      if (feedParams === void 0) {
+        feedParams = {};
+      }
+
+      return {
+        pathname: PHOTOS_PATH_PREFIX,
+        query: compactDefined(getFeedParams(feedParams))
+      };
+    }),
+    handleResponse: handleFeedResponse()
+  });
+}();
+var get$1 = /*#__PURE__*/function () {
+  var getPathname = function getPathname(_ref) {
+    var photoId = _ref.photoId;
+    return PHOTOS_PATH_PREFIX + "/" + photoId;
+  };
+
+  return makeEndpoint({
+    getPathname: getPathname,
+    handleRequest: createRequestHandler(function (_ref2) {
+      var photoId = _ref2.photoId;
+      return {
+        pathname: getPathname({
+          photoId: photoId
+        }),
+        query: {}
+      };
+    }),
+    handleResponse: castResponse()
+  });
+}();
+var getStats = /*#__PURE__*/function () {
+  var getPathname = function getPathname(_ref3) {
+    var photoId = _ref3.photoId;
+    return PHOTOS_PATH_PREFIX + "/" + photoId + "/statistics";
+  };
+
+  return makeEndpoint({
+    getPathname: getPathname,
+    handleRequest: createRequestHandler(function (_ref4) {
+      var photoId = _ref4.photoId;
+      return {
+        pathname: getPathname({
+          photoId: photoId
+        }),
+        query: {}
+      };
+    }),
+    handleResponse: castResponse()
+  });
+}();
+var getRandom = /*#__PURE__*/function () {
+  var getPathname = function getPathname() {
+    return PHOTOS_PATH_PREFIX + "/random";
+  };
+
+  return makeEndpoint({
+    getPathname: getPathname,
+    handleRequest: createRequestHandler(function (_temp) {
+      var _ref5 = _temp === void 0 ? {} : _temp,
+          collectionIds = _ref5.collectionIds,
+          contentFilter = _ref5.contentFilter,
+          topicIds = _ref5.topicIds,
+          queryParams = _objectWithoutPropertiesLoose(_ref5, ["collectionIds", "contentFilter", "topicIds"]);
+
+      return {
+        pathname: getPathname(),
+        query: compactDefined(_extends({}, queryParams, {
+          content_filter: contentFilter
+        }, getCollections(collectionIds), getTopics(topicIds))),
+        headers: {
+          /**
+           * Avoid response caching
+           */
+          'cache-control': 'no-cache'
+        }
+      };
+    }),
+    handleResponse: castResponse()
+  });
+}();
+var trackDownload = {
+  handleRequest: /*#__PURE__*/createRequestHandler(function (_ref6) {
+    var downloadLocation = _ref6.downloadLocation;
+
+    var _parseQueryAndPathnam = parseQueryAndPathname(downloadLocation),
+        pathname = _parseQueryAndPathnam.pathname,
+        query = _parseQueryAndPathnam.query;
+
+    if (!isDefined(pathname)) {
+      throw new Error('Could not parse pathname from url.');
+    }
+
+    return {
+      pathname: pathname,
+      query: compactDefined(query)
+    };
+  }),
+  handleResponse: /*#__PURE__*/castResponse()
+};
+
+var index$1 = {
+  __proto__: null,
+  list: list$1,
+  get: get$1,
+  getStats: getStats,
+  getRandom: getRandom,
+  trackDownload: trackDownload
+};
+
+var SEARCH_PATH_PREFIX = "/search";
+var getPhotos$1 = /*#__PURE__*/function () {
+  var _getPathname = function getPathname() {
+    return SEARCH_PATH_PREFIX + "/photos";
+  };
+
+  return makeEndpoint({
+    // Wrapper uses type trick to allow 0 args
+    getPathname: function getPathname(_params) {
+      return _getPathname();
+    },
+    handleRequest: createRequestHandler(function (_ref) {
+      var query = _ref.query,
+          page = _ref.page,
+          perPage = _ref.perPage,
+          orderBy = _ref.orderBy,
+          collectionIds = _ref.collectionIds,
+          lang = _ref.lang,
+          contentFilter = _ref.contentFilter,
+          filters = _objectWithoutPropertiesLoose(_ref, ["query", "page", "perPage", "orderBy", "collectionIds", "lang", "contentFilter"]);
+
+      return {
+        pathname: _getPathname(),
+        query: compactDefined(_extends({
+          query: query,
+          content_filter: contentFilter,
+          lang: lang,
+          order_by: orderBy
+        }, getFeedParams({
+          page: page,
+          perPage: perPage
+        }), getCollections(collectionIds), filters))
+      };
+    }),
+    handleResponse: castResponse()
+  });
+}();
+var getCollections$1 = /*#__PURE__*/function () {
+  var _getPathname2 = function getPathname() {
+    return SEARCH_PATH_PREFIX + "/collections";
+  };
+
+  return makeEndpoint({
+    // Wrapper uses type trick to allow 0 args
+    getPathname: function getPathname(_params) {
+      return _getPathname2();
+    },
+    handleRequest: createRequestHandler(function (_ref2) {
+      var query = _ref2.query,
+          paginationParams = _objectWithoutPropertiesLoose(_ref2, ["query"]);
+
+      return {
+        pathname: _getPathname2(),
+        query: _extends({
+          query: query
+        }, getFeedParams(paginationParams))
+      };
+    }),
+    handleResponse: castResponse()
+  });
+}();
+var getUsers = /*#__PURE__*/function () {
+  var _getPathname3 = function getPathname() {
+    return SEARCH_PATH_PREFIX + "/users";
+  };
+
+  return makeEndpoint({
+    // Wrapper uses type trick to allow 0 args
+    getPathname: function getPathname(_params) {
+      return _getPathname3();
+    },
+    handleRequest: createRequestHandler(function (_ref3) {
+      var query = _ref3.query,
+          paginationParams = _objectWithoutPropertiesLoose(_ref3, ["query"]);
+
+      return {
+        pathname: _getPathname3(),
+        query: _extends({
+          query: query
+        }, getFeedParams(paginationParams))
+      };
+    }),
+    handleResponse: castResponse()
+  });
+}();
+
+var index$2 = {
+  __proto__: null,
+  getPhotos: getPhotos$1,
+  getCollections: getCollections$1,
+  getUsers: getUsers
+};
+
+var USERS_PATH_PREFIX = '/users';
+var get$2 = /*#__PURE__*/function () {
+  var getPathname = function getPathname(_ref) {
+    var username = _ref.username;
+    return USERS_PATH_PREFIX + "/" + username;
+  };
+
+  return makeEndpoint({
+    getPathname: getPathname,
+    handleRequest: createRequestHandler(function (_ref2) {
+      var username = _ref2.username;
+      return {
+        pathname: getPathname({
+          username: username
+        }),
+        query: {}
+      };
+    }),
+    handleResponse: castResponse()
+  });
+}();
+var getPhotos$2 = /*#__PURE__*/function () {
+  var getPathname = function getPathname(_ref3) {
+    var username = _ref3.username;
+    return USERS_PATH_PREFIX + "/" + username + "/photos";
+  };
+
+  return makeEndpoint({
+    getPathname: getPathname,
+    handleRequest: createRequestHandler(function (_ref4) {
+      var username = _ref4.username,
+          stats = _ref4.stats,
+          orientation = _ref4.orientation,
+          paginationParams = _objectWithoutPropertiesLoose(_ref4, ["username", "stats", "orientation"]);
+
+      return {
+        pathname: getPathname({
+          username: username
+        }),
+        query: compactDefined(_extends({}, getFeedParams(paginationParams), {
+          orientation: orientation,
+          stats: stats
+        }))
+      };
+    }),
+    handleResponse: handleFeedResponse()
+  });
+}();
+var getLikes = /*#__PURE__*/function () {
+  var getPathname = function getPathname(_ref5) {
+    var username = _ref5.username;
+    return USERS_PATH_PREFIX + "/" + username + "/likes";
+  };
+
+  return makeEndpoint({
+    getPathname: getPathname,
+    handleRequest: createRequestHandler(function (_ref6) {
+      var username = _ref6.username,
+          orientation = _ref6.orientation,
+          paginationParams = _objectWithoutPropertiesLoose(_ref6, ["username", "orientation"]);
+
+      return {
+        pathname: getPathname({
+          username: username
+        }),
+        query: compactDefined(_extends({}, getFeedParams(paginationParams), {
+          orientation: orientation
+        }))
+      };
+    }),
+    handleResponse: handleFeedResponse()
+  });
+}();
+var getCollections$2 = /*#__PURE__*/function () {
+  var getPathname = function getPathname(_ref7) {
+    var username = _ref7.username;
+    return USERS_PATH_PREFIX + "/" + username + "/collections";
+  };
+
+  return makeEndpoint({
+    getPathname: getPathname,
+    handleRequest: createRequestHandler(function (_ref8) {
+      var username = _ref8.username,
+          paginationParams = _objectWithoutPropertiesLoose(_ref8, ["username"]);
+
+      return {
+        pathname: getPathname({
+          username: username
+        }),
+        query: getFeedParams(paginationParams)
+      };
+    }),
+    handleResponse: handleFeedResponse()
+  });
+}();
+
+var index$3 = {
+  __proto__: null,
+  get: get$2,
+  getPhotos: getPhotos$2,
+  getLikes: getLikes,
+  getCollections: getCollections$2
+};
+
+var BASE_TOPIC_PATH = '/topics';
+
+var getTopicPath = function getTopicPath(_ref) {
+  var topicIdOrSlug = _ref.topicIdOrSlug;
+  return BASE_TOPIC_PATH + "/" + topicIdOrSlug;
+};
+
+var list$2 = /*#__PURE__*/makeEndpoint({
+  getPathname: getTopicPath,
+  handleRequest: function handleRequest(_ref2) {
+    var page = _ref2.page,
+        perPage = _ref2.perPage,
+        orderBy = _ref2.orderBy,
+        topicIdsOrSlugs = _ref2.topicIdsOrSlugs;
+    return {
+      pathname: BASE_TOPIC_PATH,
+      query: compactDefined(_extends({}, getFeedParams({
+        page: page,
+        perPage: perPage
+      }), {
+        ids: topicIdsOrSlugs == null ? void 0 : topicIdsOrSlugs.join(','),
+        order_by: orderBy
+      }))
+    };
+  },
+  handleResponse: /*#__PURE__*/handleFeedResponse()
+});
+var get$3 = /*#__PURE__*/makeEndpoint({
+  getPathname: getTopicPath,
+  handleRequest: function handleRequest(_ref3) {
+    var topicIdOrSlug = _ref3.topicIdOrSlug;
+    return {
+      pathname: getTopicPath({
+        topicIdOrSlug: topicIdOrSlug
+      }),
+      query: {}
+    };
+  },
+  handleResponse: /*#__PURE__*/castResponse()
+});
+var getPhotos$3 = /*#__PURE__*/function () {
+  var getPathname = /*#__PURE__*/flow(getTopicPath, function (topicPath) {
+    return topicPath + "/photos";
+  });
+  return makeEndpoint({
+    getPathname: getPathname,
+    handleRequest: function handleRequest(_ref4) {
+      var topicIdOrSlug = _ref4.topicIdOrSlug,
+          orientation = _ref4.orientation,
+          feedParams = _objectWithoutPropertiesLoose(_ref4, ["topicIdOrSlug", "orientation"]);
+
+      return {
+        pathname: getPathname({
+          topicIdOrSlug: topicIdOrSlug
+        }),
+        query: compactDefined(_extends({}, getFeedParams(feedParams), {
+          orientation: orientation
+        }))
+      };
+    },
+    handleResponse: handleFeedResponse()
+  });
+}();
+
+var index$4 = {
+  __proto__: null,
+  list: list$2,
+  get: get$3,
+  getPhotos: getPhotos$3
+};
+
+var trackNonHotLinkedPhotoView = function trackNonHotLinkedPhotoView(_ref) {
+  var appId = _ref.appId;
+  return function (_ref2) {
+    var photoId = _ref2.photoId;
+    var ids = !Array.isArray(photoId) ? [photoId] : photoId;
+
+    if (ids.length > 20) {
+      throw new Error('You cannot track more than 20 photos at once. Please try again with fewer photos.');
+    }
+
+    return fetch("views.unsplash.com/v?photo_id=" + ids.join() + "&app_id=" + appId);
+  };
+};
+
+
+
+var internals = {
+  __proto__: null,
+  collections: index,
+  photos: index$1,
+  search: index$2,
+  users: index$3,
+  topics: index$4,
+  trackNonHotLinkedPhotoView: trackNonHotLinkedPhotoView
+};
+
+var Language;
+
+(function (Language) {
+  Language["Afrikaans"] = "af";
+  Language["Amharic"] = "am";
+  Language["Arabic"] = "ar";
+  Language["Azerbaijani"] = "az";
+  Language["Belarusian"] = "be";
+  Language["Bulgarian"] = "bg";
+  Language["Bengali"] = "bn";
+  Language["Bosnian"] = "bs";
+  Language["Catalan"] = "ca";
+  Language["Cebuano"] = "ceb";
+  Language["Corsican"] = "co";
+  Language["Czech"] = "cs";
+  Language["Welsh"] = "cy";
+  Language["Danish"] = "da";
+  Language["German"] = "de";
+  Language["Greek"] = "el";
+  Language["English"] = "en";
+  Language["Esperanto"] = "eo";
+  Language["Spanish"] = "es";
+  Language["Estonian"] = "et";
+  Language["Basque"] = "eu";
+  Language["Persian"] = "fa";
+  Language["Finnish"] = "fi";
+  Language["French"] = "fr";
+  Language["Frisian"] = "fy";
+  Language["Irish"] = "ga";
+  Language["ScotsGaelic"] = "gd";
+  Language["Galician"] = "gl";
+  Language["Gujarati"] = "gu";
+  Language["Hausa"] = "ha";
+  Language["Hawaiian"] = "haw";
+  Language["Hindi"] = "hi";
+  Language["Hmong"] = "hmn";
+  Language["Croatian"] = "hr";
+  Language["HaitianCreole"] = "ht";
+  Language["Hungarian"] = "hu";
+  Language["Armenian"] = "hy";
+  Language["Indonesian"] = "id";
+  Language["Igbo"] = "ig";
+  Language["Icelandic"] = "is";
+  Language["Italian"] = "it";
+  Language["Hebrew"] = "iw";
+  Language["Japanese"] = "ja";
+  Language["Javanese"] = "jw";
+  Language["Georgian"] = "ka";
+  Language["Kazakh"] = "kk";
+  Language["Khmer"] = "km";
+  Language["Kannada"] = "kn";
+  Language["Korean"] = "ko";
+  Language["Kurdish"] = "ku";
+  Language["Kyrgyz"] = "ky";
+  Language["Latin"] = "la";
+  Language["Luxembourgish"] = "lb";
+  Language["Lao"] = "lo";
+  Language["Lithuanian"] = "lt";
+  Language["Latvian"] = "lv";
+  Language["Malagasy"] = "mg";
+  Language["Maori"] = "mi";
+  Language["Macedonian"] = "mk";
+  Language["Malayalam"] = "ml";
+  Language["Mongolian"] = "mn";
+  Language["Marathi"] = "mr";
+  Language["Malay"] = "ms";
+  Language["Maltese"] = "mt";
+  Language["Myanmar"] = "my";
+  Language["Nepali"] = "ne";
+  Language["Dutch"] = "nl";
+  Language["Norwegian"] = "no";
+  Language["Nyanja"] = "ny";
+  Language["Oriya"] = "or";
+  Language["Punjabi"] = "pa";
+  Language["Polish"] = "pl";
+  Language["Pashto"] = "ps";
+  Language["Portuguese"] = "pt";
+  Language["Romanian"] = "ro";
+  Language["Russian"] = "ru";
+  Language["Kinyarwanda"] = "rw";
+  Language["Sindhi"] = "sd";
+  Language["Sinhala"] = "si";
+  Language["Slovak"] = "sk";
+  Language["Slovenian"] = "sl";
+  Language["Samoan"] = "sm";
+  Language["Shona"] = "sn";
+  Language["Somali"] = "so";
+  Language["Albanian"] = "sq";
+  Language["Serbian"] = "sr";
+  Language["Sesotho"] = "st";
+  Language["Sundanese"] = "su";
+  Language["Swedish"] = "sv";
+  Language["Swahili"] = "sw";
+  Language["Tamil"] = "ta";
+  Language["Telugu"] = "te";
+  Language["Tajik"] = "tg";
+  Language["Thai"] = "th";
+  Language["Turkmen"] = "tk";
+  Language["Filipino"] = "tl";
+  Language["Turkish"] = "tr";
+  Language["Tatar"] = "tt";
+  Language["Uighur"] = "ug";
+  Language["Ukrainian"] = "uk";
+  Language["Urdu"] = "ur";
+  Language["Uzbek"] = "uz";
+  Language["Vietnamese"] = "vi";
+  Language["Xhosa"] = "xh";
+  Language["Yiddish"] = "yi";
+  Language["Yoruba"] = "yo";
+  Language["ChineseSimplified"] = "zh";
+  Language["ChineseTraditional"] = "zh-TW";
+  Language["Zulu"] = "zu";
+})(Language || (Language = {}));
+
+var OrderBy;
+
+(function (OrderBy) {
+  OrderBy["LATEST"] = "latest";
+  OrderBy["POPULAR"] = "popular";
+  OrderBy["VIEWS"] = "views";
+  OrderBy["DOWNLOADS"] = "downloads";
+  OrderBy["OLDEST"] = "oldest";
+})(OrderBy || (OrderBy = {}));
+
+var createApi = /*#__PURE__*/flow(initMakeRequest, function (makeRequest) {
+  return {
+    photos: {
+      get: makeRequest(get$1),
+      list: makeRequest(list$1),
+      getStats: makeRequest(getStats),
+      getRandom: makeRequest(getRandom),
+      trackDownload: makeRequest(trackDownload)
+    },
+    users: {
+      getPhotos: makeRequest(getPhotos$2),
+      getCollections: makeRequest(getCollections$2),
+      getLikes: makeRequest(getLikes),
+      get: makeRequest(get$2)
+    },
+    search: {
+      getCollections: makeRequest(getCollections$1),
+      getPhotos: makeRequest(getPhotos$1),
+      getUsers: makeRequest(getUsers)
+    },
+    collections: {
+      getPhotos: makeRequest(getPhotos),
+      get: makeRequest(get),
+      list: makeRequest(list),
+      getRelated: makeRequest(getRelated)
+    },
+    topics: {
+      list: makeRequest(list$2),
+      get: makeRequest(get$3),
+      getPhotos: makeRequest(getPhotos$3)
+    }
+  };
+});
+
+
+//# sourceMappingURL=unsplash-js.esm.js.map
 
 
 /***/ }),

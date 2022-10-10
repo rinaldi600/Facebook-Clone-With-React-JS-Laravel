@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import LogoFacebook from "../../../../../img/SeekPng.com_logo-facebook-png-transparente_516623 (1).png";
 import photoDump from "../../../../../photo-dump/freestocks-8a95EVm0ovQ-unsplash.jpg";
 import {useNavigate} from "react-router-dom";
@@ -14,7 +14,8 @@ function getWidthDimension() {
 }
 
 function Navbar() {
-    const detailUser = useSelector(state => state.detailUserCurrent.value);
+    const detailUserRedux = useSelector(state => state.detailUserCurrent.value);
+    const [detailUser, setDetailUser] = useState('');
     const [modalSearchFriends, setModalSearchFriends] = useState(false);
     const [windowDimensions, setWindowDimensions] = useState(getWidthDimension());
     const [closeModalBox, setCloseModalBox] = useState(0);
@@ -28,12 +29,15 @@ function Navbar() {
         function handleResize() {
             setWindowDimensions(getWidthDimension);
         }
-
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    useEffect(() => {
+        setDetailUser(JSON.parse(window.localStorage.getItem('user')))
+    },[]);
 
+    console.log(detailUserRedux);
     const searchFriends = (e) => {
         if (e.target.value !== '') {
             setModalSearchFriends(true);
@@ -46,7 +50,6 @@ function Navbar() {
             .then(function (response) {
                 setStatus(response.status);
                 searchUser(response.data?.test);
-                console.log(response);
             })
             .catch(function (error) {
                 console.log(error);
@@ -60,6 +63,7 @@ function Navbar() {
         axios.post('/logout')
             .then((response) => {
                 navigate('/');
+                window.localStorage.clear();
             })
             .catch((error) => {
                 console.log(error);
@@ -189,7 +193,7 @@ function Navbar() {
                     </svg>
                 </div>
                 <div onClick={showProfile} className={"w-[40px] h-[40px] rounded-full cursor-pointer overflow-hidden"}>
-                    <img src={detailUser?.photo_profile} alt=""/>
+                    <img src={detailUser?.photo_profile ?? detailUserRedux?.photo_profile} alt=""/>
                 </div>
             </div>
 
@@ -197,9 +201,9 @@ function Navbar() {
                 <div style={{boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}} className={"w-11/12 mb-5 min-h-[110.662px] bg-white rounded-lg p-4"}>
                     <div style={{borderBottom : '2px solid #CED0D4'}} className={"flex flex-wrap items-center gap-2 pb-4"}>
                         <div className={"w-[40px] h-[40px] rounded-full cursor-pointer overflow-hidden"}>
-                            <img className={"w-full h-full"} src={detailUser?.photo_profile} alt=""/>
+                            <img className={"w-full h-full"} src={detailUser?.photo_profile ?? detailUserRedux?.photo_profile} alt=""/>
                         </div>
-                        <p className={"text-base text-[#050505] mobile:text-xs font-semibold"}>{detailUser?.name}</p>
+                        <p className={"text-base text-[#050505] mobile:text-xs font-semibold"}>{detailUser?.name ?? detailUserRedux?.name}</p>
                     </div>
                     <p className={"text-[#3889F4] mt-2 text-sm font-medium"}>Lihat Semua Profil</p>
                 </div>
@@ -215,7 +219,7 @@ function Navbar() {
                 </button>
             </div>
 
-            <div style={{boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px'}} className={`mobile:w-full w-[30%] ${windowDimensions.width < 508 ? 'top-[14%]' : ''} ${windowDimensions.width >= 508 && windowDimensions.width <= 767 ? 'top-[8%]' : ''} ${windowDimensions.width >= 767 && windowDimensions.width <= 1023 ? 'top-[15%]' : ''} lg:top-[10%] right-0 ${modalNotifications ? '' : 'hidden'} bg-white p-2 min-h-[100px] rounded-lg absolute`}>
+            <div style={{boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px'}} className={`mobile:w-full w-[30%] ${windowDimensions.width < 508 ? 'top-[14%]' : ''} ${windowDimensions.width >= 508 && windowDimensions.width <= 767 ? 'top-[8%]' : ''} ${windowDimensions.width >= 767 && windowDimensions.width <= 1023 ? 'top-[15%]' : ''} lg:top-[10%] right-0 ${modalNotifications ? '' : 'hidden'} bg-white z-50 p-2 min-h-[100px] rounded-lg absolute`}>
                 <p className={"text-2xl font-bold"}>Notifikasi</p>
                 <div className={"w-full p-2"}>
                     <div className={"flex w-full items-center gap-2"}>
