@@ -9342,6 +9342,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 function ViewUser(props) {
+  var detailUser = JSON.parse(localStorage.getItem('user'));
+
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
       _useState2 = _slicedToArray(_useState, 2),
       bgRandom = _useState2[0],
@@ -9350,14 +9352,15 @@ function ViewUser(props) {
   var unsplash = (0,unsplash_js__WEBPACK_IMPORTED_MODULE_5__.createApi)({
     accessKey: 'UR3l5ThucatZkTCoUPxoDM7mvmBW1zUneBD6iRdOrx4'
   });
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {// unsplash.photos.getRandom({
-    //
-    // }).then((success) => {
-    //     setRandomBg(success.response?.urls.full);
-    // }).catch((error) => {
-    //     console.log(error)
-    // });
-    // console.log("WORK")
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    unsplash.photos.getRandom({}).then(function (success) {
+      var _success$response;
+
+      setRandomBg((_success$response = success.response) === null || _success$response === void 0 ? void 0 : _success$response.urls.full);
+    })["catch"](function (error) {
+      console.log(error);
+    });
+    console.log("WORK");
   }, []); // axios.get(`/user_profile/${username}`)
   //     .then(function (response) {
   //         console.log(response);
@@ -9369,6 +9372,13 @@ function ViewUser(props) {
   //     .finally(function () {
   //         console.log("WORK")
   //     });
+
+  var comment = function comment(event) {
+    if (event.keyCode === 13) {
+      console.log("WORK");
+      event.target.value = '';
+    }
+  };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("fragment", {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Navbar_Navbar__WEBPACK_IMPORTED_MODULE_1__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
@@ -9592,12 +9602,48 @@ function ViewUser(props) {
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                 className: "h-[1px] mt-3 bg-[#CED0D4]"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
               className: "min-h-[100px] p-3 pt-1 bg-white",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
                 className: "text-[#65676b] font-semibold text-sm cursor-pointer hover:underline hover:decoration-solid",
                 children: "Lihat 14 komentar sebelumnya"
-              })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                className: "mt-2 flex items-center gap-2",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  className: "w-[32px] h-[32px] rounded-full overflow-hidden",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+                    className: "w-full h-full",
+                    src: _photo_dump_stephanie_liverani_Zz5LQe_VSMY_unsplash_jpg__WEBPACK_IMPORTED_MODULE_3__["default"],
+                    alt: ""
+                  })
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  className: "max-w-[221px] min-h-[33px] p-2 bg-[#F0F2F5] rounded-lg",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+                    className: "text-sm text-[#050505]",
+                    children: "hahaha gpp ..men uut dwe lah haha"
+                  })
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                className: "max-w-[558px] min-h-[36px] mt-2 flex gap-2 items-center",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  className: "w-[32px] h-[32px] rounded-full overflow-hidden",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+                    className: "w-full h-full",
+                    src: detailUser['photo_profile'],
+                    alt: ""
+                  })
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  className: "max-w-[480px] relative w-full h-[36px]",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                    type: "text",
+                    placeholder: "Tulis Komentar",
+                    onKeyUp: function onKeyUp(e) {
+                      return comment(e);
+                    },
+                    className: "bg-[#F0F2F5] rounded-full p-2 text-sm w-full box-border h-full outline-none border-none"
+                  })
+                })]
+              })]
             })]
           })]
         })]

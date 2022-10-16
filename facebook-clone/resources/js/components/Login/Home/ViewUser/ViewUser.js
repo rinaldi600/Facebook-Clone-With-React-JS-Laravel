@@ -6,20 +6,21 @@ import photoDump from '../../../../../photo-dump/stephanie-liverani-Zz5LQe-VSMY-
 
 function ViewUser(props) {
 
+    const detailUser = JSON.parse(localStorage.getItem('user'));
     const [bgRandom, setRandomBg] = useState('');
     const unsplash = createApi({
         accessKey: 'UR3l5ThucatZkTCoUPxoDM7mvmBW1zUneBD6iRdOrx4',
     });
 
     useEffect(() => {
-        // unsplash.photos.getRandom({
-        //
-        // }).then((success) => {
-        //     setRandomBg(success.response?.urls.full);
-        // }).catch((error) => {
-        //     console.log(error)
-        // });
-        // console.log("WORK")
+        unsplash.photos.getRandom({
+
+        }).then((success) => {
+            setRandomBg(success.response?.urls.full);
+        }).catch((error) => {
+            console.log(error)
+        });
+        console.log("WORK")
     }, []);
 
     // axios.get(`/user_profile/${username}`)
@@ -33,6 +34,13 @@ function ViewUser(props) {
     //     .finally(function () {
     //         console.log("WORK")
     //     });
+
+    const comment = (event) => {
+        if (event.keyCode === 13) {
+            console.log("WORK");
+            event.target.value = ''
+        }
+    };
 
     return (
         <fragment>
@@ -167,6 +175,22 @@ function ViewUser(props) {
 
                             <div className={"min-h-[100px] p-3 pt-1 bg-white"}>
                                 <p className={"text-[#65676b] font-semibold text-sm cursor-pointer hover:underline hover:decoration-solid"}>Lihat 14 komentar sebelumnya</p>
+                                <div className={"mt-2 flex items-center gap-2"}>
+                                    <div className={"w-[32px] h-[32px] rounded-full overflow-hidden"}>
+                                        <img className={"w-full h-full"} src={photoDump} alt=""/>
+                                    </div>
+                                    <div className={"max-w-[221px] min-h-[33px] p-2 bg-[#F0F2F5] rounded-lg"}>
+                                        <p className={"text-sm text-[#050505]"}>hahaha gpp ..men uut dwe lah haha</p>
+                                    </div>
+                                </div>
+                                <div className={"max-w-[558px] min-h-[36px] mt-2 flex gap-2 items-center"}>
+                                    <div className={"w-[32px] h-[32px] rounded-full overflow-hidden"}>
+                                        <img className={"w-full h-full"} src={detailUser['photo_profile']} alt=""/>
+                                    </div>
+                                    <div className={"max-w-[480px] relative w-full h-[36px]"}>
+                                        <input type="text" placeholder={"Tulis Komentar"} onKeyUp={(e) => comment(e)} className={"bg-[#F0F2F5] rounded-full p-2 text-sm w-full box-border h-full outline-none border-none"}/>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
