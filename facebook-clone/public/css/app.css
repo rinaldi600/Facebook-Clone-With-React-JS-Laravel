@@ -526,10 +526,6 @@ video {
   bottom: 0px;
   left: 0px;
 }
-.inset-y-0 {
-  top: 0px;
-  bottom: 0px;
-}
 .top-16 {
   top: 4rem;
 }
@@ -562,6 +558,9 @@ video {
 }
 .z-50 {
   z-index: 50;
+}
+.z-0 {
+  z-index: 0;
 }
 .mx-auto {
   margin-left: auto;
@@ -693,19 +692,6 @@ video {
 .h-\[12px\] {
   height: 12px;
 }
-.h-\[\] {
-  height: ;
-}
-.h-min {
-  height: -webkit-min-content;
-  height: -moz-min-content;
-  height: min-content;
-}
-.h-fit {
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
-}
 .min-h-\[900px\] {
   min-height: 900px;
 }
@@ -760,6 +746,12 @@ video {
 .min-h-\[300px\] {
   min-height: 300px;
 }
+.min-h-\[33px\] {
+  min-height: 33px;
+}
+.min-h-\[36px\] {
+  min-height: 36px;
+}
 .min-h-\[101px\] {
   min-height: 101px;
 }
@@ -783,18 +775,6 @@ video {
 }
 .min-h-\[58px\] {
   min-height: 58px;
-}
-.min-h-\[31px\] {
-  min-height: 31px;
-}
-.min-h-\[33px\] {
-  min-height: 33px;
-}
-.min-h-\[\] {
-  min-height: ;
-}
-.min-h-\[36px\] {
-  min-height: 36px;
 }
 .w-\[90\%\] {
   width: 90%;
@@ -874,47 +854,11 @@ video {
 .w-\[12px\] {
   width: 12px;
 }
-.w-\[\] {
-  width: ;
-}
-.w-\[500px\] {
-  width: 500px;
-}
-.w-\[400px\] {
-  width: 400px;
-}
-.w-\[450px\] {
-  width: 450px;
-}
-.min-w-\[221px\] {
-  min-width: 221px;
-}
 .max-w-\[221px\] {
   max-width: 221px;
 }
-.max-w-xs {
-  max-width: 20rem;
-}
-.max-w-\[\] {
-  max-width: ;
-}
 .max-w-\[558px\] {
   max-width: 558px;
-}
-.max-w-\[500px\] {
-  max-width: 500px;
-}
-.max-w-\[400px\] {
-  max-width: 400px;
-}
-.max-w-\[50000px\] {
-  max-width: 50000px;
-}
-.max-w-\[450px\] {
-  max-width: 450px;
-}
-.max-w-\[550px\] {
-  max-width: 550px;
 }
 .max-w-\[480px\] {
   max-width: 480px;
@@ -991,9 +935,6 @@ video {
 .rounded-md {
   border-radius: 0.375rem;
 }
-.rounded-tl-3xl {
-  border-top-left-radius: 1.5rem;
-}
 .border {
   border-width: 1px;
 }
@@ -1021,6 +962,10 @@ video {
 .border-\[\#CED0D4\] {
   --tw-border-opacity: 1;
   border-color: rgb(206 208 212 / var(--tw-border-opacity));
+}
+.border-red-500 {
+  --tw-border-opacity: 1;
+  border-color: rgb(239 68 68 / var(--tw-border-opacity));
 }
 .border-b-\[\#DADDE1\] {
   --tw-border-opacity: 1;
@@ -1312,6 +1257,10 @@ video {
 .text-\[\#BCC0C4\] {
   --tw-text-opacity: 1;
   color: rgb(188 192 196 / var(--tw-text-opacity));
+}
+.text-\[\#e11d48\] {
+  --tw-text-opacity: 1;
+  color: rgb(225 29 72 / var(--tw-text-opacity));
 }
 .antialiased {
   -webkit-font-smoothing: antialiased;

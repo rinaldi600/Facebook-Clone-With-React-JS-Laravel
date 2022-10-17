@@ -197,7 +197,7 @@ function Navbar() {
                 </div>
             </div>
 
-            <div style={{boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px'}} className={`mobile:w-full w-[30%] ${windowDimensions.width < 508 ? 'top-[14%]' : ''} ${windowDimensions.width >= 508 && windowDimensions.width <= 767 ? 'top-[8%]' : ''} ${windowDimensions.width >= 767 && windowDimensions.width <= 1023 ? 'top-[15%]' : ''} lg:top-[10%] right-0 ${modalProfile ? '' : 'hidden'} bg-white p-2 min-h-[100px] rounded-lg absolute`}>
+            <div style={{boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px'}} className={`mobile:w-full w-[30%] ${windowDimensions.width < 508 ? 'top-[14%]' : ''} ${windowDimensions.width >= 508 && windowDimensions.width <= 767 ? 'top-[8%]' : ''} ${windowDimensions.width >= 767 && windowDimensions.width <= 1023 ? 'top-[15%]' : ''} lg:top-[10%] right-0 ${modalProfile ? '' : 'hidden'} bg-white p-2 min-h-[100px] rounded-lg absolute z-50`}>
                 <div style={{boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}} className={"w-11/12 mb-5 min-h-[110.662px] bg-white rounded-lg p-4"}>
                     <div style={{borderBottom : '2px solid #CED0D4'}} className={"flex flex-wrap items-center gap-2 pb-4"}>
                         <div className={"w-[40px] h-[40px] rounded-full cursor-pointer overflow-hidden"}>

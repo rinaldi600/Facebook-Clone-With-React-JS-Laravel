@@ -8,6 +8,8 @@ function Center(props) {
     const statusState = useSelector(state => state.showStatus.value);
     const statusUser = useSelector(state => state.getStatus.value);
     const dispatch = useDispatch();
+    const statusValidation = useSelector(state => state.validation.status);
+    const messageValidation = useSelector(state => state.validation.messageUser);
 
     useEffect(() => {
         console.log(statusUser)
@@ -17,6 +19,8 @@ function Center(props) {
         dispatch(show());
     };
 
+    console.log(statusValidation);
+    console.log(messageValidation);
     return (
         <div className={"bg-[#F0F2F5] min-h-screen pt-5"}>
             <div className={"min-h-[101px] md:w-[90%] bg-white rounded-lg p-3"}>
@@ -24,7 +28,7 @@ function Center(props) {
                     <div className={"w-[40px] h-[40px] rounded-full overflow-hidden"}>
                         <img src={detailUser['photo_profile']} alt=""/>
                     </div>
-                    <input value={statusUser.length > 0 ? statusUser : ''} disabled={!!statusState} onClick={showBoxModal} className={"bg-[#F0F2F5] w-[90%] h-[40px] rounded-full text-lg p-2 border-none outline-none cursor-pointer hover:bg-[#E4E6E9]"} placeholder={`Apa yang anda pikirkan, ${detailUser['name'].split(' ')[0]}?`} type="text"/>
+                    <input value={statusUser.length > 0 ? statusUser : ''} disabled={!!statusState} onClick={showBoxModal} className={`${statusValidation ? 'border-2 border-red-500' : 'border-none'} bg-[#F0F2F5] w-[90%] h-[40px] rounded-full text-lg p-2 outline-none cursor-pointer hover:bg-[#E4E6E9] border-2 border-red-500`} placeholder={`Apa yang anda pikirkan, ${detailUser['name'].split(' ')[0]}?`} type="text"/>
                 </div>
                 <div className={"min-h-[40px] flex justify-around mobile:flex-wrap"}>
                     <button className={"hover:bg-[#F2F2F2] p-2 flex gap-1 items-center hover:rounded-lg"}>

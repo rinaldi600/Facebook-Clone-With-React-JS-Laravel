@@ -53,4 +53,8 @@ class Home extends Controller
     public function userView() {
         return view('welcome');
     }
+
+    public function getStatusUser() {
+
+    }
 }

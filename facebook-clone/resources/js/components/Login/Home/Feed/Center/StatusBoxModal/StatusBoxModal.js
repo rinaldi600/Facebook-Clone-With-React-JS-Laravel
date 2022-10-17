@@ -2,10 +2,13 @@ import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {close} from '../../../../../../features/showStatusBox';
 import {getStatusUser} from '../../../../../../features/getStatusUser';
+import {setValidation} from '../../../../../../features/validationStatusUser';
 
 function StatusBoxModal(props) {
     const detailUser = useSelector(state => state.detailUserCurrent.value);
     const statusUser = useSelector(state => state.getStatus.value);
+    const statusValidation = useSelector(state => state.validation.status);
+    const messageValidation = useSelector(state => state.validation.messageUser);
     const dispatch = useDispatch();
     const [isScroll, setScroll] = useState(false);
     const [background, setBackground] = useState(false);
@@ -26,8 +29,22 @@ function StatusBoxModal(props) {
         dispatch(getStatusUser(e.target.value))
     };
 
+    const createStatus = () => {
+        if (statusUser === '') {
+            dispatch(setValidation({
+                message : 'Wajib Diisi',
+                    status : true
+                }))
+        } else {
+            dispatch(setValidation({
+                message : '',
+                status : false
+            }))
+        }
+    };
+
     return (
-        <div className={"fixed bg-[#F3F3F4]/75 inset-0 flex justify-center items-center"}>
+        <div className={"fixed bg-[#F3F3F4]/75 inset-0 flex z-50 justify-center items-center"}>
            <div className={"lg:w-[500px] md:w-[60%] sm:w-[65%] w-[75%] min-h-[408px] bg-white shadow-xl rounded-lg overflow-hidden"}>
                 <div style={{borderBottom : '1px solid #E5E5E5'}} className={"h-[40px] p-1 justify-between flex justify-center items-center"}>
                     <p className={"text-xl text-[#050505] font-bold mx-auto"}>Buat Postingan</p>
@@ -52,9 +69,10 @@ function StatusBoxModal(props) {
                         </div>
                     </div>
                    <div className={"min-h-[328px] bg-white pr-4 pl-4"}>
-                       <textarea value={statusUser.length > 0 ? statusUser : ''} onChange={(e) => checkScrollBar(e)} placeholder={`Apa yang anda pikirkan, ${detailUser['name'].split(' ')[0]}?`} className={`scrollbar-hide bg-grey-100 ${isScroll ? 'text-sm' : 'text-2xl' } min-h-[200px] w-full outline-none border-none`} name="status" id="" cols="30" >
+                       <textarea value={statusUser.length > 0 ? statusUser : ''} onChange={(e) => checkScrollBar(e)} placeholder={`Apa yang anda pikirkan, ${detailUser['name'].split(' ')[0]}?`} className={`scrollbar-hide bg-grey-100 ${isScroll ? 'text-sm' : 'text-2xl' } min-h-[200px] w-full outline-none ${statusValidation ? 'border-2 border-red-500' : 'border-none'}`} name="status" id="" cols="30" >
 
                        </textarea>
+                       <p className={`text-sm text-[#e11d48] ${statusValidation ? 'block' : 'hidden'} mb-2`}>{messageValidation}</p>
                        <div style={{border : '1px solid #D0D2D6'}} className={"rounded-lg min-h-[58px] justify-between p-2 flex items-center"}>
                             <p className={"font-semibold text-sm text-[050505]"}>Tambahkan ke Postingan Anda</p>
 
@@ -89,7 +107,7 @@ function StatusBoxModal(props) {
                            </div>
                        </div>
                        <div className={"bg-white mt-3 mb-3"}>
-                           <button className={`${background ? 'bg-[#1B74E4] text-white' : 'bg-[#E4E6EB] text-[#BCC0C4]'} font-semibold w-full rounded-lg h-[36px]`}>Kirim</button>
+                           <button onClick={createStatus} className={`${background ? 'bg-[#1B74E4] text-white' : 'bg-[#E4E6EB] text-[#BCC0C4]'} font-semibold w-full rounded-lg h-[36px]`}>Kirim</button>
                        </div>
                    </div>
                </div>
