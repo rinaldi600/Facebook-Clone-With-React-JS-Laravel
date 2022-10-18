@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class Home extends Controller
 {
@@ -54,7 +55,20 @@ class Home extends Controller
         return view('welcome');
     }
 
-    public function getStatusUser() {
+    public function getStatusUser(Request $request) {
 
+        $validator = Validator::make($request->all(), [
+            'status' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+               'errors' => $validator->errors()->get('status')
+            ]);
+        } else {
+            return response()->json([
+                'status' => $request->input('status')
+            ]);
+        }
     }
 }

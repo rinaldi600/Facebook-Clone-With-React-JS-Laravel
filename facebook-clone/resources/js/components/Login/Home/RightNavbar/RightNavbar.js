@@ -31,7 +31,7 @@ function RightNavbar(props) {
             <div className={"mt-3"}>
                 <div className={"flex items-center gap-2 w-full hover:bg-[#E4E6E9] pl-1 cursor-pointer h-[48px] rounded-lg"}>
                     <div className={"w-[36px] h-[36px] rounded-full overflow-hidden"}>
-                        <img src="https://scontent.fsrg7-1.fna.fbcdn.net/v/t39.30808-1/297579949_100416456114671_869850798967648584_n.png?stp=cp0_dst-png_p50x50&_nc_cat=100&ccb=1-7&_nc_sid=05dcb7&_nc_ohc=Fbl1yADXpGoAX_7YCdH&_nc_ht=scontent.fsrg7-1.fna&oh=00_AT_cL8WsNbCjmn6pj6JrWBymYBlA4eDV50QqHykhpNhZDQ&oe=633DB39E" alt=""/>
+                        <img src="https://scontent.fsrg1-1.fna.fbcdn.net/v/t39.30808-1/297579949_100416456114671_869850798967648584_n.png?stp=cp0_dst-png_p50x50&_nc_cat=100&ccb=1-7&_nc_sid=05dcb7&_nc_eui2=AeF5Wmifk3o2RzDXkNS5J-O5Gman-t8OxQcaZqf63w7FB3XQSYZt4LXslqAV_IzSteRtPdZTCu3LL965TvCi9a_e&_nc_ohc=Y_vfbTlJBgoAX9QQWvg&tn=foDWZVGHpNLffpN7&_nc_ht=scontent.fsrg1-1.fna&oh=00_AT9NDUnuoS-LTa_k7Hir--Tq68fVPgLZpAbjUZu1UltnwQ&oe=6353745E" alt=""/>
                     </div>
                     <p className={"font-medium text-[#050505] text-sm"}>Doodle Art</p>
                 </div>

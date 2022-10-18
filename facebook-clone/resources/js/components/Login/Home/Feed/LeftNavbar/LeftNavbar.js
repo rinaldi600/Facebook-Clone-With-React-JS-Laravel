@@ -202,7 +202,7 @@ function LeftNavbar(props) {
             <p className={"pl-2 text-[#65676b] text-base font-semibold mt-3 mb-3"}>Pintasan Anda</p>
             <div className={"min-h-[48px] hover:bg-[#E4E6E9] gap-2 pl-2 cursor-pointer flex flex-wrap items-center"}>
                 <div className={"w-[36px] h-[36px] rounded-lg overflow-hidden"}>
-                    <img src='https://scontent.fsrg7-1.fna.fbcdn.net/v/t39.30808-6/301120520_621500392832173_3419125554319852132_n.jpg?stp=c53.0.64.64a_cp0_dst-jpg_p64x64&_nc_cat=108&ccb=1-7&_nc_sid=ac9ee4&_nc_ohc=qBA3LhdknoUAX-msFSh&_nc_ht=scontent.fsrg7-1.fna&oh=00_AT_-OF5N7k0OGJK0YvkmWh6h9oYi5eKGpkoQo3MudKo_sw&oe=63354A01' alt=""/>
+                    <img src='https://scontent.fsrg1-1.fna.fbcdn.net/v/t39.30808-6/308967566_645976417051237_6908412255620513280_n.jpg?stp=c25.0.64.64a_cp0_dst-jpg_p64x64&_nc_cat=103&ccb=1-7&_nc_sid=ac9ee4&_nc_eui2=AeFygNzb5iNDrGkRnduLrM-XvVKKy44AiPa9UorLjgCI9hGbda_6qJ2MYmzZz5XnBe-hAp8ieOZqCRMpKaaTBeXm&_nc_ohc=oIu79ROxGdkAX8Zc-FM&tn=foDWZVGHpNLffpN7&_nc_ht=scontent.fsrg1-1.fna&oh=00_AT-qRxS3cEytiLdL9a60BMMOswWUr9yMBgi3wpiefSg9xg&oe=6352F23E' alt=""/>
                 </div>
                 <p className={"text-sm font-medium"}>Pahe.in Official Group</p>
             </div>

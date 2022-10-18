@@ -7723,6 +7723,15 @@ function StatusBoxModal(props) {
         message: '',
         status: false
       }));
+      axios.post('/create_status_user', {
+        status: statusUser
+      }).then(function (response) {
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+      dispatch((0,_features_showStatusBox__WEBPACK_IMPORTED_MODULE_2__.close)());
+      dispatch((0,_features_getStatusUser__WEBPACK_IMPORTED_MODULE_3__.getStatusUser)(''));
     }
   };
 
@@ -8342,7 +8351,7 @@ function LeftNavbar(props) {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
         className: "w-[36px] h-[36px] rounded-lg overflow-hidden",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-          src: "https://scontent.fsrg7-1.fna.fbcdn.net/v/t39.30808-6/301120520_621500392832173_3419125554319852132_n.jpg?stp=c53.0.64.64a_cp0_dst-jpg_p64x64&_nc_cat=108&ccb=1-7&_nc_sid=ac9ee4&_nc_ohc=qBA3LhdknoUAX-msFSh&_nc_ht=scontent.fsrg7-1.fna&oh=00_AT_-OF5N7k0OGJK0YvkmWh6h9oYi5eKGpkoQo3MudKo_sw&oe=63354A01",
+          src: "https://scontent.fsrg1-1.fna.fbcdn.net/v/t39.30808-6/308967566_645976417051237_6908412255620513280_n.jpg?stp=c25.0.64.64a_cp0_dst-jpg_p64x64&_nc_cat=103&ccb=1-7&_nc_sid=ac9ee4&_nc_eui2=AeFygNzb5iNDrGkRnduLrM-XvVKKy44AiPa9UorLjgCI9hGbda_6qJ2MYmzZz5XnBe-hAp8ieOZqCRMpKaaTBeXm&_nc_ohc=oIu79ROxGdkAX8Zc-FM&tn=foDWZVGHpNLffpN7&_nc_ht=scontent.fsrg1-1.fna&oh=00_AT-qRxS3cEytiLdL9a60BMMOswWUr9yMBgi3wpiefSg9xg&oe=6352F23E",
           alt: ""
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
@@ -9121,7 +9130,7 @@ function RightNavbar(props) {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("div", {
           className: "w-[36px] h-[36px] rounded-full overflow-hidden",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("img", {
-            src: "https://scontent.fsrg7-1.fna.fbcdn.net/v/t39.30808-1/297579949_100416456114671_869850798967648584_n.png?stp=cp0_dst-png_p50x50&_nc_cat=100&ccb=1-7&_nc_sid=05dcb7&_nc_ohc=Fbl1yADXpGoAX_7YCdH&_nc_ht=scontent.fsrg7-1.fna&oh=00_AT_cL8WsNbCjmn6pj6JrWBymYBlA4eDV50QqHykhpNhZDQ&oe=633DB39E",
+            src: "https://scontent.fsrg1-1.fna.fbcdn.net/v/t39.30808-1/297579949_100416456114671_869850798967648584_n.png?stp=cp0_dst-png_p50x50&_nc_cat=100&ccb=1-7&_nc_sid=05dcb7&_nc_eui2=AeF5Wmifk3o2RzDXkNS5J-O5Gman-t8OxQcaZqf63w7FB3XQSYZt4LXslqAV_IzSteRtPdZTCu3LL965TvCi9a_e&_nc_ohc=Y_vfbTlJBgoAX9QQWvg&tn=foDWZVGHpNLffpN7&_nc_ht=scontent.fsrg1-1.fna&oh=00_AT9NDUnuoS-LTa_k7Hir--Tq68fVPgLZpAbjUZu1UltnwQ&oe=6353745E",
             alt: ""
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("p", {

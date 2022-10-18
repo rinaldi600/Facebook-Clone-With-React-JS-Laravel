@@ -36,10 +36,24 @@ function StatusBoxModal(props) {
                     status : true
                 }))
         } else {
+
             dispatch(setValidation({
                 message : '',
                 status : false
-            }))
+            }));
+
+            axios.post('/create_status_user', {
+                status: statusUser,
+            })
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+
+            dispatch(close());
+            dispatch(getStatusUser(''))
         }
     };
 
