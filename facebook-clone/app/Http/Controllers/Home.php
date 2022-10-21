@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Post;
 
 class Home extends Controller
 {
@@ -66,8 +67,14 @@ class Home extends Controller
                'errors' => $validator->errors()->get('status')
             ]);
         } else {
+            $postUser = Post::create([
+                'id_post' => 'POST - ' . date('YmdHis').substr((string)microtime(), 1, 8),
+                'username' => Auth::user()['username'],
+                'post' => $request->input('status'),
+            ]);
+
             return response()->json([
-                'status' => $request->input('status')
+                'success' => 'Data Berhasil Ditambahkan'
             ]);
         }
     }

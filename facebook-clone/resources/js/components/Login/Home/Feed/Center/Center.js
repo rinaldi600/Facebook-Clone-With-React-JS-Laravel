@@ -89,6 +89,9 @@ function Center(props) {
                 </div>
             </div>
             { statusState ? <StatusBoxModal/> : '' }
+            <div className={"bg-white md:w-[90%] min-h-[80px] mt-3 rounded-lg p-3"}>
+
+            </div>
         </div>
     )
 }

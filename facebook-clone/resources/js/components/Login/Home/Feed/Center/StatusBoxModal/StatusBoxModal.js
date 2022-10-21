@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {close} from '../../../../../../features/showStatusBox';
 import {getStatusUser} from '../../../../../../features/getStatusUser';
@@ -12,6 +12,7 @@ function StatusBoxModal(props) {
     const dispatch = useDispatch();
     const [isScroll, setScroll] = useState(false);
     const [background, setBackground] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const checkScrollBar = (e) => {
         if (e.target.value.length >= 591) {
@@ -46,14 +47,24 @@ function StatusBoxModal(props) {
                 status: statusUser,
             })
                 .then(function (response) {
-                    console.log(response);
+                    if (response.data.hasOwnProperty('errors')) {
+                        dispatch(setValidation({
+                            message : response.data.errors[0],
+                            status : true
+                        }));
+                        console.log(response.data.errors[0]);
+                    } else {
+                        setLoading(true);
+                        dispatch(getStatusUser(''));
+                        console.log(response);
+                    }
+                    setLoading(false);
+                    dispatch(close());
                 })
                 .catch(function (error) {
+                    setLoading(true);
                     console.log(error);
                 });
-
-            dispatch(close());
-            dispatch(getStatusUser(''))
         }
     };
 
@@ -121,7 +132,7 @@ function StatusBoxModal(props) {
                            </div>
                        </div>
                        <div className={"bg-white mt-3 mb-3"}>
-                           <button onClick={createStatus} className={`${background ? 'bg-[#1B74E4] text-white' : 'bg-[#E4E6EB] text-[#BCC0C4]'} font-semibold w-full rounded-lg h-[36px]`}>Kirim</button>
+                           <button onClick={createStatus} className={`${background ? 'bg-[#1B74E4] text-white' : 'bg-[#E4E6EB] text-[#BCC0C4]'} ${loading ? 'cursor-wait' : 'cursor-pointer'} font-semibold w-full rounded-lg h-[36px]`}>Kirim</button>
                        </div>
                    </div>
                </div>

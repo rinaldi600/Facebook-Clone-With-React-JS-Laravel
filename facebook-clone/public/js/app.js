@@ -7626,7 +7626,9 @@ function Center(props) {
           })]
         })]
       })]
-    }), statusState ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_StatusBoxModal_StatusBoxModal__WEBPACK_IMPORTED_MODULE_3__["default"], {}) : '']
+    }), statusState ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_StatusBoxModal_StatusBoxModal__WEBPACK_IMPORTED_MODULE_3__["default"], {}) : '', /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+      className: "bg-white md:w-[90%] min-h-[80px] mt-3 rounded-lg p-3"
+    })]
   });
 }
 
@@ -7696,6 +7698,11 @@ function StatusBoxModal(props) {
       background = _useState4[0],
       setBackground = _useState4[1];
 
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState6 = _slicedToArray(_useState5, 2),
+      loading = _useState6[0],
+      setLoading = _useState6[1];
+
   var checkScrollBar = function checkScrollBar(e) {
     if (e.target.value.length >= 591) {
       setScroll(true);
@@ -7726,12 +7733,24 @@ function StatusBoxModal(props) {
       axios.post('/create_status_user', {
         status: statusUser
       }).then(function (response) {
-        console.log(response);
+        if (response.data.hasOwnProperty('errors')) {
+          dispatch((0,_features_validationStatusUser__WEBPACK_IMPORTED_MODULE_4__.setValidation)({
+            message: response.data.errors[0],
+            status: true
+          }));
+          console.log(response.data.errors[0]);
+        } else {
+          setLoading(true);
+          dispatch((0,_features_getStatusUser__WEBPACK_IMPORTED_MODULE_3__.getStatusUser)(''));
+          console.log(response);
+        }
+
+        setLoading(false);
+        dispatch((0,_features_showStatusBox__WEBPACK_IMPORTED_MODULE_2__.close)());
       })["catch"](function (error) {
+        setLoading(true);
         console.log(error);
       });
-      dispatch((0,_features_showStatusBox__WEBPACK_IMPORTED_MODULE_2__.close)());
-      dispatch((0,_features_getStatusUser__WEBPACK_IMPORTED_MODULE_3__.getStatusUser)(''));
     }
   };
 
@@ -7884,7 +7903,7 @@ function StatusBoxModal(props) {
             className: "bg-white mt-3 mb-3",
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
               onClick: createStatus,
-              className: "".concat(background ? 'bg-[#1B74E4] text-white' : 'bg-[#E4E6EB] text-[#BCC0C4]', " font-semibold w-full rounded-lg h-[36px]"),
+              className: "".concat(background ? 'bg-[#1B74E4] text-white' : 'bg-[#E4E6EB] text-[#BCC0C4]', " ").concat(loading ? 'cursor-wait' : 'cursor-pointer', " font-semibold w-full rounded-lg h-[36px]"),
               children: "Kirim"
             })
           })]

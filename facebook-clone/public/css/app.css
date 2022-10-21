@@ -776,6 +776,9 @@ video {
 .min-h-\[58px\] {
   min-height: 58px;
 }
+.min-h-\[80px\] {
+  min-height: 80px;
+}
 .w-\[90\%\] {
   width: 90%;
 }
@@ -871,6 +874,12 @@ video {
 }
 .cursor-pointer {
   cursor: pointer;
+}
+.cursor-wait {
+  cursor: wait;
+}
+.cursor-default {
+  cursor: default;
 }
 .resize {
   resize: both;
