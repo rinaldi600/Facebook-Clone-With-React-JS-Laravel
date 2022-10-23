@@ -758,6 +758,9 @@ video {
 .min-h-\[40px\] {
   min-height: 40px;
 }
+.min-h-\[80px\] {
+  min-height: 80px;
+}
 .min-h-\[48px\] {
   min-height: 48px;
 }
@@ -775,9 +778,6 @@ video {
 }
 .min-h-\[58px\] {
   min-height: 58px;
-}
-.min-h-\[80px\] {
-  min-height: 80px;
 }
 .w-\[90\%\] {
   width: 90%;
@@ -877,9 +877,6 @@ video {
 }
 .cursor-wait {
   cursor: wait;
-}
-.cursor-default {
-  cursor: default;
 }
 .resize {
   resize: both;

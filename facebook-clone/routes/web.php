@@ -29,6 +29,8 @@ Route::middleware('isLogin')->group(function () {
     Route::post('/logout', [\App\Http\Controllers\Home::class, 'logout']);
     Route::get('/user_profile/{user}', [\App\Http\Controllers\Home::class, 'viewUser']);
     Route::get('/user/{user}', [\App\Http\Controllers\Home::class, 'userView']);
+    Route::get('/{user}', [\App\Http\Controllers\Home::class, 'myUserView']);
+    Route::get('/get_my_posts/{user}', [\App\Http\Controllers\Home::class, 'myPost']);
     Route::post('/create_status_user', [\App\Http\Controllers\Home::class, 'getStatusUser'])->middleware('XssSanitizer');
 });
 

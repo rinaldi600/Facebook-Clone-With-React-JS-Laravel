@@ -78,4 +78,14 @@ class Home extends Controller
             ]);
         }
     }
+
+    public function myUserView() {
+        return view('welcome');
+    }
+
+    public function myPost(User $user) {
+        return response()->json([
+          'post' => $user->posts
+        ]);
+    }
 }

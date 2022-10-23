@@ -1,12 +1,15 @@
 import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
+import axios from "axios";
+
 
 
 function LeftNavbar(props) {
 
     const detailUser = useSelector(state => state.detailUserCurrent.value);
     const [showMore, setShowMore] = useState(false);
-
+    const navigate = useNavigate();
 
     const showMoreClick = () => {
       setShowMore(true);
@@ -16,9 +19,14 @@ function LeftNavbar(props) {
         setShowMore(false);
     };
 
+
+    const navigateDetailUser = () => {
+        navigate(`/${detailUser.username}`)
+    };
+
     return (
         <div className={"h-screen overflow-y-scroll bg-[#F0F2F5] scrollbar-hide"}>
-            <div className={"min-h-[48px] hover:bg-[#E4E6E9] mt-4 gap-2 pl-2 cursor-pointer flex flex-wrap items-center"}>
+            <div onClick={navigateDetailUser} className={"min-h-[48px] hover:bg-[#E4E6E9] mt-4 gap-2 pl-2 cursor-pointer flex flex-wrap items-center"}>
                 <div className={"w-[36px] h-[36px] rounded-full overflow-hidden"}>
                     <img src={detailUser['photo_profile']} alt=""/>
                 </div>
