@@ -3,37 +3,43 @@ import Navbar from "../Navbar/Navbar";
 import { createApi } from 'unsplash-js';
 import bgRandomComputer from '../../../../../bg-random/markus-winkler-_m5JqBg1AMg-unsplash.jpg';
 import photoDump from '../../../../../photo-dump/stephanie-liverani-Zz5LQe-VSMY-unsplash.jpg'
+import {useParams} from "react-router-dom";
+import axios from "axios";
 
 function ViewUser(props) {
 
     const detailUser = JSON.parse(localStorage.getItem('user'));
     const [bgRandom, setRandomBg] = useState('');
+    const {user} = useParams();
+    const [detailUserPeople, getDetailUserPeople] = useState([]);
     const unsplash = createApi({
         accessKey: 'UR3l5ThucatZkTCoUPxoDM7mvmBW1zUneBD6iRdOrx4',
     });
 
-    useEffect(() => {
-        unsplash.photos.getRandom({
+    useEffect(async () => {
+        await unsplash.photos.getRandom({
 
         }).then((success) => {
             setRandomBg(success.response?.urls.full);
         }).catch((error) => {
             console.log(error)
         });
-        console.log("WORK")
+        console.log(user)
     }, []);
 
-    // axios.get(`/user_profile/${username}`)
-    //     .then(function (response) {
-    //         console.log(response);
-    //
-    //     })
-    //     .catch(function (error) {
-    //         console.log(error);
-    //     })
-    //     .finally(function () {
-    //         console.log("WORK")
-    //     });
+    useEffect(async () => {
+        axios.get(`/user_profile/${user}`)
+            .then(function (response) {
+                getDetailUserPeople(response.data.detailUser);
+                console.log(response)
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+            .finally(function () {
+                console.log("WORK")
+            });
+    },[]);
 
     const comment = (event) => {
         if (event.keyCode === 13) {
@@ -143,7 +149,7 @@ function ViewUser(props) {
                             <p className={"font-bold text-xl text-[#050505]"}>Postingan</p>
                         </div>
 
-                        <div className={"rounded-md min-h-[300px] bg-white mt-3 overflow-hidden"}>
+                        <div className={"rounded-md bg-white mt-3 overflow-hidden"}>
                             <div className={"h-[50px] p-3 flex items-center gap-2"}>
                                 <div className={"w-[36px] h-[36px] overflow-hidden rounded-full"}>
                                     <img className={"w-full h-full object-center"} src={photoDump} alt=""/>
