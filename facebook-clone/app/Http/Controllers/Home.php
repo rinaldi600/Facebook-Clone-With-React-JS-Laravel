@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Post;
+use App\Models\Friend;
 
 class Home extends Controller
 {
@@ -47,6 +48,7 @@ class Home extends Controller
     }
 
     public function viewUser(User $user) {
+        $user->posts;
         return response()->json([
             'detailUser' => $user,
         ]);
@@ -86,6 +88,25 @@ class Home extends Controller
     public function myPost(User $user) {
         return response()->json([
           'post' => $user->posts
+        ]);
+    }
+
+    public function addFriend(Request $request) {
+
+        Friend::create([
+            'id_friend' => 'FRIEND - ' . date('YmdHis').substr((string)microtime(), 1, 8),
+            'username' => Auth::user()['username'],
+            'username_friend' => $request->input('usernameFriend'),
+        ]);
+
+        return response()->json([
+           'response' => 'Berhasil menambahkan teman'
+        ]);
+    }
+
+    public function checkFriend(User $user) {
+        return response()->json([
+            'is_friend' => $user->friends[0]->is_friend
         ]);
     }
 }

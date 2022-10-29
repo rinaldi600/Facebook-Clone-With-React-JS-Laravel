@@ -83,7 +83,7 @@ function StatusBoxModal(props) {
                <div className={"min-h-[368px] bg-blue-300"}>
                     <div className={"min-h-[40px] bg-white flex gap-2 p-4"}>
                         <div className={"w-[40px] h-[40px] rounded-full overflow-hidden"}>
-                            <img src={detailUser['photo_profile']} alt=""/>
+                            <img className={"w-full h-full"} src={detailUser['photo_profile']} alt=""/>
                         </div>
                         <div>
                             <p className={"text-sm font-semibold"}>{detailUser['name']}</p>

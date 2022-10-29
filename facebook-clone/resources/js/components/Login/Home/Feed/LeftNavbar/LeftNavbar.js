@@ -28,7 +28,7 @@ function LeftNavbar(props) {
         <div className={"h-screen overflow-y-scroll bg-[#F0F2F5] scrollbar-hide"}>
             <div onClick={navigateDetailUser} className={"min-h-[48px] hover:bg-[#E4E6E9] mt-4 gap-2 pl-2 cursor-pointer flex flex-wrap items-center"}>
                 <div className={"w-[36px] h-[36px] rounded-full overflow-hidden"}>
-                    <img src={detailUser['photo_profile']} alt=""/>
+                    <img className={"w-full h-full"} src={detailUser['photo_profile']} alt=""/>
                 </div>
                 <p className={"text-sm font-medium"}>{detailUser['name']}</p>
             </div>

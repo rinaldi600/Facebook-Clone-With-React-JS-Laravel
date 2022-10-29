@@ -3,35 +3,41 @@ import Navbar from "../Navbar/Navbar";
 import { createApi } from 'unsplash-js';
 import bgRandomComputer from '../../../../../bg-random/markus-winkler-_m5JqBg1AMg-unsplash.jpg';
 import photoDump from '../../../../../photo-dump/stephanie-liverani-Zz5LQe-VSMY-unsplash.jpg'
-import {useParams} from "react-router-dom";
+import {useParams, } from "react-router-dom";
 import axios from "axios";
+import moment from "moment";
 
 function ViewUser(props) {
 
     const detailUser = JSON.parse(localStorage.getItem('user'));
     const [bgRandom, setRandomBg] = useState('');
+    const [isFriend, checkFriend] = useState(null);
     const {user} = useParams();
     const [detailUserPeople, getDetailUserPeople] = useState([]);
+    const [statusFetch, setStatus] = useState(0);
     const unsplash = createApi({
         accessKey: 'UR3l5ThucatZkTCoUPxoDM7mvmBW1zUneBD6iRdOrx4',
     });
 
-    useEffect(async () => {
-        await unsplash.photos.getRandom({
 
-        }).then((success) => {
-            setRandomBg(success.response?.urls.full);
-        }).catch((error) => {
-            console.log(error)
-        });
-        console.log(user)
-    }, []);
+    // useEffect(async () => {
+    //     await unsplash.photos.getRandom({
+    //
+    //     }).then((success) => {
+    //         setRandomBg(success.response?.urls.full);
+    //     }).catch((error) => {
+    //         console.log(error)
+    //     });
+    // }, []);
 
     useEffect(async () => {
         axios.get(`/user_profile/${user}`)
             .then(function (response) {
                 getDetailUserPeople(response.data.detailUser);
-                console.log(response)
+                console.log(response);
+                if (response.status === 200) {
+                    setStatus(response.status);
+                }
             })
             .catch(function (error) {
                 console.log(error);
@@ -41,12 +47,36 @@ function ViewUser(props) {
             });
     },[]);
 
+    moment.locale('id');
+
     const comment = (event) => {
         if (event.keyCode === 13) {
             console.log("WORK");
             event.target.value = ''
         }
     };
+
+    const addFriend = async () => {
+        await axios.post('/add_friend', {
+            usernameFriend : detailUserPeople['username']
+        })
+            .then((response) => {
+                console.log(response)
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    };
+
+    useEffect(async () => {
+        await axios.get(`/check_friend/${detailUser['username']}`)
+            .then((success) => {
+                console.log(success)
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    },[]);
 
     return (
         <fragment>
@@ -59,11 +89,11 @@ function ViewUser(props) {
                     <div style={{borderBottom : '1px solid #CCCED2'}} className={"min-h-[160px] flex justify-self-center"}>
                         <div className={"flex lg:flex-row w-full gap-2 flex-col"}>
                             <div className={"w-[168px] h-[168px] bg-yellow-500 overflow-hidden rounded-full border-2 border-white lg:mt-[-50px] lg:ml-2 mx-auto mt-[-50px]"}>
-                                <img className={"w-full h-full object-center"} src={photoDump} alt=""/>
+                                <img className={"w-full h-full object-center"} src={detailUserPeople['photo_profile']} alt=""/>
                             </div>
                             <div className={"lg:w-[85%] w-full flex lg:mb-0 mb-3 lg:flex-row flex-col justify-between lg:text-start text-center"}>
                                 <div className={"lg:mt-3 lg:ml-3"}>
-                                    <h1 className={"font-bold text-3xl text-[#050505]"}>Lucille J. Tatum <span className={"font-normal"}>( tatum69 )</span></h1>
+                                    <h1 className={"font-bold text-3xl text-[#050505]"}>{detailUserPeople['name']} <span className={"font-normal"}>( {detailUserPeople['username']} )</span></h1>
                                     <p className={"font-semibold text-[#65676b] text-base mb-10 lg:mb-0"}>800 Teman</p>
                                 </div>
                                 <div className={"flex justify-center gap-2 items-center"}>
@@ -71,7 +101,7 @@ function ViewUser(props) {
                                         <img className={"w-[16px] h-[16px]"} src="https://static.xx.fbcdn.net/rsrc.php/v3/yE/r/1z-5F6qDswz.png" alt=""/>
                                         <span className={"font-semibold text-[#050505] text-sm"}>Pesan</span>
                                     </button>
-                                    <button className={"w-[141px] h-[36px] bg-[#1B74E4] hover:bg-[#1A6ED8] justify-center rounded-md flex items-center gap-1"}>
+                                    <button onClick={addFriend} className={"w-[141px] h-[36px] bg-[#1B74E4] hover:bg-[#1A6ED8] justify-center rounded-md flex items-center gap-1"}>
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                              className="w-[16px] h-[16px] text-white">
                                             <path
@@ -110,7 +140,7 @@ function ViewUser(props) {
                     <div className={"lg:w-[40%] shadow-md pl-4 pt-2 pr-4 rounded-md lg:sticky top-0 w-[99%] h-[350px] bg-white"}>
                         <p className={"font-bold text-xl text-[#050505]"}>Intro</p>
                         <div className={"mt-2 border-b border-[#CED0D4]"}>
-                            <p className={"text-sm text-[#050505] text-center mb-2"}>Email : rinaldih84@gmail.com</p>
+                            <p className={"text-sm text-[#050505] text-center mb-2"}>Email : {detailUserPeople['email']}</p>
                         </div>
                         <div className={"mt-3"}>
                             <div className={"flex gap-2 mb-5 items-center"}>
@@ -149,56 +179,68 @@ function ViewUser(props) {
                             <p className={"font-bold text-xl text-[#050505]"}>Postingan</p>
                         </div>
 
-                        <div className={"rounded-md bg-white mt-3 overflow-hidden"}>
-                            <div className={"h-[50px] p-3 flex items-center gap-2"}>
-                                <div className={"w-[36px] h-[36px] overflow-hidden rounded-full"}>
-                                    <img className={"w-full h-full object-center"} src={photoDump} alt=""/>
-                                </div>
-                                <div>
-                                    <p className={"text-[#050505] font-semibold text-sm"}>Lucille J. Tatum</p>
-                                    <p className={"text-[#65676B] text-xs"}>4 April 2015</p>
-                                </div>
-                            </div>
+                        {
+                            detailUserPeople['posts']?.length <= 0 && statusFetch === 200 ?
+                            <p>Tidak Ada Postingan Status</p>
+                            :
+                                (
+                                    detailUserPeople['posts']?.length <= 0 && statusFetch !== 200 ?
+                                        <p>Loading</p>
+                                        :
+                                    detailUserPeople['posts']?.map((post) => (
+                                        <div className={"rounded-md bg-white mt-3 overflow-hidden"} key={post['id']}>
+                                            <div className={"h-[50px] p-3 flex items-center gap-2"}>
+                                                <div className={"w-[36px] h-[36px] overflow-hidden rounded-full"}>
+                                                    <img className={"w-full h-full object-center"} src={detailUserPeople['photo_profile']} alt=""/>
+                                                </div>
+                                                <div>
+                                                    <p className={"text-[#050505] font-semibold text-sm"}>{detailUserPeople['name']}</p>
+                                                    <p className={"text-[#65676B] text-xs"}>{moment(new Date(post['created_at'])).format('LL')}</p>
+                                                </div>
+                                            </div>
 
-                            <div className={"min-h-[56px] p-3 pt-1"}>
-                                <p className={"text-[#050505] text-2xl"}>Your time is limited, so don't waste it living someone else's life</p>
+                                            <div className={"min-h-[56px] p-3 pt-1"}>
+                                                <p className={"text-[#050505] text-2xl"}>{post['post']}</p>
 
-                                <div className={"mt-1 flex justify-between"}>
-                                    <div className={"flex items-center gap-1"}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                             className="w-[18px] h-[18px] text-white bg-[#1198F6] rounded-full p-0.5 cursor-pointer">
-                                            <path
-                                                d="M7.493 18.75c-.425 0-.82-.236-.975-.632A7.48 7.48 0 016 15.375c0-1.75.599-3.358 1.602-4.634.151-.192.373-.309.6-.397.473-.183.89-.514 1.212-.924a9.042 9.042 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75 2.25 2.25 0 012.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H14.23c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23h-.777zM2.331 10.977a11.969 11.969 0 00-.831 4.398 12 12 0 00.52 3.507c.26.85 1.084 1.368 1.973 1.368H4.9c.445 0 .72-.498.523-.898a8.963 8.963 0 01-.924-3.977c0-1.708.476-3.305 1.302-4.666.245-.403-.028-.959-.5-.959H4.25c-.832 0-1.612.453-1.918 1.227z"/>
-                                        </svg>
-                                        <p className={"text-[#65676b] text-sm"}>77</p>
-                                    </div>
-                                    <p className={"text-[#65676b] text-sm"}>15 Komentar</p>
-                                </div>
-                                <div className={"h-[1px] mt-3 bg-[#CED0D4]"}>
+                                                <div className={"mt-1 flex justify-between"}>
+                                                    <div className={"flex items-center gap-1"}>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                                             className="w-[18px] h-[18px] text-white bg-[#1198F6] rounded-full p-0.5 cursor-pointer">
+                                                            <path
+                                                                d="M7.493 18.75c-.425 0-.82-.236-.975-.632A7.48 7.48 0 016 15.375c0-1.75.599-3.358 1.602-4.634.151-.192.373-.309.6-.397.473-.183.89-.514 1.212-.924a9.042 9.042 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75 2.25 2.25 0 012.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H14.23c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23h-.777zM2.331 10.977a11.969 11.969 0 00-.831 4.398 12 12 0 00.52 3.507c.26.85 1.084 1.368 1.973 1.368H4.9c.445 0 .72-.498.523-.898a8.963 8.963 0 01-.924-3.977c0-1.708.476-3.305 1.302-4.666.245-.403-.028-.959-.5-.959H4.25c-.832 0-1.612.453-1.918 1.227z"/>
+                                                        </svg>
+                                                        <p className={"text-[#65676b] text-sm"}>77</p>
+                                                    </div>
+                                                    <p className={"text-[#65676b] text-sm"}>15 Komentar</p>
+                                                </div>
+                                                <div className={"h-[1px] mt-3 bg-[#CED0D4]"}>
 
-                                </div>
-                            </div>
+                                                </div>
+                                            </div>
 
-                            <div className={"min-h-[100px] p-3 pt-1 bg-white"}>
-                                <p className={"text-[#65676b] font-semibold text-sm cursor-pointer hover:underline hover:decoration-solid"}>Lihat 14 komentar sebelumnya</p>
-                                <div className={"mt-2 flex items-center gap-2"}>
-                                    <div className={"w-[32px] h-[32px] rounded-full overflow-hidden"}>
-                                        <img className={"w-full h-full"} src={photoDump} alt=""/>
-                                    </div>
-                                    <div className={"max-w-[221px] min-h-[33px] p-2 bg-[#F0F2F5] rounded-lg"}>
-                                        <p className={"text-sm text-[#050505]"}>hahaha gpp ..men uut dwe lah haha</p>
-                                    </div>
-                                </div>
-                                <div className={"max-w-[558px] min-h-[36px] mt-2 flex gap-2 items-center"}>
-                                    <div className={"w-[32px] h-[32px] rounded-full overflow-hidden"}>
-                                        <img className={"w-full h-full"} src={detailUser['photo_profile']} alt=""/>
-                                    </div>
-                                    <div className={"max-w-[480px] relative w-full h-[36px]"}>
-                                        <input type="text" placeholder={"Tulis Komentar"} onKeyUp={(e) => comment(e)} className={"bg-[#F0F2F5] rounded-full p-2 text-sm w-full box-border h-full outline-none border-none"}/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                            <div className={"min-h-[100px] p-3 pt-1 bg-white"}>
+                                                <p className={"text-[#65676b] font-semibold text-sm cursor-pointer hover:underline hover:decoration-solid"}>Lihat 14 komentar sebelumnya</p>
+                                                <div className={"mt-2 flex items-center gap-2"}>
+                                                    <div className={"w-[32px] h-[32px] rounded-full overflow-hidden"}>
+                                                        <img className={"w-full h-full"} src={photoDump} alt=""/>
+                                                    </div>
+                                                    <div className={"max-w-[221px] min-h-[33px] p-2 bg-[#F0F2F5] rounded-lg"}>
+                                                        <p className={"text-sm text-[#050505]"}>hahaha gpp ..men uut dwe lah haha</p>
+                                                    </div>
+                                                </div>
+                                                <div className={"max-w-[558px] min-h-[36px] mt-2 flex gap-2 items-center"}>
+                                                    <div className={"w-[32px] h-[32px] rounded-full overflow-hidden"}>
+                                                        <img className={"w-full h-full"} src={detailUser['photo_profile']} alt=""/>
+                                                    </div>
+                                                    <div className={"max-w-[480px] relative w-full h-[36px]"}>
+                                                        <input type="text" placeholder={"Tulis Komentar"} onKeyUp={(e) => comment(e)} className={"bg-[#F0F2F5] rounded-full p-2 text-sm w-full box-border h-full outline-none border-none"}/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))
+                                )
+                        }
                     </div>
 
                 </div>

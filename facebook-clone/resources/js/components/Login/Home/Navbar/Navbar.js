@@ -91,7 +91,8 @@ function Navbar() {
     };
 
     const viewUser = (username) => {
-        navigate(`/user/${username}`)
+        navigate(`/user/${username}`);
+        navigate(0);
     };
 
     const showNotifications = () => {
@@ -121,8 +122,8 @@ function Navbar() {
                     <div className={"w-full p-2"}>
                         {
                             users.length > 0 ?
-                                users.map((user, index)=> (
-                                    <div onClick={() => viewUser(user.username)} className={"flex w-full items-center gap-2 mt-3 p-1 rounded-lg hover:bg-[#E3E4E5] cursor-pointer"}>
+                                users.map((user, index) => (
+                                    <div onClick={() => viewUser(user.username)} key={index} className={"flex w-full items-center gap-2 mt-3 p-1 rounded-lg hover:bg-[#E3E4E5] cursor-pointer"}>
                                         <div className={"w-[36px] h-[36px] rounded-full overflow-hidden"}>
                                             <img className={"w-full h-full"} src={user.photo_profile} alt=""/>
                                         </div>
@@ -193,7 +194,7 @@ function Navbar() {
                     </svg>
                 </div>
                 <div onClick={showProfile} className={"w-[40px] h-[40px] rounded-full cursor-pointer overflow-hidden"}>
-                    <img src={detailUser?.photo_profile ?? detailUserRedux?.photo_profile} alt=""/>
+                    <img className={"w-full h-full"} src={detailUser?.photo_profile ?? detailUserRedux?.photo_profile} alt=""/>
                 </div>
             </div>
 

@@ -27,7 +27,7 @@ function Center(props) {
             <div className={"min-h-[101px] md:w-[90%] bg-white rounded-lg p-3"}>
                 <div style={{borderBottom : '1px solid #E4E6EB'}} className={"mb-2 w-full flex gap-2 p-1 items-center h-[60px]"}>
                     <div className={"w-[40px] h-[40px] rounded-full overflow-hidden"}>
-                        <img src={detailUser['photo_profile']} alt=""/>
+                        <img className={"w-full h-full"} src={detailUser['photo_profile']} alt=""/>
                     </div>
                     <input value={statusUser.length > 0 ? statusUser : ''} disabled={!!statusState} onClick={showBoxModal} className={`${statusValidation ? 'border-2 border-red-500' : 'border-none'} bg-[#F0F2F5] w-[90%] h-[40px] rounded-full text-lg p-2 outline-none cursor-pointer hover:bg-[#E4E6E9] border-2 border-red-500`} placeholder={`Apa yang anda pikirkan, ${detailUser['name'].split(' ')[0]}?`} type="text"/>
                 </div>
