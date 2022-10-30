@@ -1085,6 +1085,12 @@ video {
 .p-px {
   padding: 1px;
 }
+.p-10 {
+  padding: 2.5rem;
+}
+.p-6 {
+  padding: 1.5rem;
+}
 .pt-3 {
   padding-top: 0.75rem;
 }

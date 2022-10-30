@@ -9943,7 +9943,18 @@ function ViewUser(props) {
               return axios__WEBPACK_IMPORTED_MODULE_4___default().post('/add_friend', {
                 usernameFriend: detailUserPeople['username']
               }).then(function (response) {
-                console.log(response);
+                if (response.status === 200) {
+                  checkFriends().then(function (success) {
+                    if (success.data['is_friend'] !== null) {
+                      checkFriend(success.data['is_friend']);
+                      console.log("WORKED");
+                    } else {
+                      console.log("FAILS");
+                    }
+                  })["catch"](function (error) {
+                    console.log(error);
+                  });
+                }
               })["catch"](function (error) {
                 console.log(error);
               });
@@ -9961,25 +9972,43 @@ function ViewUser(props) {
     };
   }();
 
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-      while (1) {
-        switch (_context3.prev = _context3.next) {
-          case 0:
-            _context3.next = 2;
-            return axios__WEBPACK_IMPORTED_MODULE_4___default().get("/check_friend/".concat(detailUser['username'])).then(function (success) {
-              console.log(success);
-            })["catch"](function (error) {
-              console.log(error);
-            });
+  var checkFriends = /*#__PURE__*/function () {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_4___default().get("/check_friend/".concat(detailUser['username']));
 
-          case 2:
-          case "end":
-            return _context3.stop();
+            case 2:
+              return _context3.abrupt("return", _context3.sent);
+
+            case 3:
+            case "end":
+              return _context3.stop();
+          }
         }
+      }, _callee3);
+    }));
+
+    return function checkFriends() {
+      return _ref3.apply(this, arguments);
+    };
+  }();
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    checkFriends().then(function (success) {
+      if (success.data['is_friend'] !== null) {
+        checkFriend(success.data['is_friend']);
+        console.log("WORKED");
+      } else {
+        console.log("FAILS");
       }
-    }, _callee3);
-  })), []);
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  }, []);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("fragment", {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Navbar_Navbar__WEBPACK_IMPORTED_MODULE_1__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
       className: "min-h-[565px] bg-white",
@@ -10032,7 +10061,13 @@ function ViewUser(props) {
                     className: "font-semibold text-[#050505] text-sm",
                     children: "Pesan"
                   })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("button", {
+                }), isFriend === 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
+                  className: "w-[141px] p-6 h-[36px] bg-[#1B74E4] hover:bg-[#1A6ED8] justify-center rounded-md flex items-center gap-1",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
+                    className: "font-semibold text-sm text-white",
+                    children: "Menunggu Konfirmasi"
+                  })
+                }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("button", {
                   onClick: addFriend,
                   className: "w-[141px] h-[36px] bg-[#1B74E4] hover:bg-[#1A6ED8] justify-center rounded-md flex items-center gap-1",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("svg", {

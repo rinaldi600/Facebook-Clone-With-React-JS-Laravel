@@ -106,7 +106,7 @@ class Home extends Controller
 
     public function checkFriend(User $user) {
         return response()->json([
-            'is_friend' => $user->friends[0]->is_friend
+            'is_friend' => count($user->friends) === 0 ? null : $user->friends[0]->is_friend,
         ]);
     }
 }
