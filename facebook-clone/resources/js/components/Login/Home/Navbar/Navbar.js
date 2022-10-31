@@ -19,8 +19,10 @@ function Navbar() {
     const [modalSearchFriends, setModalSearchFriends] = useState(false);
     const [windowDimensions, setWindowDimensions] = useState(getWidthDimension());
     const [closeModalBox, setCloseModalBox] = useState(0);
+    const [requestFriend, setRequestFriend] = useState([]);
     const [modalProfile, setModalProfile] = useState(false);
     const [modalNotifications, setModalNotifications] = useState(false);
+    const [modalNotificationsFriends, setModalNotificationsFriends] = useState(false);
     const navigate = useNavigate();
     const [users, searchUser] = useState([]);
     const [status, setStatus] = useState(0);
@@ -37,7 +39,6 @@ function Navbar() {
         setDetailUser(JSON.parse(window.localStorage.getItem('user')))
     },[]);
 
-    console.log(detailUserRedux);
     const searchFriends = (e) => {
         if (e.target.value !== '') {
             setModalSearchFriends(true);
@@ -81,6 +82,26 @@ function Navbar() {
         }
     });
 
+    useEffect(async () => {
+        if (detailUser !== undefined) {
+            await axios.get(`/check_request_friend/${detailUser['username'] ?? detailUserRedux['username']}`)
+                .then((success) => {
+                    setRequestFriend(success.data.dataRequest);
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+        }
+    },[detailUser]);
+
+    const confirmFriend = (id) => {
+        console.log(id);
+    };
+
+    const rejectFriend = (id) => {
+        console.log(id);
+    };
+
     const showProfile = () => {
         setModalProfile(true);
         setCloseModalBox(closeModalBox + 1);
@@ -108,6 +129,14 @@ function Navbar() {
         navigate('/home');
     };
 
+    const showRequestFriends = () => {
+        setModalNotificationsFriends(true);
+        setCloseModalBox(closeModalBox + 1);
+
+        if (closeModalBox % 2 !== 0) {
+            setModalNotificationsFriends(false);
+        }
+    };
 
     return (
         <div style={{boxShadow: 'rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px'}} className={"flex min-h-[56px] flex-wrap font-Helvetica bg-red-400 shadow-md"}>
@@ -179,18 +208,26 @@ function Navbar() {
             </div>
 
             <div className={"w-[50%] gap-2 items-center justify-center flex md:w-[25%] bg-white"}>
-                <div className={"w-[40px] h-[40px] bg-[#E4E6EB] rounded-full grid justify-center content-center cursor-pointer"}>
+                <div onClick={showRequestFriends} className={"w-[40px] h-[40px] bg-[#E4E6EB] relative rounded-full grid justify-center content-center cursor-pointer"}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                          stroke="currentColor" className="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
-                              d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/>
+                              d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
                     </svg>
+                    {
+                        requestFriend.length === 0 ?
+                            ''
+                            :
+                            <div className={"w-[24px] h-[24px] absolute top-[-5px] right-[-10px] flex items-center justify-center rounded-full bg-[#CC1016]"}>
+                                <p className={"text-white"}>{requestFriend.length}</p>
+                            </div>
+                    }
                 </div>
                 <div onClick={showNotifications} className={"w-[40px] h-[40px] bg-[#E4E6EB] rounded-full grid justify-center content-center cursor-pointer"}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                          stroke="currentColor" className="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
-                              d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/>
+                              d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/>
                     </svg>
                 </div>
                 <div onClick={showProfile} className={"w-[40px] h-[40px] rounded-full cursor-pointer overflow-hidden"}>
@@ -230,6 +267,30 @@ function Navbar() {
                         <p className={"text-[#050505] font-normal text-sm"}><span className={"font-semibold"}>Shane M. Heatherly</span>, mengomentari postingan anda</p>
                     </div>
                 </div>
+            </div>
+
+            <div style={{boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px'}} className={`mobile:w-full w-[30%] ${windowDimensions.width < 508 ? 'top-[14%]' : ''} ${windowDimensions.width >= 508 && windowDimensions.width <= 767 ? 'top-[8%]' : ''} ${windowDimensions.width >= 767 && windowDimensions.width <= 1023 ? 'top-[15%]' : ''} lg:top-[10%] right-0 ${modalNotificationsFriends ? '' : 'hidden'} bg-white z-50 p-2 min-h-[100px] rounded-lg absolute`}>
+                <p className={"text-2xl font-bold"}>Permintaan Teman</p>
+
+                {
+                    requestFriend.map((request) => (
+                        <div className={"w-full p-2"}>
+                            <div className={"flex w-full items-center gap-2"}>
+                                <div className={"w-[36px] h-[36px] rounded-full overflow-hidden"}>
+                                    <img className={"w-full h-full"} src={request['users']['photo_profile']} alt=""/>
+                                </div>
+                                <div>
+                                    <p className={"text-[#050505] font-normal text-sm"}><span className={"font-semibold"}>{request['users']['name']}</span>, ingin menjadi teman anda</p>
+                                    <div className={"flex gap-2"}>
+                                        <button onClick={() => confirmFriend(request['id_friend'])} className={"h-[36px] bg-[#1B74E4] hover:bg-[#1A6ED8] rounded-md p-1 text-white"}>Konfirmasi</button>
+                                        <button onClick={() => rejectFriend(request['id_friend'])} className={"bg-[#E4E6EB] h-[36px] hover:bg-[#D8DADF] rounded-md p-1"}>Tolak</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                }
+
             </div>
         </div>
     )

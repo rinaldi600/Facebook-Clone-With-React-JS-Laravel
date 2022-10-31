@@ -104,9 +104,17 @@ class Home extends Controller
         ]);
     }
 
-    public function checkFriend(User $user) {
+    public function checkFriend(User $user, $friend) {
         return response()->json([
-            'is_friend' => count($user->friends) === 0 ? null : $user->friends[0]->is_friend,
+            'is_friend' => count($user->friends->where('username_friend', $friend)) === 0 ?
+                null : $user->friends->where('username_friend', $friend)->first()->is_friend,
         ]);
     }
+
+    public function requestFriend(Friend $friend) {
+        return response()->json([
+           'dataRequest' => $friend::with('users')->where('is_friend',0)->get(),
+        ]);
+    }
+
 }

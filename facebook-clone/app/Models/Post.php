@@ -19,6 +19,6 @@ class Post extends Model
     protected $guarded = ['id'];
 
     public function users() {
-        return $this->belongsTo(User::class,'username');
+        return $this->belongsTo(User::class,'username','username');
     }
 }

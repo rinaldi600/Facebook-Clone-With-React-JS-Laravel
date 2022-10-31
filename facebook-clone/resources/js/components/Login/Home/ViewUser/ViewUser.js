@@ -19,16 +19,15 @@ function ViewUser(props) {
         accessKey: 'UR3l5ThucatZkTCoUPxoDM7mvmBW1zUneBD6iRdOrx4',
     });
 
+    useEffect(async () => {
+        await unsplash.photos.getRandom({
 
-    // useEffect(async () => {
-    //     await unsplash.photos.getRandom({
-    //
-    //     }).then((success) => {
-    //         setRandomBg(success.response?.urls.full);
-    //     }).catch((error) => {
-    //         console.log(error)
-    //     });
-    // }, []);
+        }).then((success) => {
+            setRandomBg(success.response?.urls.full);
+        }).catch((error) => {
+            console.log(error)
+        });
+    }, []);
 
     useEffect(async () => {
         axios.get(`/user_profile/${user}`)
@@ -43,7 +42,6 @@ function ViewUser(props) {
                 console.log(error);
             })
             .finally(function () {
-                console.log("WORK")
             });
     },[]);
 
@@ -62,16 +60,7 @@ function ViewUser(props) {
         })
             .then((response) => {
                 if (response.status === 200) {
-                    checkFriends().then((success) => {
-                        if (success.data['is_friend'] !== null) {
-                            checkFriend(success.data['is_friend']);
-                            console.log("WORKED")
-                        } else {
-                            console.log("FAILS")
-                        }
-                    }).catch((error) => {
-                        console.log(error);
-                    });
+                    resultFriend();
                 }
             })
             .catch((error) => {
@@ -79,24 +68,30 @@ function ViewUser(props) {
             })
     };
 
+    const checkFriends = async ($usernameProfile) => {
+        if ($usernameProfile !== detailUser['username']) {
+            return await axios.get(`/check_friend/${detailUser['username']}/${$usernameProfile}`);
+        }
+    };
 
-    const checkFriends = async () => {
-        return await axios.get(`/check_friend/${detailUser['username']}`);
+    const resultFriend = () => {
+        if (detailUserPeople['username'] !== undefined) {
+            checkFriends(detailUserPeople['username']).then((success) => {
+                if (success.data['is_friend'] !== null) {
+                    checkFriend(success.data['is_friend']);
+                    console.log(success);
+                } else {
+                    console.log("FAILS")
+                }
+            }).catch((error) => {
+                console.log(error);
+            });
+        }
     };
 
     useEffect(() => {
-        checkFriends().then((success) => {
-            if (success.data['is_friend'] !== null) {
-                checkFriend(success.data['is_friend']);
-                console.log("WORKED")
-            } else {
-                console.log("FAILS")
-            }
-        }).catch((error) => {
-            console.log(error);
-        });
-    },[]);
-
+        resultFriend();
+    },[detailUserPeople]);
 
     return (
         <fragment>
@@ -117,24 +112,32 @@ function ViewUser(props) {
                                     <p className={"font-semibold text-[#65676b] text-base mb-10 lg:mb-0"}>800 Teman</p>
                                 </div>
                                 <div className={"flex justify-center gap-2 items-center"}>
-                                    <button className={"w-[82px] h-[36px] bg-[#E4E6EB] hover:bg-[#D8DADF] justify-center rounded-md flex items-center gap-1"}>
-                                        <img className={"w-[16px] h-[16px]"} src="https://static.xx.fbcdn.net/rsrc.php/v3/yE/r/1z-5F6qDswz.png" alt=""/>
-                                        <span className={"font-semibold text-[#050505] text-sm"}>Pesan</span>
-                                    </button>
                                     {
-                                        isFriend === 0 ?
-                                            <button  className={"w-[141px] p-6 h-[36px] bg-[#1B74E4] hover:bg-[#1A6ED8] justify-center rounded-md flex items-center gap-1"}>
-                                                <span className={"font-semibold text-sm text-white"}>Menunggu Konfirmasi</span>
+                                        detailUserPeople['username'] !== detailUser['username'] ?
+                                            <button className={"w-[82px] h-[36px] bg-[#E4E6EB] hover:bg-[#D8DADF] justify-center rounded-md flex items-center gap-1"}>
+                                                <img className={"w-[16px] h-[16px]"} src="https://static.xx.fbcdn.net/rsrc.php/v3/yE/r/1z-5F6qDswz.png" alt=""/>
+                                                <span className={"font-semibold text-[#050505] text-sm"}>Pesan</span>
                                             </button>
                                             :
-                                            <button onClick={addFriend} className={"w-[141px] h-[36px] bg-[#1B74E4] hover:bg-[#1A6ED8] justify-center rounded-md flex items-center gap-1"}>
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                                     className="w-[16px] h-[16px] text-white">
-                                                    <path
-                                                        d="M6.25 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM3.25 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM19.75 7.5a.75.75 0 00-1.5 0v2.25H16a.75.75 0 000 1.5h2.25v2.25a.75.75 0 001.5 0v-2.25H22a.75.75 0 000-1.5h-2.25V7.5z"/>
-                                                </svg>
-                                                <span className={"font-semibold text-sm text-white"}>Tambah Teman</span>
-                                            </button>
+                                            ''
+                                    }
+                                    {
+                                        detailUserPeople['username'] !== detailUser['username'] ?
+                                            isFriend === 0 ?
+                                                <button  className={"w-[141px] p-6 h-[36px] bg-[#1B74E4] hover:bg-[#1A6ED8] justify-center rounded-md flex items-center gap-1"}>
+                                                    <span className={"font-semibold text-sm text-white"}>Menunggu Konfirmasi</span>
+                                                </button>
+                                                :
+                                                <button onClick={addFriend} className={"w-[141px] h-[36px] bg-[#1B74E4] hover:bg-[#1A6ED8] justify-center rounded-md flex items-center gap-1"}>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                                         className="w-[16px] h-[16px] text-white">
+                                                        <path
+                                                            d="M6.25 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM3.25 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM19.75 7.5a.75.75 0 00-1.5 0v2.25H16a.75.75 0 000 1.5h2.25v2.25a.75.75 0 001.5 0v-2.25H22a.75.75 0 000-1.5h-2.25V7.5z"/>
+                                                    </svg>
+                                                    <span className={"font-semibold text-sm text-white"}>Tambah Teman</span>
+                                                </button>
+                                            :
+                                            ''
                                     }
                                 </div>
                             </div>
