@@ -107,7 +107,7 @@ class SignUpUser extends Controller
                 $user = Auth::user();
                 $request->session()->regenerate();
                 return response()->json([
-                    'WORK' => 'SUCCESS'
+                    'WORK' => $user
                 ]);
             } else {
                 return response()->json([

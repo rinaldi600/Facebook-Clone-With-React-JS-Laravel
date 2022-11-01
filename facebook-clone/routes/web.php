@@ -31,7 +31,8 @@ Route::middleware('isLogin')->group(function () {
     Route::get('/user_profile/{user}', [\App\Http\Controllers\Home::class, 'viewUser']);
     Route::get('/user/{user}', [\App\Http\Controllers\Home::class, 'userView']);
     Route::get('/check_friend/{user}/{friend}', [\App\Http\Controllers\Home::class, 'checkFriend']);
-    Route::get('/check_request_friend/{username_friend}', [\App\Http\Controllers\Home::class, 'requestFriend']);
+//    Route::get('/check_request_friend/{username_friend}', [\App\Http\Controllers\Home::class, 'requestFriend']);
+    Route::get('/check_request_friend', [\App\Http\Controllers\Home::class, 'requestFriend']);
     Route::get('/{user}', [\App\Http\Controllers\Home::class, 'myUserView']);
     Route::get('/get_my_posts/{user}', [\App\Http\Controllers\Home::class, 'myPost']);
     Route::post('/create_status_user', [\App\Http\Controllers\Home::class, 'getStatusUser'])->middleware('XssSanitizer');
