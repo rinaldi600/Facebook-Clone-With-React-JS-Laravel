@@ -111,9 +111,12 @@ class Home extends Controller
         ]);
     }
 
-    public function requestFriend(Friend $friend) {
+    public function requestFriend($usernameFriend) {
         return response()->json([
-           'dataRequest' => $friend::with('users')->where('is_friend',0)->get(),
+            'dataRequest' => Friend::with('users')->where([
+                ['is_friend',0],
+                ['username_friend', $usernameFriend],
+            ])->get(),
         ]);
     }
 

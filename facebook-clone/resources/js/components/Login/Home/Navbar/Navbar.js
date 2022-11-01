@@ -35,8 +35,8 @@ function Navbar() {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    useEffect(() => {
-        setDetailUser(JSON.parse(window.localStorage.getItem('user')))
+    useEffect( () => {
+        setDetailUser(JSON.parse(window.localStorage.getItem('user')));
     },[]);
 
     const searchFriends = (e) => {
@@ -65,6 +65,7 @@ function Navbar() {
             .then((response) => {
                 navigate('/');
                 window.localStorage.clear();
+                navigate(0);
             })
             .catch((error) => {
                 console.log(error);
@@ -82,15 +83,27 @@ function Navbar() {
         }
     });
 
-    useEffect(async () => {
-        if (detailUser !== undefined) {
-            await axios.get(`/check_request_friend/${detailUser['username'] ?? detailUserRedux['username']}`)
+
+    useEffect(() => {
+        if (typeof detailUser === 'object' && detailUser !== null) {
+            const fetchRequest = async () => {
+                return await axios.get(`/check_request_friend/${detailUser.username ?? detailUserRedux.username}`)
+            };
+
+            fetchRequest()
                 .then((success) => {
-                    setRequestFriend(success.data.dataRequest);
+                    setRequestFriend(success.data['dataRequest']);
+                    console.log(success)
                 })
                 .catch((error) => {
-                    console.log(error);
-                })
+                    console.log(error)
+                });
+        }
+    },[detailUser]);
+
+    useEffect(() => {
+        if (document.readyState === 'complete' && requestFriend.length > 0) {
+            navigate(0);
         }
     },[detailUser]);
 
@@ -101,6 +114,7 @@ function Navbar() {
     const rejectFriend = (id) => {
         console.log(id);
     };
+
 
     const showProfile = () => {
         setModalProfile(true);
@@ -216,7 +230,14 @@ function Navbar() {
                     </svg>
                     {
                         requestFriend.length === 0 ?
-                            ''
+                            <div className={"w-[24px] h-[24px] absolute top-[-5px] right-[-10px] flex items-center justify-center rounded-full bg-[#CC1016]"}>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                     className="w-[12px] h-[12px] text-white">
+                                    <path fill-rule="evenodd"
+                                          d="M4.755 10.059a7.5 7.5 0 0112.548-3.364l1.903 1.903h-3.183a.75.75 0 100 1.5h4.992a.75.75 0 00.75-.75V4.356a.75.75 0 00-1.5 0v3.18l-1.9-1.9A9 9 0 003.306 9.67a.75.75 0 101.45.388zm15.408 3.352a.75.75 0 00-.919.53 7.5 7.5 0 01-12.548 3.364l-1.902-1.903h3.183a.75.75 0 000-1.5H2.984a.75.75 0 00-.75.75v4.992a.75.75 0 001.5 0v-3.18l1.9 1.9a9 9 0 0015.059-4.035.75.75 0 00-.53-.918z"
+                                          clip-rule="evenodd"/>
+                                </svg>
+                            </div>
                             :
                             <div className={"w-[24px] h-[24px] absolute top-[-5px] right-[-10px] flex items-center justify-center rounded-full bg-[#CC1016]"}>
                                 <p className={"text-white"}>{requestFriend.length}</p>
@@ -273,22 +294,25 @@ function Navbar() {
                 <p className={"text-2xl font-bold"}>Permintaan Teman</p>
 
                 {
-                    requestFriend.map((request) => (
-                        <div className={"w-full p-2"}>
-                            <div className={"flex w-full items-center gap-2"}>
-                                <div className={"w-[36px] h-[36px] rounded-full overflow-hidden"}>
-                                    <img className={"w-full h-full"} src={request['users']['photo_profile']} alt=""/>
-                                </div>
-                                <div>
-                                    <p className={"text-[#050505] font-normal text-sm"}><span className={"font-semibold"}>{request['users']['name']}</span>, ingin menjadi teman anda</p>
-                                    <div className={"flex gap-2"}>
-                                        <button onClick={() => confirmFriend(request['id_friend'])} className={"h-[36px] bg-[#1B74E4] hover:bg-[#1A6ED8] rounded-md p-1 text-white"}>Konfirmasi</button>
-                                        <button onClick={() => rejectFriend(request['id_friend'])} className={"bg-[#E4E6EB] h-[36px] hover:bg-[#D8DADF] rounded-md p-1"}>Tolak</button>
+                    requestFriend.length === 0 ?
+                        <p>Tidak ada permintaan pertemanan</p>
+                        :
+                        requestFriend.map((request) => (
+                            <div className={"w-full p-2"}>
+                                <div className={"flex w-full items-center gap-2"}>
+                                    <div className={"w-[36px] h-[36px] rounded-full overflow-hidden"}>
+                                        <img className={"w-full h-full"} src={request['users']['photo_profile']} alt=""/>
+                                    </div>
+                                    <div>
+                                        <p className={"text-[#050505] font-normal text-sm"}><span className={"font-semibold"}>{request['users']['name']}</span>, ingin menjadi teman anda</p>
+                                        <div className={"flex gap-2"}>
+                                            <button onClick={() => confirmFriend(request['id_friend'])} className={"h-[36px] bg-[#1B74E4] hover:bg-[#1A6ED8] rounded-md p-1 text-white"}>Konfirmasi</button>
+                                            <button onClick={() => rejectFriend(request['id_friend'])} className={"bg-[#E4E6EB] h-[36px] hover:bg-[#D8DADF] rounded-md p-1"}>Tolak</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    ))
+                        ))
                 }
 
             </div>
