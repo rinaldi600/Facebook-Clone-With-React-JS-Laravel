@@ -9224,23 +9224,53 @@ function Navbar() {
 
     fetchRequest().then(function (success) {
       setRequestFriend(success.data['dataRequest']);
-      console.log(success);
     })["catch"](function (error) {
       console.log(error);
     });
   }, []);
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    if (document.readyState === 'complete' && requestFriend.length > 0) {
-      navigate(0);
-    }
-  }, [detailUser]);
+
+  var sendRequestFriend = /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(idFriend, isFriend) {
+      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_3___default().post('/confirm_or_reject_friend', {
+                id_friend: idFriend,
+                is_friend: isFriend
+              });
+
+            case 2:
+              return _context2.abrupt("return", _context2.sent);
+
+            case 3:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }));
+
+    return function sendRequestFriend(_x, _x2) {
+      return _ref2.apply(this, arguments);
+    };
+  }();
 
   var confirmFriend = function confirmFriend(id) {
-    console.log(id);
+    sendRequestFriend(id, true).then(function (success) {
+      console.log(success);
+    })["catch"](function (error) {
+      console.log(error);
+    });
   };
 
   var rejectFriend = function rejectFriend(id) {
-    console.log(id);
+    sendRequestFriend(id, false).then(function (success) {
+      console.log(success);
+    })["catch"](function (error) {
+      console.log(error);
+    });
   };
 
   var showProfile = function showProfile() {

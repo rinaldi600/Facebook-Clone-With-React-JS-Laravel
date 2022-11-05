@@ -114,9 +114,15 @@ class Home extends Controller
     public function requestFriend() {
         return response()->json([
             'dataRequest' => Friend::with('users')->where([
-                ['is_friend',0],
+                ['is_friend','pending'],
                 ['username_friend', Auth::user()['username']],
             ])->get(),
+        ]);
+    }
+
+    public function confirmFriend(Request $request) {
+        return response()->json([
+            'work' => 'Tidak Diterima',
         ]);
     }
 

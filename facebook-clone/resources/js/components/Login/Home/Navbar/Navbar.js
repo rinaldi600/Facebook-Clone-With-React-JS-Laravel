@@ -86,32 +86,42 @@ function Navbar() {
 
     useEffect(() => {
         const fetchRequest = async () => {
-            // return await axios.get(`/check_request_friend/${detailUser.username ?? detailUserRedux.username}`)
             return await axios.get(`/check_request_friend`)
         };
 
         fetchRequest()
             .then((success) => {
                 setRequestFriend(success.data['dataRequest']);
-                console.log(success)
             })
             .catch((error) => {
                 console.log(error)
             });
     },[]);
 
-    useEffect(() => {
-        if (document.readyState === 'complete' && requestFriend.length > 0) {
-            navigate(0);
-        }
-    },[detailUser]);
-
+    const sendRequestFriend = async (idFriend, isFriend) => {
+        return await axios.post('/confirm_or_reject_friend', {
+            id_friend : idFriend,
+            is_friend : isFriend
+        });
+    };
     const confirmFriend = (id) => {
-        console.log(id);
+        sendRequestFriend(id, true)
+            .then((success) => {
+                console.log(success);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     };
 
     const rejectFriend = (id) => {
-        console.log(id);
+        sendRequestFriend(id, false)
+            .then((success) => {
+                console.log(success);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     };
 
 
