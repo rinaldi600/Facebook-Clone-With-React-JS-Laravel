@@ -12,18 +12,12 @@ function Center(props) {
     const statusValidation = useSelector(state => state.validation.status);
     const messageValidation = useSelector(state => state.validation.messageUser);
 
-    useEffect(() => {
-        console.log(statusUser)
-    },[statusUser]);
-
     const showBoxModal = () => {
         dispatch(show());
     };
 
-    console.log(statusValidation);
-    console.log(messageValidation);
     return (
-        <div className={"bg-[#F0F2F5] min-h-screen pt-5"}>
+        <div className={"bg-[#F0F2F5] min-h-screen pt-5 p-2"}>
             <div className={"min-h-[101px] md:w-[90%] bg-white rounded-lg p-3"}>
                 <div style={{borderBottom : '1px solid #E4E6EB'}} className={"mb-2 w-full flex gap-2 p-1 items-center h-[60px]"}>
                     <div className={"w-[40px] h-[40px] rounded-full overflow-hidden"}>

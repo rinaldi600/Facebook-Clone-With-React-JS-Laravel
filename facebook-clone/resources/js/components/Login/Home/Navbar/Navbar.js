@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import LogoFacebook from "../../../../../img/SeekPng.com_logo-facebook-png-transparente_516623 (1).png";
-import photoDump from "../../../../../photo-dump/freestocks-8a95EVm0ovQ-unsplash.jpg";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {useSelector} from "react-redux";
@@ -18,11 +17,11 @@ function Navbar() {
     const [detailUser, setDetailUser] = useState('');
     const [modalSearchFriends, setModalSearchFriends] = useState(false);
     const [windowDimensions, setWindowDimensions] = useState(getWidthDimension());
-    const [closeModalBox, setCloseModalBox] = useState(0);
     const [requestFriend, setRequestFriend] = useState([]);
     const [modalProfile, setModalProfile] = useState(false);
     const [modalNotifications, setModalNotifications] = useState(false);
     const [modalNotificationsFriends, setModalNotificationsFriends] = useState(false);
+    const [dataRequestFriends, setDataRequestFriends] = useState([]);
     const navigate = useNavigate();
     const [users, searchUser] = useState([]);
     const [status, setStatus] = useState(0);
@@ -76,19 +75,21 @@ function Navbar() {
     };
 
     useEffect(() => {
-        if (closeModalBox === 1) {
-            return () => {
-                setCloseModalBox(0);
-            }
-        }
-    });
+        axios.get('/get_notifications_user')
+            .then((success) => {
+                console.log(success);
+                setDataRequestFriends(success.data.friends);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    },[]);
 
+    const fetchRequest = async () => {
+        return await axios.get(`/check_request_friend`)
+    };
 
     useEffect(() => {
-        const fetchRequest = async () => {
-            return await axios.get(`/check_request_friend`)
-        };
-
         fetchRequest()
             .then((success) => {
                 setRequestFriend(success.data['dataRequest']);
@@ -104,10 +105,18 @@ function Navbar() {
             is_friend : isFriend
         });
     };
+
     const confirmFriend = (id) => {
-        sendRequestFriend(id, true)
+        sendRequestFriend(id, 'accept')
             .then((success) => {
-                console.log(success);
+                fetchRequest()
+                    .then((success) => {
+                        setRequestFriend(success.data['dataRequest']);
+                        setModalNotificationsFriends(true);
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    });
             })
             .catch((error) => {
                 console.log(error);
@@ -115,21 +124,26 @@ function Navbar() {
     };
 
     const rejectFriend = (id) => {
-        sendRequestFriend(id, false)
+        sendRequestFriend(id, 'reject')
             .then((success) => {
-                console.log(success);
+                fetchRequest()
+                    .then((success) => {
+                        setRequestFriend(success.data['dataRequest']);
+                        setModalNotificationsFriends(true);
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    });
             })
             .catch((error) => {
                 console.log(error);
             })
     };
 
-
     const showProfile = () => {
-        setModalProfile(true);
-        setCloseModalBox(closeModalBox + 1);
-
-        if (closeModalBox % 2 !== 0) {
+        if (!modalProfile) {
+            setModalProfile(true);
+        } else {
             setModalProfile(false);
         }
     };
@@ -140,10 +154,9 @@ function Navbar() {
     };
 
     const showNotifications = () => {
-        setModalNotifications(true);
-        setCloseModalBox(closeModalBox + 1);
-
-        if (closeModalBox % 2 !== 0) {
+        if (!modalNotifications) {
+            setModalNotifications(true);
+        } else {
             setModalNotifications(false);
         }
     };
@@ -153,10 +166,9 @@ function Navbar() {
     };
 
     const showRequestFriends = () => {
-        setModalNotificationsFriends(true);
-        setCloseModalBox(closeModalBox + 1);
-
-        if (closeModalBox % 2 !== 0) {
+        if (!modalNotificationsFriends) {
+            setModalNotificationsFriends(true);
+        } else {
             setModalNotificationsFriends(false);
         }
     };
@@ -230,32 +242,28 @@ function Navbar() {
                 </div>
             </div>
 
-            <div className={"w-[50%] gap-2 items-center justify-center flex md:w-[25%] bg-white"}>
-                <div onClick={showRequestFriends} className={"w-[40px] h-[40px] bg-[#E4E6EB] relative rounded-full grid justify-center content-center cursor-pointer"}>
+            <div className={"w-[50%] gap-3 items-center justify-center flex md:w-[25%] bg-white"}>
+                <div onClick={showRequestFriends} className={"w-[40px] h-[40px] bg-[#E4E6EB] relative hover:bg-[#D8DADF] rounded-full grid justify-center content-center cursor-pointer"}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                          stroke="currentColor" className="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
                               d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
                     </svg>
-                    {
-                        requestFriend.length === 0 ?
-                            <div className={"w-[24px] h-[24px] absolute top-[-5px] right-[-10px] flex items-center justify-center rounded-full bg-[#CC1016]"}>
-                                <p className={"text-white"}>0</p>
-                            </div>
-                            :
-                            <div className={"w-[24px] h-[24px] absolute top-[-5px] right-[-10px] flex items-center justify-center rounded-full bg-[#CC1016]"}>
-                                <p className={"text-white"}>{requestFriend.length}</p>
-                            </div>
-                    }
+                    <div className={"w-[24px] h-[24px] absolute top-[-5px] right-[-10px] flex items-center justify-center rounded-full bg-[#CC1016]"}>
+                        <p className={"text-white"}>{requestFriend.length === 0 ? 0 : requestFriend.length}</p>
+                    </div>
                 </div>
-                <div onClick={showNotifications} className={"w-[40px] h-[40px] bg-[#E4E6EB] rounded-full grid justify-center content-center cursor-pointer"}>
+                <div onClick={showNotifications} className={"w-[40px] h-[40px] relative bg-[#E4E6EB] hover:bg-[#D8DADF] rounded-full grid justify-center content-center cursor-pointer"}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                          stroke="currentColor" className="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
                               d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/>
                     </svg>
+                    <div className={"w-[24px] h-[24px] absolute top-[-5px] right-[-10px] flex items-center justify-center rounded-full bg-[#CC1016]"}>
+                        <p className={"text-white"}>{dataRequestFriends.length === 0 ? 0 : dataRequestFriends.length}</p>
+                    </div>
                 </div>
-                <div onClick={showProfile} className={"w-[40px] h-[40px] rounded-full cursor-pointer overflow-hidden"}>
+                <div onClick={showProfile} className={"w-[40px] h-[40px] rounded-full hover:bg-[#D8DADF] cursor-pointer overflow-hidden"}>
                     <img className={"w-full h-full"} src={detailUser?.photo_profile ?? detailUserRedux?.photo_profile} alt=""/>
                 </div>
             </div>
@@ -284,14 +292,21 @@ function Navbar() {
 
             <div style={{boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px'}} className={`mobile:w-full w-[30%] ${windowDimensions.width < 508 ? 'top-[14%]' : ''} ${windowDimensions.width >= 508 && windowDimensions.width <= 767 ? 'top-[8%]' : ''} ${windowDimensions.width >= 767 && windowDimensions.width <= 1023 ? 'top-[15%]' : ''} lg:top-[10%] right-0 ${modalNotifications ? '' : 'hidden'} bg-white z-50 p-2 min-h-[100px] rounded-lg absolute`}>
                 <p className={"text-2xl font-bold"}>Notifikasi</p>
-                <div className={"w-full p-2"}>
-                    <div className={"flex w-full items-center gap-2"}>
-                        <div className={"w-[36px] h-[36px] rounded-full overflow-hidden"}>
-                            <img className={"w-full h-full"} src={photoDump} alt=""/>
-                        </div>
-                        <p className={"text-[#050505] font-normal text-sm"}><span className={"font-semibold"}>Shane M. Heatherly</span>, mengomentari postingan anda</p>
-                    </div>
-                </div>
+                {
+                    dataRequestFriends.length === 0 ?
+                        <p>Tidak ada notifikasi</p>
+                        :
+                        dataRequestFriends.map((request) => (
+                            <div className={"w-full p-2"}>
+                                <div className={"flex w-full items-center gap-2"}>
+                                    <div className={"w-[36px] h-[36px] rounded-full overflow-hidden"}>
+                                        <img className={"w-full h-full"} src={request['users_friend']['photo_profile']} alt=""/>
+                                    </div>
+                                    <p className={"text-[#050505] font-normal text-sm"}><span className={"font-semibold"}>{request['users_friend']['name']}</span>, {request['is_friend'] === 'accept' ? 'menerima permintaan anda' : 'menolak permintaan anda'}</p>
+                                </div>
+                            </div>
+                        ))
+                }
             </div>
 
             <div style={{boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px'}} className={`mobile:w-full w-[30%] ${windowDimensions.width < 508 ? 'top-[14%]' : ''} ${windowDimensions.width >= 508 && windowDimensions.width <= 767 ? 'top-[8%]' : ''} ${windowDimensions.width >= 767 && windowDimensions.width <= 1023 ? 'top-[15%]' : ''} lg:top-[10%] right-0 ${modalNotificationsFriends ? '' : 'hidden'} bg-white z-50 p-2 min-h-[100px] rounded-lg absolute`}>

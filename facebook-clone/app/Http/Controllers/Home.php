@@ -121,8 +121,21 @@ class Home extends Controller
     }
 
     public function confirmFriend(Request $request) {
+        Friend::where('id_friend', $request->input('id_friend'))->update([
+            'is_friend' => $request->input('is_friend'),
+        ]);
         return response()->json([
-            'work' => 'Tidak Diterima',
+            'work' => $request->input('is_friend') === 'accept' ? 'Permintaan Diterima' : 'Permintaan Ditolak',
+        ]);
+    }
+
+    public function getNotifications() {
+        return response()->json([
+            'friends' => Friend::with(['usersFriend'])->where('username',Auth::user()['username'])
+               ->where(function ($query) {
+                    $query->where('is_friend','accept')->orWhere('is_friend','reject');
+               })->get(),
+            'comments' => Auth::user()
         ]);
     }
 

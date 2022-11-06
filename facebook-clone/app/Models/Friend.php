@@ -29,4 +29,8 @@ class Friend extends Model
     public function users() {
         return $this->belongsTo(User::class,'username','username');
     }
+
+    public function usersFriend() {
+        return $this->belongsTo(User::class,'username_friend','username');
+    }
 }

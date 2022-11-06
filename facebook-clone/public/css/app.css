@@ -1599,6 +1599,10 @@ video {
     gap: 0.75rem;
   }
 
+  .lg\:p-0 {
+    padding: 0px;
+  }
+
   .lg\:text-start {
     text-align: start;
   }

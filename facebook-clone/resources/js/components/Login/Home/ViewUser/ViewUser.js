@@ -123,7 +123,7 @@ function ViewUser(props) {
                                     }
                                     {
                                         detailUserPeople['username'] !== detailUser['username'] ?
-                                            isFriend === 0 ?
+                                            isFriend === 'pending' ?
                                                 <button  className={"w-[141px] p-6 h-[36px] bg-[#1B74E4] hover:bg-[#1A6ED8] justify-center rounded-md flex items-center gap-1"}>
                                                     <span className={"font-semibold text-sm text-white"}>Menunggu Konfirmasi</span>
                                                 </button>
