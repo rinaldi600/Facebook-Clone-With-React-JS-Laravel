@@ -10030,6 +10030,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 function ViewUser(props) {
   var _detailUserPeople$pos, _detailUserPeople$pos2, _detailUserPeople$pos3;
 
@@ -10045,51 +10046,43 @@ function ViewUser(props) {
       isFriend = _useState4[0],
       checkFriend = _useState4[1];
 
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+      _useState6 = _slicedToArray(_useState5, 2),
+      idFriend = _useState6[0],
+      setIdFriend = _useState6[1];
+
   var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useParams)(),
       user = _useParams.user;
 
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-      _useState6 = _slicedToArray(_useState5, 2),
-      detailUserPeople = _useState6[0],
-      getDetailUserPeople = _useState6[1];
-
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
       _useState8 = _slicedToArray(_useState7, 2),
-      statusFetch = _useState8[0],
-      setStatus = _useState8[1];
+      detailUserPeople = _useState8[0],
+      getDetailUserPeople = _useState8[1];
+
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+      _useState10 = _slicedToArray(_useState9, 2),
+      statusFetch = _useState10[0],
+      setStatus = _useState10[1];
 
   var unsplash = (0,unsplash_js__WEBPACK_IMPORTED_MODULE_8__.createApi)({
     accessKey: 'UR3l5ThucatZkTCoUPxoDM7mvmBW1zUneBD6iRdOrx4'
-  });
+  }); // useEffect(async () => {
+  //     await unsplash.photos.getRandom({
+  //
+  //     }).then((success) => {
+  //         setRandomBg(success.response?.urls.full);
+  //     }).catch((error) => {
+  //         console.log(error)
+  //     });
+  // }, []);
+
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            _context.next = 2;
-            return unsplash.photos.getRandom({}).then(function (success) {
-              var _success$response;
-
-              setRandomBg((_success$response = success.response) === null || _success$response === void 0 ? void 0 : _success$response.urls.full);
-            })["catch"](function (error) {
-              console.log(error);
-            });
-
-          case 2:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee);
-  })), []);
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
             axios__WEBPACK_IMPORTED_MODULE_4___default().get("/user_profile/".concat(user)).then(function (response) {
               getDetailUserPeople(response.data.detailUser);
-              console.log(response);
 
               if (response.status === 200) {
                 setStatus(response.status);
@@ -10100,10 +10093,10 @@ function ViewUser(props) {
 
           case 1:
           case "end":
-            return _context2.stop();
+            return _context.stop();
         }
       }
-    }, _callee2);
+    }, _callee);
   })), []);
   moment__WEBPACK_IMPORTED_MODULE_5___default().locale('id');
 
@@ -10115,12 +10108,12 @@ function ViewUser(props) {
   };
 
   var addFriend = /*#__PURE__*/function () {
-    var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context2.prev = _context2.next) {
             case 0:
-              _context3.next = 2;
+              _context2.next = 2;
               return axios__WEBPACK_IMPORTED_MODULE_4___default().post('/add_friend', {
                 usernameFriend: detailUserPeople['username']
               }).then(function (response) {
@@ -10133,35 +10126,66 @@ function ViewUser(props) {
 
             case 2:
             case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }));
+
+    return function addFriend() {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+
+  var checkFriends = /*#__PURE__*/function () {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3($usernameProfile) {
+      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              if (!($usernameProfile !== detailUser['username'])) {
+                _context3.next = 4;
+                break;
+              }
+
+              _context3.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_4___default().get("/check_friend/".concat(detailUser['username'], "/").concat($usernameProfile));
+
+            case 3:
+              return _context3.abrupt("return", _context3.sent);
+
+            case 4:
+            case "end":
               return _context3.stop();
           }
         }
       }, _callee3);
     }));
 
-    return function addFriend() {
+    return function checkFriends(_x) {
       return _ref3.apply(this, arguments);
     };
   }();
 
-  var checkFriends = /*#__PURE__*/function () {
-    var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4($usernameProfile) {
+  var sendBackRequestFriend = /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
       return _regeneratorRuntime().wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
-              if (!($usernameProfile !== detailUser['username'])) {
-                _context4.next = 4;
-                break;
-              }
+              _context4.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_4___default().post('/send_back_request_friend', {
+                id_friend: idFriend,
+                is_friend: 'pending'
+              }).then(function (success) {
+                if (success.status === 200) {
+                  resultFriend();
+                }
+              })["catch"](function (error) {
+                console.log(error);
+              });
 
-              _context4.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_4___default().get("/check_friend/".concat(detailUser['username'], "/").concat($usernameProfile));
-
-            case 3:
-              return _context4.abrupt("return", _context4.sent);
-
-            case 4:
+            case 2:
             case "end":
               return _context4.stop();
           }
@@ -10169,7 +10193,7 @@ function ViewUser(props) {
       }, _callee4);
     }));
 
-    return function checkFriends(_x) {
+    return function sendBackRequestFriend() {
       return _ref4.apply(this, arguments);
     };
   }();
@@ -10178,11 +10202,13 @@ function ViewUser(props) {
     if (detailUserPeople['username'] !== undefined) {
       checkFriends(detailUserPeople['username']).then(function (success) {
         if (success.data['is_friend'] !== null) {
-          checkFriend(success.data['is_friend']);
-          console.log(success);
+          checkFriend(success.data['is_friend']['isFriend']);
+          setIdFriend(success.data['is_friend']['idFriend']);
         } else {
           console.log("FAILS");
         }
+
+        console.log(success);
       })["catch"](function (error) {
         console.log(error);
       });
@@ -10250,21 +10276,43 @@ function ViewUser(props) {
                     className: "font-semibold text-sm text-white",
                     children: "Menunggu Konfirmasi"
                   })
-                }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("button", {
-                  onClick: addFriend,
-                  className: "w-[141px] h-[36px] bg-[#1B74E4] hover:bg-[#1A6ED8] justify-center rounded-md flex items-center gap-1",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("svg", {
-                    xmlns: "http://www.w3.org/2000/svg",
-                    viewBox: "0 0 24 24",
-                    fill: "currentColor",
-                    className: "w-[16px] h-[16px] text-white",
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("path", {
-                      d: "M6.25 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM3.25 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM19.75 7.5a.75.75 0 00-1.5 0v2.25H16a.75.75 0 000 1.5h2.25v2.25a.75.75 0 001.5 0v-2.25H22a.75.75 0 000-1.5h-2.25V7.5z"
+                }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
+                  children: isFriend === 'reject' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
+                    onClick: sendBackRequestFriend,
+                    className: "w-[141px] h-[36px] bg-[#1B74E4] hover:bg-[#1A6ED8] justify-center rounded-md flex items-center gap-1",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
+                      className: "font-semibold text-xs text-white",
+                      children: "Kirim Permintaan Lagi"
                     })
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
-                    className: "font-semibold text-sm text-white",
-                    children: "Tambah Teman"
-                  })]
+                  }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
+                    children: isFriend === 'accept' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
+                      className: "w-[141px] h-[36px] bg-[#1B74E4] hover:bg-[#1A6ED8] justify-center rounded-md flex items-center",
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("svg", {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        viewBox: "0 0 24 24",
+                        fill: "currentColor",
+                        className: "w-[16px] h-[16px] text-white",
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("path", {
+                          d: "M4.5 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM14.25 8.625a3.375 3.375 0 116.75 0 3.375 3.375 0 01-6.75 0zM1.5 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM17.25 19.128l-.001.144a2.25 2.25 0 01-.233.96 10.088 10.088 0 005.06-1.01.75.75 0 00.42-.643 4.875 4.875 0 00-6.957-4.611 8.586 8.586 0 011.71 5.157v.003z"
+                        })
+                      })
+                    }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("button", {
+                      onClick: addFriend,
+                      className: "w-[141px] h-[36px] bg-[#1B74E4] hover:bg-[#1A6ED8] justify-center rounded-md flex items-center gap-1",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("svg", {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        viewBox: "0 0 24 24",
+                        fill: "currentColor",
+                        className: "w-[16px] h-[16px] text-white",
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("path", {
+                          d: "M6.25 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM3.25 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM19.75 7.5a.75.75 0 00-1.5 0v2.25H16a.75.75 0 000 1.5h2.25v2.25a.75.75 0 001.5 0v-2.25H22a.75.75 0 000-1.5h-2.25V7.5z"
+                        })
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
+                        className: "font-semibold text-sm text-white",
+                        children: "Tambah Teman"
+                      })]
+                    })
+                  })
                 }) : '']
               })]
             })]

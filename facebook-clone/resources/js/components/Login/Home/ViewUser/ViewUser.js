@@ -12,6 +12,7 @@ function ViewUser(props) {
     const detailUser = JSON.parse(localStorage.getItem('user'));
     const [bgRandom, setRandomBg] = useState('');
     const [isFriend, checkFriend] = useState(null);
+    const [idFriend, setIdFriend] = useState('');
     const {user} = useParams();
     const [detailUserPeople, getDetailUserPeople] = useState([]);
     const [statusFetch, setStatus] = useState(0);
@@ -19,21 +20,20 @@ function ViewUser(props) {
         accessKey: 'UR3l5ThucatZkTCoUPxoDM7mvmBW1zUneBD6iRdOrx4',
     });
 
-    useEffect(async () => {
-        await unsplash.photos.getRandom({
-
-        }).then((success) => {
-            setRandomBg(success.response?.urls.full);
-        }).catch((error) => {
-            console.log(error)
-        });
-    }, []);
+    // useEffect(async () => {
+    //     await unsplash.photos.getRandom({
+    //
+    //     }).then((success) => {
+    //         setRandomBg(success.response?.urls.full);
+    //     }).catch((error) => {
+    //         console.log(error)
+    //     });
+    // }, []);
 
     useEffect(async () => {
         axios.get(`/user_profile/${user}`)
             .then(function (response) {
                 getDetailUserPeople(response.data.detailUser);
-                console.log(response);
                 if (response.status === 200) {
                     setStatus(response.status);
                 }
@@ -74,15 +74,31 @@ function ViewUser(props) {
         }
     };
 
+    const sendBackRequestFriend = async () => {
+        await axios.post('/send_back_request_friend', {
+            id_friend: idFriend,
+            is_friend: 'pending',
+        })
+            .then((success) => {
+                if (success.status === 200) {
+                    resultFriend();
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    };
+
     const resultFriend = () => {
         if (detailUserPeople['username'] !== undefined) {
             checkFriends(detailUserPeople['username']).then((success) => {
                 if (success.data['is_friend'] !== null) {
-                    checkFriend(success.data['is_friend']);
-                    console.log(success);
+                    checkFriend(success.data['is_friend']['isFriend']);
+                    setIdFriend(success.data['is_friend']['idFriend']);
                 } else {
                     console.log("FAILS")
                 }
+                console.log(success)
             }).catch((error) => {
                 console.log(error);
             });
@@ -124,18 +140,43 @@ function ViewUser(props) {
                                     {
                                         detailUserPeople['username'] !== detailUser['username'] ?
                                             isFriend === 'pending' ?
-                                                <button  className={"w-[141px] p-6 h-[36px] bg-[#1B74E4] hover:bg-[#1A6ED8] justify-center rounded-md flex items-center gap-1"}>
+                                                <button className={"w-[141px] p-6 h-[36px] bg-[#1B74E4] hover:bg-[#1A6ED8] justify-center rounded-md flex items-center gap-1"}>
                                                     <span className={"font-semibold text-sm text-white"}>Menunggu Konfirmasi</span>
                                                 </button>
                                                 :
-                                                <button onClick={addFriend} className={"w-[141px] h-[36px] bg-[#1B74E4] hover:bg-[#1A6ED8] justify-center rounded-md flex items-center gap-1"}>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                                         className="w-[16px] h-[16px] text-white">
-                                                        <path
-                                                            d="M6.25 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM3.25 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM19.75 7.5a.75.75 0 00-1.5 0v2.25H16a.75.75 0 000 1.5h2.25v2.25a.75.75 0 001.5 0v-2.25H22a.75.75 0 000-1.5h-2.25V7.5z"/>
-                                                    </svg>
-                                                    <span className={"font-semibold text-sm text-white"}>Tambah Teman</span>
-                                                </button>
+                                                <>
+                                                    {
+                                                        isFriend === 'reject' ?
+                                                            <button onClick={sendBackRequestFriend} className={"w-[141px] h-[36px] bg-[#1B74E4] hover:bg-[#1A6ED8] justify-center rounded-md flex items-center gap-1"}>
+                                                                <span className={"font-semibold text-xs text-white"}>
+                                                                    Kirim Permintaan Lagi
+                                                                </span>
+                                                            </button>
+                                                            :
+                                                            <>
+                                                                {
+                                                                    isFriend === 'accept' ?
+                                                                        <button className={"w-[141px] h-[36px] bg-[#1B74E4] hover:bg-[#1A6ED8] justify-center rounded-md flex items-center"}>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                 viewBox="0 0 24 24" fill="currentColor"
+                                                                                 className="w-[16px] h-[16px] text-white">
+                                                                                <path
+                                                                                    d="M4.5 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM14.25 8.625a3.375 3.375 0 116.75 0 3.375 3.375 0 01-6.75 0zM1.5 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM17.25 19.128l-.001.144a2.25 2.25 0 01-.233.96 10.088 10.088 0 005.06-1.01.75.75 0 00.42-.643 4.875 4.875 0 00-6.957-4.611 8.586 8.586 0 011.71 5.157v.003z"/>
+                                                                            </svg>
+                                                                        </button>
+                                                                        :
+                                                                        <button onClick={addFriend} className={"w-[141px] h-[36px] bg-[#1B74E4] hover:bg-[#1A6ED8] justify-center rounded-md flex items-center gap-1"}>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                                                                 className="w-[16px] h-[16px] text-white">
+                                                                                <path
+                                                                                    d="M6.25 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM3.25 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM19.75 7.5a.75.75 0 00-1.5 0v2.25H16a.75.75 0 000 1.5h2.25v2.25a.75.75 0 001.5 0v-2.25H22a.75.75 0 000-1.5h-2.25V7.5z"/>
+                                                                            </svg>
+                                                                            <span className={"font-semibold text-sm text-white"}>Tambah Teman</span>
+                                                                        </button>
+                                                                }
+                                                            </>
+                                                    }
+                                                </>
                                             :
                                             ''
                                     }

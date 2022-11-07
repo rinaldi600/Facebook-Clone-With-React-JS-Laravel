@@ -104,10 +104,22 @@ class Home extends Controller
         ]);
     }
 
+    public function sendBackRequestFriend(Request $request) {
+        Friend::where('id_friend', $request->input('id_friend'))->update([
+            'is_friend' => $request->input('is_friend')
+        ]);
+        return response()->json([
+           'test' => 'Permintaan pertemanan dikirim kembali',
+        ]);
+    }
+
     public function checkFriend(User $user, $friend) {
         return response()->json([
             'is_friend' => count($user->friends->where('username_friend', $friend)) === 0 ?
-                null : $user->friends->where('username_friend', $friend)->first()->is_friend,
+                null : array(
+                    'isFriend' => $user->friends->where('username_friend', $friend)->first()->is_friend,
+                    'idFriend' => $user->friends->where('username_friend', $friend)->first()->id_friend,
+                )
         ]);
     }
 
