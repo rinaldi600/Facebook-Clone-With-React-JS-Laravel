@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import {show} from '../../../../../features/showStatusBox';
 import StatusBoxModal from "./StatusBoxModal/StatusBoxModal";
 import photoDump from "../../../../../../photo-dump/stephanie-liverani-Zz5LQe-VSMY-unsplash.jpg";
+import axios from "axios";
 
 function Center(props) {
     const detailUser = useSelector(state => state.detailUserCurrent.value);
@@ -15,6 +16,21 @@ function Center(props) {
     const showBoxModal = () => {
         dispatch(show());
     };
+
+    const getPosts = async () => {
+        return await axios.get(`/get_my_posts/${detailUser?.username}`);
+    };
+
+    useEffect(() => {
+        getPosts()
+            .then((success) => {
+                console.log("CHECK");
+                console.log(success);
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }, [detailUser?.username]);
 
     return (
         <div className={"bg-[#F0F2F5] min-h-screen pt-5 p-2"}>

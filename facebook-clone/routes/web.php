@@ -33,6 +33,7 @@ Route::middleware('isLogin')->group(function () {
     Route::get('/user/{user}', [\App\Http\Controllers\Home::class, 'userView']);
     Route::get('/check_friend/{user}/{friend}', [\App\Http\Controllers\Home::class, 'checkFriend']);
     Route::get('/check_request_friend', [\App\Http\Controllers\Home::class, 'requestFriend']);
+    Route::get('/count_friends/{user}', [\App\Http\Controllers\Home::class, 'countFriends']);
     Route::post('/confirm_or_reject_friend', [\App\Http\Controllers\Home::class, 'confirmFriend']);
     Route::post('/send_back_request_friend', [\App\Http\Controllers\Home::class, 'sendBackRequestFriend']);
     Route::get('/{user}', [\App\Http\Controllers\Home::class, 'myUserView']);

@@ -3,10 +3,14 @@ import Navbar from "../Navbar/Navbar";
 import bgRandomComputer from "../../../../../bg-random/markus-winkler-_m5JqBg1AMg-unsplash.jpg";
 import photoDump from "../../../../../photo-dump/stephanie-liverani-Zz5LQe-VSMY-unsplash.jpg";
 import moment from "moment";
+import axios from "axios";
+import {countFriends} from "../FriendsCount/Friends";
 
 function MyUserView() {
     const detailUser = JSON.parse(localStorage.getItem('user'));
     const [myPosts, getMyPosts] = useState([]);
+    const [count, setCountFriend] = useState(0);
+
     useEffect(async () => {
         await axios.get(`/get_my_posts/${detailUser['username']}`)
             .then((success) => {
@@ -19,6 +23,17 @@ function MyUserView() {
     },[]);
 
     moment.locale('id');
+
+    useEffect(() => {
+        countFriends(detailUser['username'])
+            .then((success) => {
+                setCountFriend(success.data?.countFriends);
+                console.log(success);
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    },[]);
 
     return (
         <fragment>
@@ -36,7 +51,7 @@ function MyUserView() {
                             <div className={"lg:w-[85%] w-full flex lg:mb-0 mb-3 lg:flex-row flex-col justify-between lg:text-start text-center"}>
                                 <div className={"lg:mt-3 lg:ml-3"}>
                                     <h1 className={"font-bold text-3xl text-[#050505]"}>{detailUser['name']} <span className={"font-normal"}>( {detailUser['username']} )</span></h1>
-                                    <p className={"font-semibold text-[#65676b] text-base mb-10 lg:mb-0"}>800 Teman</p>
+                                    <p className={"font-semibold text-[#65676b] text-base mb-10 lg:mb-0"}>{count ? count + ' Teman' : 'Loading'}</p>
                                 </div>
                             </div>
                         </div>

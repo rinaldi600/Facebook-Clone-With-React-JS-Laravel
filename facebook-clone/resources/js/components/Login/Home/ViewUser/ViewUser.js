@@ -6,6 +6,7 @@ import photoDump from '../../../../../photo-dump/stephanie-liverani-Zz5LQe-VSMY-
 import {useParams,} from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
+import {countFriends} from "../FriendsCount/Friends";
 
 function ViewUser(props) {
 
@@ -13,6 +14,7 @@ function ViewUser(props) {
     const [bgRandom, setRandomBg] = useState('');
     const [isFriend, checkFriend] = useState(null);
     const [idFriend, setIdFriend] = useState('');
+    const [count, setCountFriend] = useState(0);
     const {user} = useParams();
     const [detailUserPeople, getDetailUserPeople] = useState([]);
     const [statusFetch, setStatus] = useState(0);
@@ -92,13 +94,12 @@ function ViewUser(props) {
     const resultFriend = () => {
         if (detailUserPeople['username'] !== undefined) {
             checkFriends(detailUserPeople['username']).then((success) => {
-                if (success.data['is_friend'] !== null) {
-                    checkFriend(success.data['is_friend']['isFriend']);
-                    setIdFriend(success.data['is_friend']['idFriend']);
+                if (success.data['is_friend']['is_friend'] !== null) {
+                    checkFriend(success.data['is_friend']['is_friend']);
+                    setIdFriend(success.data['is_friend']['id_friend']);
                 } else {
                     console.log("FAILS")
                 }
-                console.log(success)
             }).catch((error) => {
                 console.log(error);
             });
@@ -107,6 +108,17 @@ function ViewUser(props) {
 
     useEffect(() => {
         resultFriend();
+    },[detailUserPeople]);
+
+    useEffect(() => {
+        countFriends(detailUserPeople?.username)
+            .then((success) => {
+                setCountFriend(success.data?.countFriends);
+                console.log(success.data?.countFriends);
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     },[detailUserPeople]);
 
     return (
@@ -125,7 +137,7 @@ function ViewUser(props) {
                             <div className={"lg:w-[85%] w-full flex lg:mb-0 mb-3 lg:flex-row flex-col justify-between lg:text-start text-center"}>
                                 <div className={"lg:mt-3 lg:ml-3"}>
                                     <h1 className={"font-bold text-3xl text-[#050505]"}>{detailUserPeople['name']} <span className={"font-normal"}>( {detailUserPeople['username']} )</span></h1>
-                                    <p className={"font-semibold text-[#65676b] text-base mb-10 lg:mb-0"}>800 Teman</p>
+                                    <p className={"font-semibold text-[#65676b] text-base mb-10 lg:mb-0"}>{count ? count + " Teman" : 'Loading'}</p>
                                 </div>
                                 <div className={"flex justify-center gap-2 items-center"}>
                                     {

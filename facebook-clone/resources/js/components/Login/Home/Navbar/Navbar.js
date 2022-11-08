@@ -77,7 +77,6 @@ function Navbar() {
     useEffect(() => {
         axios.get('/get_notifications_user')
             .then((success) => {
-                console.log(success);
                 setDataRequestFriends(success.data.friends);
             })
             .catch((error) => {

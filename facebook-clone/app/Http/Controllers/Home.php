@@ -87,7 +87,7 @@ class Home extends Controller
 
     public function myPost(User $user) {
         return response()->json([
-          'post' => $user->posts
+          'post' => $user
         ]);
     }
 
@@ -115,8 +115,10 @@ class Home extends Controller
 
     public function checkFriend(User $user, $friend) {
         return response()->json([
-            'is_friend' => count($user->friends->where('username_friend', $friend)) === 0 ?
-                null : array(
+           'is_friend' => count($user->friends->where('username_friend', $friend)) === 0 ?
+               Friend::with('users')->where('username_friend', $user['username'])
+                   ->where('username', $friend)->first()
+               : array(
                     'isFriend' => $user->friends->where('username_friend', $friend)->first()->is_friend,
                     'idFriend' => $user->friends->where('username_friend', $friend)->first()->id_friend,
                 )
@@ -151,4 +153,17 @@ class Home extends Controller
         ]);
     }
 
+    public function countFriends($user) {
+        if ($user === Auth::user()['username']) {
+            return response()->json([
+                'countFriends' => count(Friend::where('username', Auth::user()['username'])
+                    ->orwhere('username_friend', Auth::user()['username'])->get())
+            ]);
+        } else {
+            return response()->json([
+                'countFriends' => count(Friend::where('username', $user)
+                    ->orwhere('username_friend', $user)->get()),
+            ]);
+        }
+    }
 }
