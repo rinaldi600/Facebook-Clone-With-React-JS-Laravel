@@ -12,9 +12,9 @@ function MyUserView() {
     const [count, setCountFriend] = useState(0);
 
     useEffect(async () => {
-        await axios.get(`/get_my_posts/${detailUser['username']}`)
+        await axios.get(`/my_posts/${detailUser['username']}`)
             .then((success) => {
-                getMyPosts(success.data.post);
+                getMyPosts(success.data?.detailUser.posts);
                 console.log(success);
             })
             .catch((error) => {

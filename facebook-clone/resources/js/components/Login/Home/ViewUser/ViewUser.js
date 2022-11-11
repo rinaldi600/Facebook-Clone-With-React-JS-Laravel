@@ -64,6 +64,7 @@ function ViewUser(props) {
                 if (response.status === 200) {
                     resultFriend();
                 }
+                console.log(response);
             })
             .catch((error) => {
                 console.log(error);
@@ -94,12 +95,13 @@ function ViewUser(props) {
     const resultFriend = () => {
         if (detailUserPeople['username'] !== undefined) {
             checkFriends(detailUserPeople['username']).then((success) => {
-                if (success.data['is_friend']['is_friend'] !== null) {
-                    checkFriend(success.data['is_friend']['is_friend']);
-                    setIdFriend(success.data['is_friend']['id_friend']);
+                if (success.data?.is_friend?.isFriend !== null) {
+                    checkFriend(success.data?.is_friend?.isFriend);
+                    setIdFriend(success.data?.is_friend?.idFriend);
                 } else {
                     console.log("FAILS")
                 }
+                console.log(success);
             }).catch((error) => {
                 console.log(error);
             });
@@ -120,6 +122,7 @@ function ViewUser(props) {
                 console.log(error)
             })
     },[detailUserPeople]);
+
 
     return (
         <fragment>

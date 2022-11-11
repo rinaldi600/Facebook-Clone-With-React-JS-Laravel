@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -85,9 +86,18 @@ class Home extends Controller
         return view('welcome');
     }
 
-    public function myPost(User $user) {
+    public function myPost(User $user, Friend $friend, Post $post) {
         return response()->json([
-          'post' => $user
+            'postsFriend' => array_merge(Friend::with(['users.posts','users.posts.users:username,photo_profile,name,email','users.posts.comments'])->where('username_friend', $user['username'])
+                ->get()->toArray(), Friend::with(['usersFriend.posts','usersFriend.posts.users:username,photo_profile,name,email','usersFriend.posts.comments'])->where('username', $user['username'])
+                ->get()->toArray())
+        ]);
+    }
+
+    public function myOwnPosts(User $user) {
+        $user->posts;
+        return response()->json([
+            'detailUser' => $user,
         ]);
     }
 

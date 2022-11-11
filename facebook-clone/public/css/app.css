@@ -779,6 +779,11 @@ video {
 .min-h-\[58px\] {
   min-height: 58px;
 }
+.min-h-fit {
+  min-height: -webkit-fit-content;
+  min-height: -moz-fit-content;
+  min-height: fit-content;
+}
 .w-\[90\%\] {
   width: 90%;
 }

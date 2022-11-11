@@ -34,6 +34,7 @@ Route::middleware('isLogin')->group(function () {
     Route::get('/check_friend/{user}/{friend}', [\App\Http\Controllers\Home::class, 'checkFriend']);
     Route::get('/check_request_friend', [\App\Http\Controllers\Home::class, 'requestFriend']);
     Route::get('/count_friends/{user}', [\App\Http\Controllers\Home::class, 'countFriends']);
+    Route::get('/my_posts/{user}', [\App\Http\Controllers\Home::class, 'myOwnPosts']);
     Route::post('/confirm_or_reject_friend', [\App\Http\Controllers\Home::class, 'confirmFriend']);
     Route::post('/send_back_request_friend', [\App\Http\Controllers\Home::class, 'sendBackRequestFriend']);
     Route::get('/{user}', [\App\Http\Controllers\Home::class, 'myUserView']);
