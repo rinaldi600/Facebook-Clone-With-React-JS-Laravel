@@ -88,9 +88,11 @@ class Home extends Controller
 
     public function myPost(User $user, Friend $friend, Post $post) {
         return response()->json([
-            'postsFriend' => array_merge(Friend::with(['users.posts','users.posts.users:username,photo_profile,name,email','users.posts.comments'])->where('username_friend', $user['username'])
-                ->get()->toArray(), Friend::with(['usersFriend.posts','usersFriend.posts.users:username,photo_profile,name,email','usersFriend.posts.comments'])->where('username', $user['username'])
-                ->get()->toArray())
+//            'postsFriend' => array_merge(Friend::with(['users.posts','users.posts.users:username,photo_profile,name,email','users.posts.comments'])->where('username_friend', $user['username'])
+//                ->get()->toArray(), Friend::with(['usersFriend.posts','usersFriend.posts.users:username,photo_profile,name,email','usersFriend.posts.comments'])->where('username', $user['username'])
+//                ->get()->toArray())
+               'postsFriend' => Friend::with(['usersFriend.posts','usersFriend.posts.users:username,photo_profile,name,email','usersFriend.posts.comments'])->where('username', $user['username'])
+                                ->get()
         ]);
     }
 
@@ -125,10 +127,14 @@ class Home extends Controller
 
     public function checkFriend(User $user, $friend) {
         return response()->json([
-           'is_friend' => count($user->friends->where('username_friend', $friend)) === 0 ?
-               Friend::with('users')->where('username_friend', $user['username'])
-                   ->where('username', $friend)->first()
-               : array(
+//           'is_friend' => count($user->friends->where('username_friend', $friend)) === 0 ?
+//               Friend::with('users')->where('username_friend', $user['username'])
+//                   ->where('username', $friend)->first()
+//               : array(
+//                    'isFriend' => $user->friends->where('username_friend', $friend)->first()->is_friend,
+//                    'idFriend' => $user->friends->where('username_friend', $friend)->first()->id_friend,
+//                )
+           'is_friend' => array(
                     'isFriend' => $user->friends->where('username_friend', $friend)->first()->is_friend,
                     'idFriend' => $user->friends->where('username_friend', $friend)->first()->id_friend,
                 )
@@ -145,12 +151,15 @@ class Home extends Controller
     }
 
     public function confirmFriend(Request $request) {
-        Friend::where('id_friend', $request->input('id_friend'))->update([
-            'is_friend' => $request->input('is_friend'),
-        ]);
         return response()->json([
-            'work' => $request->input('is_friend') === 'accept' ? 'Permintaan Diterima' : 'Permintaan Ditolak',
+            'work' => $request->input()
         ]);
+//        Friend::where('id_friend', $request->input('id_friend'))->update([
+//            'is_friend' => $request->input('is_friend'),
+//        ]);
+//        return response()->json([
+//            'work' => $request->input('is_friend') === 'accept' ? 'Permintaan Diterima' : 'Permintaan Ditolak',
+//        ]);
     }
 
     public function getNotifications() {
