@@ -95,9 +95,9 @@ function ViewUser(props) {
     const resultFriend = () => {
         if (detailUserPeople['username'] !== undefined) {
             checkFriends(detailUserPeople['username']).then((success) => {
-                if (success.data?.is_friend?.isFriend !== null) {
-                    checkFriend(success.data?.is_friend?.isFriend);
-                    setIdFriend(success.data?.is_friend?.idFriend);
+                if (success.data?.is_friend?.is_friend !== null) {
+                    checkFriend(success.data?.is_friend?.is_friend);
+                    setIdFriend(success.data?.is_friend?.id_friend);
                 } else {
                     console.log("FAILS")
                 }
@@ -140,7 +140,7 @@ function ViewUser(props) {
                             <div className={"lg:w-[85%] w-full flex lg:mb-0 mb-3 lg:flex-row flex-col justify-between lg:text-start text-center"}>
                                 <div className={"lg:mt-3 lg:ml-3"}>
                                     <h1 className={"font-bold text-3xl text-[#050505]"}>{detailUserPeople['name']} <span className={"font-normal"}>( {detailUserPeople['username']} )</span></h1>
-                                    <p className={"font-semibold text-[#65676b] text-base mb-10 lg:mb-0"}>{count ? count + " Teman" : 'Loading'}</p>
+                                    <p className={"font-semibold text-[#65676b] text-base mb-10 lg:mb-0"}>{count ? count + " Teman" : 0  + ' Teman'}</p>
                                 </div>
                                 <div className={"flex justify-center gap-2 items-center"}>
                                     {

@@ -29,15 +29,12 @@ function Center(props) {
         if (detailUser?.username !== undefined) {
             getPosts()
                 .then((success) => {
-                    // for (const x in success) {
-                    //     if (success.data?.postFriend?.hasOwnProperty('users')) {
-                    //         setPostFriends(success.data?.postsFriend[x].users?.posts);
-                    //     } else {
-                    //         setPostFriends(success.data?.postsFriend[x].users_friend?.posts);
-                    //     }
-                    // }
-                    // setPostFriends(success.data?.postsFriend[0].users?.posts);
-                    // setPostFriends(success.data?.postsFriend[2].users_friend?.posts);
+
+                    for (const x in success.data.postsFriend) {
+                        for (const y in success.data.postsFriend[x]?.users_friend?.posts) {
+                            setPostFriends(prevArray => [...prevArray, success.data.postsFriend[x]?.users_friend?.posts[y]]);
+                        }
+                    }
                     console.log(success)
                 })
                 .catch((error) => {

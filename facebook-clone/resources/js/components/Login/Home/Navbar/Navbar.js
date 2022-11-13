@@ -98,7 +98,7 @@ function Navbar() {
             });
     },[]);
 
-    const sendRequestFriend = async (idFriend, isFriend, username, myUsername) => {
+    const sendRequestFriend = async (idFriend, isFriend, username = null, myUsername = null) => {
         return await axios.post('/confirm_or_reject_friend', {
             id_friend : idFriend,
             is_friend : isFriend,
@@ -108,37 +108,35 @@ function Navbar() {
     };
 
     const confirmFriend = (id, username) => {
-        sendRequestFriend(id, 'accept', username, detailUser['username'])
+        sendRequestFriend(id, 'accept', username,  detailUser?.username)
             .then((success) => {
                 console.log(success);
-                // fetchRequest()
-                //     .then((success) => {
-                //         setRequestFriend(success.data['dataRequest']);
-                //         setModalNotificationsFriends(true);
-                //     })
-                //     .catch((error) => {
-                //         console.log(error)
-                //     });
+                fetchRequest()
+                    .then((success) => {
+                        setRequestFriend(success.data['dataRequest']);
+                        setModalNotificationsFriends(true);
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    });
             })
             .catch((error) => {
                 console.log(error);
             })
     };
 
-    console.log(requestFriend);
-
-    const rejectFriend = (id, username) => {
-        sendRequestFriend(id, 'reject', username, detailUser['username'])
+    const rejectFriend = (id) => {
+        sendRequestFriend(id, 'reject')
             .then((success) => {
                 console.log(success);
-                // fetchRequest()
-                //     .then((success) => {
-                //         setRequestFriend(success.data['dataRequest']);
-                //         setModalNotificationsFriends(true);
-                //     })
-                //     .catch((error) => {
-                //         console.log(error)
-                //     });
+                fetchRequest()
+                    .then((success) => {
+                        setRequestFriend(success.data['dataRequest']);
+                        setModalNotificationsFriends(true);
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    });
             })
             .catch((error) => {
                 console.log(error);
@@ -307,7 +305,7 @@ function Navbar() {
                                     <div className={"w-[36px] h-[36px] rounded-full overflow-hidden"}>
                                         <img className={"w-full h-full"} src={request['users_friend']['photo_profile']} alt=""/>
                                     </div>
-                                    <p className={"text-[#050505] font-normal text-sm"}><span className={"font-semibold"}>{request['users_friend']['name']}</span>, {request['is_friend'] === 'accept' ? 'menerima permintaan anda' : 'menolak permintaan anda'}</p>
+                                    <p className={"text-[#050505] font-normal text-sm"}><span className={"font-semibold"}>{request['users_friend']['name']}</span>, {request['is_friend'] === 'accept' ? 'sekarang berteman dengan anda' : 'menolak permintaan anda'}</p>
                                 </div>
                             </div>
                         ))
@@ -331,7 +329,7 @@ function Navbar() {
                                         <p className={"text-[#050505] font-normal text-sm"}><span className={"font-semibold"}>{request['users']['name']}</span>, ingin menjadi teman anda</p>
                                         <div className={"flex gap-2"}>
                                             <button onClick={() => confirmFriend(request['id_friend'], request['username'])} className={"h-[36px] bg-[#1B74E4] hover:bg-[#1A6ED8] rounded-md p-1 text-white"}>Konfirmasi</button>
-                                            <button onClick={() => rejectFriend(request['id_friend'], request['username'])} className={"bg-[#E4E6EB] h-[36px] hover:bg-[#D8DADF] rounded-md p-1"}>Tolak</button>
+                                            <button onClick={() => rejectFriend(request['id_friend'])} className={"bg-[#E4E6EB] h-[36px] hover:bg-[#D8DADF] rounded-md p-1"}>Tolak</button>
                                         </div>
                                     </div>
                                 </div>
