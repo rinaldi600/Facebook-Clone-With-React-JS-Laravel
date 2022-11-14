@@ -89,7 +89,7 @@ class Home extends Controller
     public function myPost(User $user, Friend $friend, Post $post) {
         return response()->json([
                'postsFriend' => Friend::with(['usersFriend.posts','usersFriend.posts.users:username,photo_profile,name,email','usersFriend.posts.comments'])->where('username', $user['username'])
-                                ->get()
+                                ->orderBy('created_at', 'desc')->get()
         ]);
     }
 
@@ -183,5 +183,11 @@ class Home extends Controller
                     ->where('is_friend','accept')->get()),
             ]);
         }
+    }
+
+    public function getComment(Request $request) {
+        return response()->json([
+           'work' => 'Anda berhasil berkomentar',
+        ]);
     }
 }

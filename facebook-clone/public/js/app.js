@@ -7543,10 +7543,15 @@ function Center(props) {
     return state.getStatus.value;
   });
 
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
       _useState2 = _slicedToArray(_useState, 2),
-      postFriends = _useState2[0],
-      setPostFriends = _useState2[1];
+      notificationComment = _useState2[0],
+      setNotificationComment = _useState2[1];
+
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+      _useState4 = _slicedToArray(_useState3, 2),
+      postFriends = _useState4[0],
+      setPostFriends = _useState4[1];
 
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
   var statusValidation = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
@@ -7616,9 +7621,47 @@ function Center(props) {
     }
   }, [detailUser === null || detailUser === void 0 ? void 0 : detailUser.username]);
   console.log(postFriends);
+
+  var comment = function comment(e) {
+    if (e.keyCode === 13) {
+      axios__WEBPACK_IMPORTED_MODULE_5___default().post('/get_comments_user', {
+        commentUser: e.target.value
+      }).then(function (success) {
+        if (success.status === 200) {
+          e.target.value = '';
+          setNotificationComment(true);
+        }
+
+        setTimeout(function () {
+          setNotificationComment(false);
+        }, 2000);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  };
+
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-    className: "bg-[#F0F2F5] min-h-screen pt-5 p-2",
+    className: "bg-[#F0F2F5] relative min-h-screen pt-5 p-2",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+      className: "bg-[#E9F7EE] ".concat(notificationComment ? 'flex' : 'hidden', " p-1 items-center gap-1 border-2 border-[#E3F2E6] absolute inset-x-0 top-0 mx-auto mt-3 z-[50] min-h-[50px] rounded-md shadow-2xl max-w-[500px]"),
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("svg", {
+          xmlns: "http://www.w3.org/2000/svg",
+          viewBox: "0 0 24 24",
+          fill: "currentColor",
+          className: "w-6 h-6 text-[#3FB660]",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("path", {
+            "fill-rule": "evenodd",
+            d: "M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 000-1.5h-3.75V6z",
+            "clip-rule": "evenodd"
+          })
+        })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
+        className: "font-bold text-[#5E6866]",
+        children: "Berhasil berkomentar...."
+      })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
       className: "min-h-[101px] md:w-[90%] bg-white rounded-lg p-3",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
         style: {
@@ -7724,7 +7767,106 @@ function Center(props) {
           })]
         })]
       })]
-    }), statusState ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_StatusBoxModal_StatusBoxModal__WEBPACK_IMPORTED_MODULE_3__["default"], {}) : '']
+    }), statusState ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_StatusBoxModal_StatusBoxModal__WEBPACK_IMPORTED_MODULE_3__["default"], {}) : '', postFriends.length <= 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
+      children: "Tidak Ada Postingan"
+    }) : postFriends.map(function (post) {
+      var _post$users, _post$users2;
+
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+        className: "rounded-md md:w-[90%] bg-white mt-3 overflow-hidden",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+          className: "h-[50px] p-3 flex items-center gap-2",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+            className: "w-[36px] h-[36px] overflow-hidden rounded-full",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("img", {
+              className: "w-full h-full object-center",
+              src: (_post$users = post.users) === null || _post$users === void 0 ? void 0 : _post$users.photo_profile,
+              alt: ""
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
+              className: "text-[#050505] font-semibold text-sm",
+              children: (_post$users2 = post.users) === null || _post$users2 === void 0 ? void 0 : _post$users2.name
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
+              className: "text-[#65676B] text-xs",
+              children: moment__WEBPACK_IMPORTED_MODULE_6__(post.created_at).format('LL')
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+          className: "min-h-[56px] p-3 pt-1",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
+            className: "text-[#050505] text-2xl",
+            children: post.post
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+            className: "mt-1 flex justify-between",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+              className: "flex items-center gap-1",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("svg", {
+                xmlns: "http://www.w3.org/2000/svg",
+                viewBox: "0 0 24 24",
+                fill: "currentColor",
+                className: "w-[18px] h-[18px] text-white bg-[#1198F6] rounded-full p-0.5 cursor-pointer",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("path", {
+                  d: "M7.493 18.75c-.425 0-.82-.236-.975-.632A7.48 7.48 0 016 15.375c0-1.75.599-3.358 1.602-4.634.151-.192.373-.309.6-.397.473-.183.89-.514 1.212-.924a9.042 9.042 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75 2.25 2.25 0 012.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H14.23c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23h-.777zM2.331 10.977a11.969 11.969 0 00-.831 4.398 12 12 0 00.52 3.507c.26.85 1.084 1.368 1.973 1.368H4.9c.445 0 .72-.498.523-.898a8.963 8.963 0 01-.924-3.977c0-1.708.476-3.305 1.302-4.666.245-.403-.028-.959-.5-.959H4.25c-.832 0-1.612.453-1.918 1.227z"
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
+                className: "text-[#65676b] text-sm",
+                children: "77"
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("p", {
+              className: "text-[#65676b] text-sm",
+              children: [post.comments.length, " Komentar"]
+            })]
+          }), post.comments.length <= 0 ? '' : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+            className: "h-[1px] mt-3 bg-[#CED0D4]"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+          className: "".concat(post.comments.length <= 0 ? 'min-h-fit' : 'min-h-[100px]', " p-3 pt-1 bg-white"),
+          children: [post.comments.length <= 0 ? '' : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
+              className: "text-[#65676b] font-semibold text-sm cursor-pointer hover:underline hover:decoration-solid",
+              children: "Lihat 14 komentar sebelumnya"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+              className: "mt-2 flex items-center gap-2",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                className: "w-[32px] h-[32px] rounded-full overflow-hidden",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("img", {
+                  className: "w-full h-full",
+                  src: _photo_dump_stephanie_liverani_Zz5LQe_VSMY_unsplash_jpg__WEBPACK_IMPORTED_MODULE_4__["default"],
+                  alt: ""
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                className: "max-w-[221px] min-h-[33px] p-2 bg-[#F0F2F5] rounded-lg",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
+                  className: "text-sm text-[#050505]",
+                  children: "hahaha gpp ..men uut dwe lah haha"
+                })
+              })]
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+            className: "max-w-[900px] min-h-[36px] mt-2 flex gap-2 items-center",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+              className: "w-[32px] h-[32px] rounded-full overflow-hidden",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("img", {
+                className: "w-full h-full",
+                src: detailUser['photo_profile'],
+                alt: ""
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+              className: "max-w-[900px] relative w-full h-[36px]",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
+                type: "text",
+                onKeyUp: function onKeyUp(e) {
+                  return comment(e);
+                },
+                placeholder: "Tulis Komentar",
+                className: "bg-[#F0F2F5] rounded-full p-2 text-sm w-full box-border h-full outline-none border-none"
+              })
+            })]
+          })]
+        })]
+      });
+    })]
   });
 }
 
@@ -8849,6 +8991,11 @@ function MyUserView() {
       console.log(error);
     });
   }, []);
+
+  var comment = function comment(e) {
+    console.log(e.target);
+  };
+
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("fragment", {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Navbar_Navbar__WEBPACK_IMPORTED_MODULE_1__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
       className: "min-h-[565px] bg-white",
@@ -9082,9 +9229,6 @@ function MyUserView() {
                     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
                       type: "text",
                       placeholder: "Tulis Komentar",
-                      onKeyUp: function onKeyUp(e) {
-                        return comment(e);
-                      },
                       className: "bg-[#F0F2F5] rounded-full p-2 text-sm w-full box-border h-full outline-none border-none"
                     })
                   })]

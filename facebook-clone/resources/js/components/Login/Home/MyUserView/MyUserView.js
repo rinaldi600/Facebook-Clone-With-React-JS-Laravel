@@ -35,6 +35,10 @@ function MyUserView() {
             })
     },[]);
 
+    const comment = (e) => {
+        console.log(e.target);
+    };
+
     return (
         <fragment>
             <Navbar/>
@@ -172,7 +176,7 @@ function MyUserView() {
                                                     <img className={"w-full h-full"} src={detailUser['photo_profile']} alt=""/>
                                                 </div>
                                                 <div className={"max-w-[480px] relative w-full h-[36px]"}>
-                                                    <input type="text" placeholder={"Tulis Komentar"} onKeyUp={(e) => comment(e)} className={"bg-[#F0F2F5] rounded-full p-2 text-sm w-full box-border h-full outline-none border-none"}/>
+                                                    <input type="text" placeholder={"Tulis Komentar"} className={"bg-[#F0F2F5] rounded-full p-2 text-sm w-full box-border h-full outline-none border-none"}/>
                                                 </div>
                                             </div>
                                         </div>

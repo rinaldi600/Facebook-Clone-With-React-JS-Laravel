@@ -39,6 +39,7 @@ Route::middleware('isLogin')->group(function () {
     Route::post('/send_back_request_friend', [\App\Http\Controllers\Home::class, 'sendBackRequestFriend']);
     Route::get('/{user}', [\App\Http\Controllers\Home::class, 'myUserView']);
     Route::get('/get_my_posts/{user}', [\App\Http\Controllers\Home::class, 'myPost']);
+    Route::post('/get_comments_user', [\App\Http\Controllers\Home::class, 'getComment'])->middleware('XssSanitizer');
     Route::post('/create_status_user', [\App\Http\Controllers\Home::class, 'getStatusUser'])->middleware('XssSanitizer');
 });
 
