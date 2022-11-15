@@ -7613,8 +7613,6 @@ function Center(props) {
         for (var x in success.data.postsFriend) {
           _loop(x);
         }
-
-        console.log(success);
       })["catch"](function (error) {
         console.log(error);
       });
@@ -7622,10 +7620,12 @@ function Center(props) {
   }, [detailUser === null || detailUser === void 0 ? void 0 : detailUser.username]);
   console.log(postFriends);
 
-  var comment = function comment(e) {
+  var comment = function comment(e, idPost) {
     if (e.keyCode === 13) {
       axios__WEBPACK_IMPORTED_MODULE_5___default().post('/get_comments_user', {
-        commentUser: e.target.value
+        commentUser: e.target.value,
+        idPost: idPost,
+        username: detailUser === null || detailUser === void 0 ? void 0 : detailUser.username
       }).then(function (success) {
         if (success.status === 200) {
           e.target.value = '';
@@ -7635,6 +7635,7 @@ function Center(props) {
         setTimeout(function () {
           setNotificationComment(false);
         }, 2000);
+        console.log(success);
       })["catch"](function (error) {
         console.log(error);
       });
@@ -7642,7 +7643,7 @@ function Center(props) {
   };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-    className: "bg-[#F0F2F5] relative min-h-screen pt-5 p-2",
+    className: "bg-[#F0F2F5] relative scrollbar-hide h-screen pt-5 p-2 overflow-y-scroll",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
       className: "bg-[#E9F7EE] ".concat(notificationComment ? 'flex' : 'hidden', " p-1 items-center gap-1 border-2 border-[#E3F2E6] absolute inset-x-0 top-0 mx-auto mt-3 z-[50] min-h-[50px] rounded-md shadow-2xl max-w-[500px]"),
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
@@ -7770,7 +7771,7 @@ function Center(props) {
     }), statusState ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_StatusBoxModal_StatusBoxModal__WEBPACK_IMPORTED_MODULE_3__["default"], {}) : '', postFriends.length <= 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
       children: "Tidak Ada Postingan"
     }) : postFriends.map(function (post) {
-      var _post$users, _post$users2;
+      var _post$users, _post$users2, _post$comments$0$user;
 
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
         className: "rounded-md md:w-[90%] bg-white mt-3 overflow-hidden",
@@ -7823,23 +7824,23 @@ function Center(props) {
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
           className: "".concat(post.comments.length <= 0 ? 'min-h-fit' : 'min-h-[100px]', " p-3 pt-1 bg-white"),
           children: [post.comments.length <= 0 ? '' : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("p", {
               className: "text-[#65676b] font-semibold text-sm cursor-pointer hover:underline hover:decoration-solid",
-              children: "Lihat 14 komentar sebelumnya"
+              children: ["Lihat ", post.comments.length - 1, " komentar sebelumnya"]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
               className: "mt-2 flex items-center gap-2",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
                 className: "w-[32px] h-[32px] rounded-full overflow-hidden",
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("img", {
                   className: "w-full h-full",
-                  src: _photo_dump_stephanie_liverani_Zz5LQe_VSMY_unsplash_jpg__WEBPACK_IMPORTED_MODULE_4__["default"],
+                  src: (_post$comments$0$user = post.comments[0].users) === null || _post$comments$0$user === void 0 ? void 0 : _post$comments$0$user.photo_profile,
                   alt: ""
                 })
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
                 className: "max-w-[221px] min-h-[33px] p-2 bg-[#F0F2F5] rounded-lg",
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
                   className: "text-sm text-[#050505]",
-                  children: "hahaha gpp ..men uut dwe lah haha"
+                  children: post.comments[0].comment
                 })
               })]
             })]
@@ -7857,7 +7858,7 @@ function Center(props) {
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
                 type: "text",
                 onKeyUp: function onKeyUp(e) {
-                  return comment(e);
+                  return comment(e, post.id_post);
                 },
                 placeholder: "Tulis Komentar",
                 className: "bg-[#F0F2F5] rounded-full p-2 text-sm w-full box-border h-full outline-none border-none"
@@ -9485,7 +9486,7 @@ function Navbar() {
   }();
 
   var confirmFriend = function confirmFriend(id, username) {
-    sendRequestFriend(id, 'accept', username, detailUser === null || detailUser === void 0 ? void 0 : detailUser.username).then(function (success) {
+    sendRequestFriend(id, 'accept', username, detailUserRedux === null || detailUserRedux === void 0 ? void 0 : detailUserRedux.username).then(function (success) {
       console.log(success);
       fetchRequest().then(function (success) {
         setRequestFriend(success.data['dataRequest']);

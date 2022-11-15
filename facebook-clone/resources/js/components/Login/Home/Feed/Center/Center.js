@@ -36,7 +36,6 @@ function Center(props) {
                             setPostFriends(prevArray => [...prevArray, success.data.postsFriend[x]?.users_friend?.posts[y]]);
                         }
                     }
-                    console.log(success)
                 })
                 .catch((error) => {
                     console.log(error)
@@ -46,10 +45,12 @@ function Center(props) {
 
     console.log(postFriends);
 
-    const comment = (e) => {
+    const comment = (e, idPost) => {
         if (e.keyCode === 13) {
             axios.post('/get_comments_user', {
-                commentUser : e.target.value
+                commentUser : e.target.value,
+                idPost : idPost,
+                username : detailUser?.username,
             })
                 .then((success) => {
                     if (success.status === 200) {
@@ -59,6 +60,7 @@ function Center(props) {
                     setTimeout(() => {
                         setNotificationComment(false);
                     }, 2000);
+                    console.log(success);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -66,8 +68,9 @@ function Center(props) {
         }
     };
 
+
     return (
-        <div className={"bg-[#F0F2F5] relative min-h-screen pt-5 p-2"}>
+        <div className={"bg-[#F0F2F5] relative scrollbar-hide h-screen pt-5 p-2 overflow-y-scroll"}>
 
             <div className={`bg-[#E9F7EE] ${notificationComment ? 'flex' : 'hidden'} p-1 items-center gap-1 border-2 border-[#E3F2E6] absolute inset-x-0 top-0 mx-auto mt-3 z-[50] min-h-[50px] rounded-md shadow-2xl max-w-[500px]`}>
                 <div>
@@ -145,6 +148,7 @@ function Center(props) {
                     </button>
                 </div>
             </div>
+
             { statusState ? <StatusBoxModal/> : '' }
 
             {
@@ -193,13 +197,13 @@ function Center(props) {
                                         ''
                                         :
                                         <Fragment>
-                                            <p className={"text-[#65676b] font-semibold text-sm cursor-pointer hover:underline hover:decoration-solid"}>Lihat 14 komentar sebelumnya</p>
+                                            <p className={"text-[#65676b] font-semibold text-sm cursor-pointer hover:underline hover:decoration-solid"}>Lihat {post.comments.length - 1} komentar sebelumnya</p>
                                             <div className={"mt-2 flex items-center gap-2"}>
                                                 <div className={"w-[32px] h-[32px] rounded-full overflow-hidden"}>
-                                                    <img className={"w-full h-full"} src={photoDump} alt=""/>
+                                                    <img className={"w-full h-full"} src={post.comments[0].users?.photo_profile} alt=""/>
                                                 </div>
                                                 <div className={"max-w-[221px] min-h-[33px] p-2 bg-[#F0F2F5] rounded-lg"}>
-                                                    <p className={"text-sm text-[#050505]"}>hahaha gpp ..men uut dwe lah haha</p>
+                                                    <p className={"text-sm text-[#050505]"}>{post.comments[0].comment}</p>
                                                 </div>
                                             </div>
                                         </Fragment>
@@ -209,7 +213,7 @@ function Center(props) {
                                         <img className={"w-full h-full"} src={detailUser['photo_profile']} alt=""/>
                                     </div>
                                     <div className={"max-w-[900px] relative w-full h-[36px]"}>
-                                        <input type="text" onKeyUp={(e) => comment(e)} placeholder={"Tulis Komentar"} className={"bg-[#F0F2F5] rounded-full p-2 text-sm w-full box-border h-full outline-none border-none"}/>
+                                        <input type="text" onKeyUp={(e) => comment(e,post.id_post)} placeholder={"Tulis Komentar"} className={"bg-[#F0F2F5] rounded-full p-2 text-sm w-full box-border h-full outline-none border-none"}/>
                                     </div>
                                 </div>
                             </div>

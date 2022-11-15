@@ -108,7 +108,7 @@ function Navbar() {
     };
 
     const confirmFriend = (id, username) => {
-        sendRequestFriend(id, 'accept', username,  detailUser?.username)
+        sendRequestFriend(id, 'accept', username,  detailUserRedux?.username)
             .then((success) => {
                 console.log(success);
                 fetchRequest()

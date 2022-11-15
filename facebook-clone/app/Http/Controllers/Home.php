@@ -88,7 +88,7 @@ class Home extends Controller
 
     public function myPost(User $user, Friend $friend, Post $post) {
         return response()->json([
-               'postsFriend' => Friend::with(['usersFriend.posts','usersFriend.posts.users:username,photo_profile,name,email','usersFriend.posts.comments'])->where('username', $user['username'])
+               'postsFriend' => Friend::with(['usersFriend.posts','usersFriend.posts.users:username,photo_profile,name,email','usersFriend.posts.comments', 'usersFriend.posts.comments.users:username,email,photo_profile,name'])->where('username', $user['username'])
                                 ->orderBy('created_at', 'desc')->get()
         ]);
     }
@@ -186,8 +186,25 @@ class Home extends Controller
     }
 
     public function getComment(Request $request) {
-        return response()->json([
-           'work' => 'Anda berhasil berkomentar',
+
+        $validator = Validator::make($request->all(), [
+            'commentUser' => 'required|string',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'error' => $validator->errors()->first('commentUser'),
+            ]);
+        } else {
+            Comment::create([
+                'id_comment' => 'COMMENT - ' . date('YmdHis').substr((string)microtime(), 1, 8),
+                'id_post' => $request->input('idPost'),
+                'username' => $request->input('username'),
+                'comment' => $request->input('commentUser')
+            ]);
+            return response()->json([
+                'work' => 'Anda berhasil berkomentar',
+            ]);
+        }
     }
 }
