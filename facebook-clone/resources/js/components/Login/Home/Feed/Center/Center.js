@@ -2,7 +2,6 @@ import React, {Fragment, useEffect, useState} from "react";
 import { useSelector, useDispatch } from 'react-redux'
 import {show} from '../../../../../features/showStatusBox';
 import StatusBoxModal from "./StatusBoxModal/StatusBoxModal";
-import photoDump from "../../../../../../photo-dump/stephanie-liverani-Zz5LQe-VSMY-unsplash.jpg";
 import axios from "axios";
 import * as moment from "moment";
 
@@ -14,23 +13,25 @@ function Center(props) {
     const [postFriends, setPostFriends] = useState([]);
     const dispatch = useDispatch();
     const statusValidation = useSelector(state => state.validation.status);
-    const messageValidation = useSelector(state => state.validation.messageUser);
+    const [pagination, setPagination] = useState({
+        skip : 0,
+        take : 1,
+    });
 
     const showBoxModal = () => {
         dispatch(show());
     };
 
-    const getPosts = async () => {
-        return await axios.get(`/get_my_posts/${detailUser?.username}`);
+    const getPosts = async (skip, take) => {
+        return await axios.get(`/get_my_posts/${detailUser?.username}/${skip}/${take}`);
     };
 
     moment.locale('id');
 
     useEffect(() => {
         if (detailUser?.username !== undefined) {
-            getPosts()
+            getPosts(pagination.skip, pagination.take)
                 .then((success) => {
-
                     for (const x in success.data.postsFriend) {
                         for (const y in success.data.postsFriend[x]?.users_friend?.posts) {
                             setPostFriends(prevArray => [...prevArray, success.data.postsFriend[x]?.users_friend?.posts[y]]);
@@ -68,6 +69,15 @@ function Center(props) {
         }
     };
 
+    useEffect(() => {
+        getPosts(pagination.skip, pagination.take)
+            .then((success) => {
+                console.log(success);
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }, [pagination.skip, pagination.take]);
 
     return (
         <div className={"bg-[#F0F2F5] relative scrollbar-hide h-screen pt-5 p-2 overflow-y-scroll"}>
@@ -197,7 +207,14 @@ function Center(props) {
                                         ''
                                         :
                                         <Fragment>
-                                            <p className={"text-[#65676b] font-semibold text-sm cursor-pointer hover:underline hover:decoration-solid"}>Lihat {post.comments.length - 1} komentar sebelumnya</p>
+                                            {/*<p onClick={showMoreComments} className={"text-[#65676b] font-semibold text-sm cursor-pointer hover:underline hover:decoration-solid"}>Lihat komentar sebelumnya</p>*/}
+                                            <p onClick={() => setPagination(
+                                                {
+                                                    ...pagination,
+                                                    skip : pagination.skip + 1,
+                                                    take : pagination.take + 1,
+                                                }
+                                            )} className={"text-[#65676b] font-semibold text-sm cursor-pointer hover:underline hover:decoration-solid"}>Lihat komentar sebelumnya</p>
                                             <div className={"mt-2 flex items-center gap-2"}>
                                                 <div className={"w-[32px] h-[32px] rounded-full overflow-hidden"}>
                                                     <img className={"w-full h-full"} src={post.comments[0].users?.photo_profile} alt=""/>

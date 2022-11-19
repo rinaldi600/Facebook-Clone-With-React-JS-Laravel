@@ -86,10 +86,14 @@ class Home extends Controller
         return view('welcome');
     }
 
-    public function myPost(User $user, Friend $friend, Post $post) {
+    public function myPost(User $user, Friend $friend, Post $post, $skip, $take) {
         return response()->json([
-               'postsFriend' => Friend::with(['usersFriend.posts','usersFriend.posts.users:username,photo_profile,name,email','usersFriend.posts.comments', 'usersFriend.posts.comments.users:username,email,photo_profile,name'])->where('username', $user['username'])
-                                ->orderBy('created_at', 'desc')->get()
+               'postsFriend' => Friend::with(['usersFriend.posts','usersFriend.posts.users:username,photo_profile,name,email',
+                   'usersFriend.posts.comments' => function($query) use($skip, $take) {
+                        $query->skip($skip)->take($take);
+                   },
+                   'usersFriend.posts.comments.users:username,email,photo_profile,name'])
+                   ->where('username', $user['username'])->orderBy('created_at', 'desc')->get(),
         ]);
     }
 
