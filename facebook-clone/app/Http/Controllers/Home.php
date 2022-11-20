@@ -86,11 +86,11 @@ class Home extends Controller
         return view('welcome');
     }
 
-    public function myPost(User $user, Friend $friend, Post $post, $skip, $take) {
+    public function myPost(User $user, Friend $friend, Post $post) {
         return response()->json([
                'postsFriend' => Friend::with(['usersFriend.posts','usersFriend.posts.users:username,photo_profile,name,email',
-                   'usersFriend.posts.comments' => function($query) use($skip, $take) {
-                        $query->skip($skip)->take($take);
+                   'usersFriend.posts.comments' => function($query) {
+                        $query->orderBy('created_at', 'desc');
                    },
                    'usersFriend.posts.comments.users:username,email,photo_profile,name'])
                    ->where('username', $user['username'])->orderBy('created_at', 'desc')->get(),
@@ -210,5 +210,13 @@ class Home extends Controller
                 'work' => 'Anda berhasil berkomentar',
             ]);
         }
+    }
+
+    public function moreComment($idPost, $skip, $take) {
+        return response()->json([
+           'test' => Comment::with('users')->where('id_post', $idPost)
+               ->orderBy('created_at', 'desc')
+               ->skip((int) $skip)->take((int) $take)->get(),
+        ]);
     }
 }

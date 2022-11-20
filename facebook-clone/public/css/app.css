@@ -705,12 +705,6 @@ video {
 .h-\[12px\] {
   height: 12px;
 }
-.h-4 {
-  height: 1rem;
-}
-.h-12 {
-  height: 3rem;
-}
 .min-h-\[900px\] {
   min-height: 900px;
 }

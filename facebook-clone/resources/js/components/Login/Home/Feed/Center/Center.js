@@ -11,30 +11,33 @@ function Center(props) {
     const statusUser = useSelector(state => state.getStatus.value);
     const [notificationComment, setNotificationComment] = useState(false);
     const [postFriends, setPostFriends] = useState([]);
+    const [listComments, setListComments] = useState([]);
     const dispatch = useDispatch();
     const statusValidation = useSelector(state => state.validation.status);
-    const [pagination, setPagination] = useState({
-        skip : 0,
-        take : 1,
-    });
+    const [pagination, setPagination] = useState([]);
 
     const showBoxModal = () => {
         dispatch(show());
     };
 
-    const getPosts = async (skip, take) => {
-        return await axios.get(`/get_my_posts/${detailUser?.username}/${skip}/${take}`);
+    const getPosts = async () => {
+        return await axios.get(`/get_my_posts/${detailUser?.username}`);
     };
 
     moment.locale('id');
 
     useEffect(() => {
         if (detailUser?.username !== undefined) {
-            getPosts(pagination.skip, pagination.take)
+            getPosts()
                 .then((success) => {
                     for (const x in success.data.postsFriend) {
                         for (const y in success.data.postsFriend[x]?.users_friend?.posts) {
                             setPostFriends(prevArray => [...prevArray, success.data.postsFriend[x]?.users_friend?.posts[y]]);
+                            setPagination(prevState => [...prevState, {
+                                idPost : success.data.postsFriend[x]?.users_friend?.posts[y].id_post,
+                                skip : 0,
+                                take : 1
+                            }])
                         }
                     }
                 })
@@ -43,8 +46,6 @@ function Center(props) {
                 })
         }
     }, [detailUser?.username]);
-
-    console.log(postFriends);
 
     const comment = (e, idPost) => {
         if (e.keyCode === 13) {
@@ -69,15 +70,30 @@ function Center(props) {
         }
     };
 
-    useEffect(() => {
-        getPosts(pagination.skip, pagination.take)
-            .then((success) => {
-                console.log(success);
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-    }, [pagination.skip, pagination.take]);
+    const showMoreComments = (idPost) => {
+
+        setListComments([]);
+
+        for (const x in pagination) {
+            if (pagination[x].idPost === idPost) {
+                pagination[x].skip = pagination[x].skip + 1;
+                pagination[x].take = pagination[x].take + 1;
+                axios.get(`/get_more_comments/${idPost}/${pagination[x].skip}/${pagination[x].take}`)
+                    .then((success) => {
+                        for (const x in success.data.test) {
+                            setListComments(prevState => [...prevState, success.data.test[x]]);
+                        }
+                        console.log(success);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+            }
+        }
+
+    };
+
+    console.log(listComments);
 
     return (
         <div className={"bg-[#F0F2F5] relative scrollbar-hide h-screen pt-5 p-2 overflow-y-scroll"}>
@@ -207,15 +223,8 @@ function Center(props) {
                                         ''
                                         :
                                         <Fragment>
-                                            {/*<p onClick={showMoreComments} className={"text-[#65676b] font-semibold text-sm cursor-pointer hover:underline hover:decoration-solid"}>Lihat komentar sebelumnya</p>*/}
-                                            <p onClick={() => setPagination(
-                                                {
-                                                    ...pagination,
-                                                    skip : pagination.skip + 1,
-                                                    take : pagination.take + 1,
-                                                }
-                                            )} className={"text-[#65676b] font-semibold text-sm cursor-pointer hover:underline hover:decoration-solid"}>Lihat komentar sebelumnya</p>
-                                            <div className={"mt-2 flex items-center gap-2"}>
+                                            <p onClick={() => showMoreComments(post.id_post)} className={`text-[#65676b] font-semibold text-sm cursor-pointer hover:underline hover:decoration-solid`}>Lihat komentar sebelumnya</p>
+                                            <div className={`${listComments.length <= 0 ? 'flex' : 'hidden'} mt-2 items-center gap-2`}>
                                                 <div className={"w-[32px] h-[32px] rounded-full overflow-hidden"}>
                                                     <img className={"w-full h-full"} src={post.comments[0].users?.photo_profile} alt=""/>
                                                 </div>
@@ -223,6 +232,35 @@ function Center(props) {
                                                     <p className={"text-sm text-[#050505]"}>{post.comments[0].comment}</p>
                                                 </div>
                                             </div>
+                                            <>
+                                                {
+                                                    listComments.length <= 0 ?
+                                                        ''
+                                                        :
+                                                        listComments[0].id_post === post.id_post ?
+                                                            listComments.map((commentUser) => (
+                                                                <div className={"mt-2 flex items-center gap-2"}>
+                                                                    <div className={"w-[32px] h-[32px] rounded-full overflow-hidden"}>
+                                                                        <img className={"w-full h-full"} src={commentUser.users?.photo_profile} alt=""/>
+                                                                    </div>
+                                                                    <div className={"max-w-[221px] min-h-[33px] p-2 bg-[#F0F2F5] rounded-lg"}>
+                                                                        <p className={"text-sm text-[#050505]"}>{commentUser.comment}</p>
+                                                                    </div>
+                                                                </div>
+                                                            ))
+                                                            :
+                                                            <Fragment>
+                                                                <div className={`flex mt-2 items-center gap-2`}>
+                                                                    <div className={"w-[32px] h-[32px] rounded-full overflow-hidden"}>
+                                                                        <img className={"w-full h-full"} src={post.comments[0].users?.photo_profile} alt=""/>
+                                                                    </div>
+                                                                    <div className={"max-w-[221px] min-h-[33px] p-2 bg-[#F0F2F5] rounded-lg"}>
+                                                                        <p className={"text-sm text-[#050505]"}>{post.comments[0].comment}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </Fragment>
+                                                }
+                                            </>
                                         </Fragment>
                                 }
                                 <div className={"max-w-[900px] min-h-[36px] mt-2 flex gap-2 items-center"}>

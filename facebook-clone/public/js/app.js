@@ -7495,12 +7495,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -7536,6 +7530,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 function Center(props) {
   var detailUser = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
     return state.detailUserCurrent.value;
@@ -7557,31 +7552,33 @@ function Center(props) {
       postFriends = _useState4[0],
       setPostFriends = _useState4[1];
 
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+      _useState6 = _slicedToArray(_useState5, 2),
+      listComments = _useState6[0],
+      setListComments = _useState6[1];
+
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
   var statusValidation = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
     return state.validation.status;
   });
 
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
-    skip: 0,
-    take: 1
-  }),
-      _useState6 = _slicedToArray(_useState5, 2),
-      pagination = _useState6[0],
-      setPagination = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+      _useState8 = _slicedToArray(_useState7, 2),
+      pagination = _useState8[0],
+      setPagination = _useState8[1];
 
   var showBoxModal = function showBoxModal() {
     dispatch((0,_features_showStatusBox__WEBPACK_IMPORTED_MODULE_2__.show)());
   };
 
   var getPosts = /*#__PURE__*/function () {
-    var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(skip, take) {
+    var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_4___default().get("/get_my_posts/".concat(detailUser === null || detailUser === void 0 ? void 0 : detailUser.username, "/").concat(skip, "/").concat(take));
+              return axios__WEBPACK_IMPORTED_MODULE_4___default().get("/get_my_posts/".concat(detailUser === null || detailUser === void 0 ? void 0 : detailUser.username));
 
             case 2:
               return _context.abrupt("return", _context.sent);
@@ -7594,7 +7591,7 @@ function Center(props) {
       }, _callee);
     }));
 
-    return function getPosts(_x, _x2) {
+    return function getPosts() {
       return _ref.apply(this, arguments);
     };
   }();
@@ -7602,13 +7599,22 @@ function Center(props) {
   moment__WEBPACK_IMPORTED_MODULE_5__.locale('id');
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if ((detailUser === null || detailUser === void 0 ? void 0 : detailUser.username) !== undefined) {
-      getPosts(pagination.skip, pagination.take).then(function (success) {
+      getPosts().then(function (success) {
         var _loop = function _loop(x) {
           var _loop2 = function _loop2(y) {
             setPostFriends(function (prevArray) {
               var _success$data$postsFr3, _success$data$postsFr4;
 
               return [].concat(_toConsumableArray(prevArray), [(_success$data$postsFr3 = success.data.postsFriend[x]) === null || _success$data$postsFr3 === void 0 ? void 0 : (_success$data$postsFr4 = _success$data$postsFr3.users_friend) === null || _success$data$postsFr4 === void 0 ? void 0 : _success$data$postsFr4.posts[y]]);
+            });
+            setPagination(function (prevState) {
+              var _success$data$postsFr5, _success$data$postsFr6;
+
+              return [].concat(_toConsumableArray(prevState), [{
+                idPost: (_success$data$postsFr5 = success.data.postsFriend[x]) === null || _success$data$postsFr5 === void 0 ? void 0 : (_success$data$postsFr6 = _success$data$postsFr5.users_friend) === null || _success$data$postsFr6 === void 0 ? void 0 : _success$data$postsFr6.posts[y].id_post,
+                skip: 0,
+                take: 1
+              }]);
             });
           };
 
@@ -7627,7 +7633,6 @@ function Center(props) {
       });
     }
   }, [detailUser === null || detailUser === void 0 ? void 0 : detailUser.username]);
-  console.log(postFriends);
 
   var comment = function comment(e, idPost) {
     if (e.keyCode === 13) {
@@ -7651,13 +7656,33 @@ function Center(props) {
     }
   };
 
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    getPosts(pagination.skip, pagination.take).then(function (success) {
-      console.log(success);
-    })["catch"](function (error) {
-      console.log(error);
-    });
-  }, [pagination.skip, pagination.take]);
+  var showMoreComments = function showMoreComments(idPost) {
+    setListComments([]);
+
+    for (var x in pagination) {
+      if (pagination[x].idPost === idPost) {
+        pagination[x].skip = pagination[x].skip + 1;
+        pagination[x].take = pagination[x].take + 1;
+        axios__WEBPACK_IMPORTED_MODULE_4___default().get("/get_more_comments/".concat(idPost, "/").concat(pagination[x].skip, "/").concat(pagination[x].take)).then(function (success) {
+          var _loop3 = function _loop3(_x) {
+            setListComments(function (prevState) {
+              return [].concat(_toConsumableArray(prevState), [success.data.test[_x]]);
+            });
+          };
+
+          for (var _x in success.data.test) {
+            _loop3(_x);
+          }
+
+          console.log(success);
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
+    }
+  };
+
+  console.log(listComments);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
     className: "bg-[#F0F2F5] relative scrollbar-hide h-screen pt-5 p-2 overflow-y-scroll",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
@@ -7787,7 +7812,7 @@ function Center(props) {
     }), statusState ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_StatusBoxModal_StatusBoxModal__WEBPACK_IMPORTED_MODULE_3__["default"], {}) : '', postFriends.length <= 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
       children: "Tidak Ada Postingan"
     }) : postFriends.map(function (post) {
-      var _post$users, _post$users2, _post$comments$0$user;
+      var _post$users, _post$users2, _post$comments$0$user, _post$comments$0$user2;
 
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
         className: "rounded-md md:w-[90%] bg-white mt-3 overflow-hidden",
@@ -7842,15 +7867,12 @@ function Center(props) {
           children: [post.comments.length <= 0 ? '' : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
               onClick: function onClick() {
-                return setPagination(_objectSpread(_objectSpread({}, pagination), {}, {
-                  skip: pagination.skip + 1,
-                  take: pagination.take + 1
-                }));
+                return showMoreComments(post.id_post);
               },
               className: "text-[#65676b] font-semibold text-sm cursor-pointer hover:underline hover:decoration-solid",
               children: "Lihat komentar sebelumnya"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-              className: "mt-2 flex items-center gap-2",
+              className: "".concat(listComments.length <= 0 ? 'flex' : 'hidden', " mt-2 items-center gap-2"),
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
                 className: "w-[32px] h-[32px] rounded-full overflow-hidden",
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
@@ -7865,6 +7887,46 @@ function Center(props) {
                   children: post.comments[0].comment
                 })
               })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
+              children: listComments.length <= 0 ? '' : listComments[0].id_post === post.id_post ? listComments.map(function (commentUser) {
+                var _commentUser$users;
+
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                  className: "mt-2 flex items-center gap-2",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+                    className: "w-[32px] h-[32px] rounded-full overflow-hidden",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
+                      className: "w-full h-full",
+                      src: (_commentUser$users = commentUser.users) === null || _commentUser$users === void 0 ? void 0 : _commentUser$users.photo_profile,
+                      alt: ""
+                    })
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+                    className: "max-w-[221px] min-h-[33px] p-2 bg-[#F0F2F5] rounded-lg",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
+                      className: "text-sm text-[#050505]",
+                      children: commentUser.comment
+                    })
+                  })]
+                });
+              }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                  className: "flex mt-2 items-center gap-2",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+                    className: "w-[32px] h-[32px] rounded-full overflow-hidden",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
+                      className: "w-full h-full",
+                      src: (_post$comments$0$user2 = post.comments[0].users) === null || _post$comments$0$user2 === void 0 ? void 0 : _post$comments$0$user2.photo_profile,
+                      alt: ""
+                    })
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+                    className: "max-w-[221px] min-h-[33px] p-2 bg-[#F0F2F5] rounded-lg",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
+                      className: "text-sm text-[#050505]",
+                      children: post.comments[0].comment
+                    })
+                  })]
+                })
+              })
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
             className: "max-w-[900px] min-h-[36px] mt-2 flex gap-2 items-center",
