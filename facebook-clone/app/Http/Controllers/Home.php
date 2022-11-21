@@ -93,7 +93,7 @@ class Home extends Controller
                         $query->orderBy('created_at', 'desc');
                    },
                    'usersFriend.posts.comments.users:username,email,photo_profile,name'])
-                   ->where('username', $user['username'])->orderBy('created_at', 'desc')->get(),
+                   ->where('username', $user['username'])->where('is_friend','accept')->orderBy('created_at', 'desc')->get(),
         ]);
     }
 
